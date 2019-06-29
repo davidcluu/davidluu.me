@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-const NotFound = () => <div>404 Not Found</div>;
+import SEO from '../components/SEO';
 
-export default NotFound;
+export default () => (
+  <Fragment>
+    <SEO title="404 Error (Not Found)" />
+    {/* TODO 404 page */}
+  </Fragment>
+);

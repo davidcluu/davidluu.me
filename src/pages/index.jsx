@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-const IndexPage = () => <div>TODO Index Page</div>;
+import SEO from '../components/SEO';
 
-export default IndexPage;
+export default () => (
+  <Fragment>
+    <SEO title="Software Engineer, Web Developer" />
+    {/* TODO Homepage */}
+  </Fragment>
+);

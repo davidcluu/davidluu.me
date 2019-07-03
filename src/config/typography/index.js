@@ -3,11 +3,11 @@ import { css } from '@emotion/core';
 
 const DEFAULT_FONT_STACK = ['Arial', 'Helvetica', 'sans-serif'];
 
-const HEADER_FONT = 'Raleway';
+const HEADER_FONT = 'Lato';
 const HEADER_FONT_WEIGHT_NORMAL = 500;
 const HEADER_FONT_WEIGHT_BOLD = 600;
 
-const BODY_FONT = 'Lato';
+const BODY_FONT = 'Montserrat';
 const BODY_FONT_WEIGHT_LIGHT = 100;
 const BODY_FONT_WEIGHT_NORMAL = 400;
 const BODY_FONT_WEIGHT_BOLD = 700;

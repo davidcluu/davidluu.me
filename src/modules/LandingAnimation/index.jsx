@@ -5,6 +5,8 @@ import Div100vh from 'react-div-100vh';
 
 import { useWindowScroll, useWindowSize } from 'react-use';
 
+import { DARK_MODE } from '../../config/dark-mode';
+
 import {
   headerFontBoldCss,
   headerFontNormalCss,
@@ -20,24 +22,27 @@ const backgroundLightModeBackgroundColorTween = createRgbTweenToRgbStringFunctio
   { r: 255, g: 145, b: 134 }
 );
 
+const backgroundDarkModeBackgroundColorTween = createRgbTweenToRgbStringFunction(
+  { r: 15, g: 26, b: 58 },
+  { r: 9, g: 68, b: 168 }
+);
+
 const headerTextOpacityTween = createLinearTweenFunction(1, 0);
 
 const LandingAnimation = () => {
-  const { width, height } = useWindowSize();
-  const { x, y } = useWindowScroll();
+  const { height } = useWindowSize();
+  const { y } = useWindowScroll();
 
   const windowScrollRatio = y / height;
   // If the viewport is scrolled past the animation (windowScrollRatio >= 1), just return 1
   const landingScrollPercent = windowScrollRatio > 1 ? 1 : windowScrollRatio;
 
-  console.log(width, height, x, y, landingScrollPercent);
-
   return (
     <Div100vh
-      css={css`
-        background-color: ${backgroundLightModeBackgroundColorTween(
-          landingScrollPercent
-        )};
+      css={({ colorScheme }) => css`
+        background-color: ${colorScheme === DARK_MODE
+          ? backgroundDarkModeBackgroundColorTween(landingScrollPercent)
+          : backgroundLightModeBackgroundColorTween(landingScrollPercent)};
       `}
     >
       {/* Header */}
@@ -55,51 +60,42 @@ const LandingAnimation = () => {
         `}
       >
         <h1
-          css={css`
+          css={({ colorScheme }) => css`
             margin: 0;
 
             ${headerFontBoldCss}
             font-size: 3.5em;
             text-transform: uppercase;
+            color: ${colorScheme === DARK_MODE ? '#fff' : '#000'};
           `}
         >
           David Luu
         </h1>
         <h3
-          css={css`
+          css={({ colorScheme }) => css`
             margin: 0;
 
             ${headerFontNormalCss}
             font-size: 1.5em;
             text-transform: uppercase;
+            color: ${colorScheme === DARK_MODE ? '#fff' : '#000'};
           `}
         >
           Software Engineer, Web Developer
         </h3>
         <h4
-          css={css`
+          css={({ colorScheme }) => css`
             margin: 0;
 
             ${headerFontNormalCss}
             font-size: 1.25em;
             text-transform: uppercase;
+            color: ${colorScheme === DARK_MODE ? '#fff' : '#000'};
           `}
         >
           Software Development Engineer II, Amazon
         </h4>
       </header>
-      {/* Beach */}
-      <div
-        css={css`
-          width: 100%;
-          height: 60px;
-
-          position: absolute;
-          bottom: 0;
-
-          background-color: #eed6af;
-        `}
-      />
     </Div100vh>
   );
 };

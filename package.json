@@ -1,9 +1,32 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "davidluu.me",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "David Luu's Personal Portfolio Website",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "David Luu <luu.david.c@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "David",
+    "Luu",
+    "David Luu",
+    "Portfolio",
+    "Website"
+  ],
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidcluu/davidluu.me"
+  },
+  "bugs": {
+    "url": "https://github.com/davidcluu/davidluu.me/issues"
+  },
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@emotion/core": "^10.0.14",
@@ -47,24 +70,5 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "eslint-plugin-relay": "^1.3.2",
     "prettier": "^1.18.2"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }

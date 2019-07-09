@@ -5,15 +5,17 @@ import { DARK_MODE, LIGHT_MODE } from '../config/dark-mode';
 
 const DarkModeContext = createContext();
 
-export const DarkModeContextProvider = ({ children }) => {
+export const DarkModeContextProvider = ({ children, ssr }) => {
   /* eslint-disable no-underscore-dangle */
-  const [colorScheme, setStateColorScheme] = useState(window.__theme);
+  const [colorScheme, setStateColorScheme] = useState(
+    ssr ? LIGHT_MODE : window.__theme
+  );
 
   useEffect(() => {
     window.__onThemeChange = () => setStateColorScheme(window.__theme);
   }, []);
 
-  const setColorScheme = window.__setTheme;
+  const setColorScheme = ssr ? () => {} : window.__setTheme;
   /* eslint-enable no-underscore-dangle */
 
   const value = {
@@ -32,6 +34,11 @@ export const DarkModeContextProvider = ({ children }) => {
 
 DarkModeContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  ssr: PropTypes.bool,
+};
+
+DarkModeContextProvider.defaultProps = {
+  ssr: false,
 };
 
 export const useDarkModeContext = () => useContext(DarkModeContext);

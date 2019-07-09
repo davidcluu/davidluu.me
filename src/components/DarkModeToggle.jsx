@@ -1,29 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { withTheme } from 'emotion-theming';
-
-import { LIGHT_MODE, DARK_MODE } from '../config/dark-mode';
+import { useDarkModeContext } from '../context/DarkMode';
 
 import Toggle from './Toggle';
 
-const DarkModeToggle = ({ theme: { colorScheme } }) => {
+const DarkModeToggle = () => {
+  const {
+    isDarkMode,
+    setDarkColorScheme,
+    setLightColorScheme,
+  } = useDarkModeContext();
+
   return (
     <Toggle
-      /* eslint-disable no-underscore-dangle */
-      checked={colorScheme === DARK_MODE}
+      checked={isDarkMode}
       onChange={({ target: { checked } }) =>
-        window.__setTheme(checked ? DARK_MODE : LIGHT_MODE)
+        checked ? setDarkColorScheme() : setLightColorScheme()
       }
-      /* eslint-enable no-underscore-dangle */
     />
   );
 };
 
-DarkModeToggle.propTypes = {
-  theme: PropTypes.shape({
-    colorScheme: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-export default withTheme(DarkModeToggle);
+export default DarkModeToggle;

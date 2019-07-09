@@ -6,12 +6,15 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-import DarkModeProvider from './src/components/DarkModeProvider';
+import ContextProvider from './src/context';
+import ThemeProvider from './src/theme';
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <DarkModeProvider>
-      {element}
-    </DarkModeProvider>
+    <ContextProvider>
+      <ThemeProvider>
+        {element}
+      </ThemeProvider>
+    </ContextProvider>
   );
 };

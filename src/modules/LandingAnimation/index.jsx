@@ -5,8 +5,6 @@ import Div100vh from 'react-div-100vh';
 
 import { useWindowScroll, useWindowSize } from 'react-use';
 
-import { DARK_MODE } from '../../config/dark-mode';
-
 import {
   headerFontBoldCss,
   headerFontNormalCss,
@@ -39,8 +37,8 @@ const LandingAnimation = () => {
 
   return (
     <Div100vh
-      css={({ colorScheme }) => css`
-        background-color: ${colorScheme === DARK_MODE
+      css={({ darkMode: { isDarkMode } }) => css`
+        background-color: ${isDarkMode
           ? backgroundDarkModeBackgroundColorTween(landingScrollPercent)
           : backgroundLightModeBackgroundColorTween(landingScrollPercent)};
       `}
@@ -60,37 +58,37 @@ const LandingAnimation = () => {
         `}
       >
         <h1
-          css={({ colorScheme }) => css`
+          css={({ darkMode: { isDarkMode } }) => css`
             margin: 0;
 
             ${headerFontBoldCss}
             font-size: 3.5em;
             text-transform: uppercase;
-            color: ${colorScheme === DARK_MODE ? '#fff' : '#000'};
+            color: ${isDarkMode ? '#fff' : '#000'};
           `}
         >
           David Luu
         </h1>
         <h3
-          css={({ colorScheme }) => css`
+          css={({ darkMode: { isDarkMode } }) => css`
             margin: 0;
 
             ${headerFontNormalCss}
             font-size: 1.5em;
             text-transform: uppercase;
-            color: ${colorScheme === DARK_MODE ? '#fff' : '#000'};
+            color: ${isDarkMode ? '#fff' : '#000'};
           `}
         >
           Software Engineer, Web Developer
         </h3>
         <h4
-          css={({ colorScheme }) => css`
+          css={({ darkMode: { isDarkMode } }) => css`
             margin: 0;
 
             ${headerFontNormalCss}
             font-size: 1.25em;
             text-transform: uppercase;
-            color: ${colorScheme === DARK_MODE ? '#fff' : '#000'};
+            color: ${isDarkMode ? '#fff' : '#000'};
           `}
         >
           Software Development Engineer II, Amazon

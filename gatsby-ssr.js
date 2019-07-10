@@ -6,15 +6,6 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
 
-import ContextProvider from './src/context';
-import ThemeProvider from './src/theme';
-
-export const wrapRootElement = ({ element }) => {
-  return (
-    <ContextProvider ssr>
-      <ThemeProvider>
-        {element}
-      </ThemeProvider>
-    </ContextProvider>
-  );
-};
+ // Disabling SSR due to a flash when rendering the application in dark mode
+ // TODO dive into why this is happening and re-enable this
+export const wrapRootElement = () => null;

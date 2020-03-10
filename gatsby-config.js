@@ -3,9 +3,10 @@ module.exports = {
     title: 'David Luu',
     description: 'David Luu - Software Engineer, Web Developer',
     author: '@davidcluu',
+    email: 'luu.david.c@gmail.com',
+    url: 'https://davidluu.me',
   },
   plugins: [
-    'gatsby-mdx',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -26,6 +27,7 @@ module.exports = {
         icon: 'src/images/favicon.png',
       },
     },
+    'gatsby-plugin-mdx',
     'gatsby-plugin-netlify',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',

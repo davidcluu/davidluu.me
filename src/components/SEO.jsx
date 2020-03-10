@@ -5,27 +5,37 @@ import Helmet from 'react-helmet';
 
 import { GLOBAL_KEYWORDS } from '../config/SEO';
 
-const SEO = ({ description, lang, meta, keywords, title }) => {
-  const { site } = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-          description
-          author
-        }
+const PAGE_QUERY = graphql`
+  query {
+    site {
+      siteMetadata {
+        author
+        description
+        title
       }
     }
-  `);
+  }
+`;
 
-  const metaDescription = description || site.siteMetadata.description;
+const SEO = ({ description, lang, meta, keywords, title }) => {
+  const {
+    site: {
+      siteMetadata: {
+        author,
+        description: defaultDescription,
+        title: titleTemplatePrefix,
+      },
+    },
+  } = useStaticQuery(PAGE_QUERY);
+
+  const metaDescription = description || defaultDescription;
 
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
-      titleTemplate={`${site.siteMetadata.title} - %s`}
+      titleTemplate={`${titleTemplatePrefix} - %s`}
       title={title}
       meta={[
         {
@@ -50,7 +60,7 @@ const SEO = ({ description, lang, meta, keywords, title }) => {
         },
         {
           name: 'twitter:creator',
-          content: site.siteMetadata.author,
+          content: author,
         },
         {
           name: 'twitter:title',

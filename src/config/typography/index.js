@@ -10,14 +10,15 @@ const HEADER_FONT_WEIGHT_BOLD = 600;
 const BODY_FONT = 'Montserrat';
 const BODY_FONT_WEIGHT_LIGHT = 100;
 const BODY_FONT_WEIGHT_NORMAL = 400;
-const BODY_FONT_WEIGHT_BOLD = 700;
+const BODY_FONT_WEIGHT_BOLD = 600;
 
 const BASE_FONT_SIZE = '16px';
 const BASE_FONT_COLOR = '#000';
+const BASE_LINE_HEIGHT = '1.2rem';
 
 const typography = new Typography({
   baseFontSize: BASE_FONT_SIZE,
-  baseLineHeight: 1.2,
+  baseLineHeight: BASE_LINE_HEIGHT,
   googleFonts: [
     {
       name: BODY_FONT,
@@ -49,6 +50,18 @@ const CSS_FONT_WEIGHT_PROPERTY = 'font-weight';
 
 const bodyFontStack = typography.options.bodyFontFamily.join(',');
 const headerFontStack = typography.options.headerFontFamily.join(',');
+
+export const baseFontSize = css`
+  font-size: ${BASE_FONT_SIZE};
+`;
+
+export const baseFontColor = css`
+  color: ${BASE_FONT_COLOR};
+`;
+
+export const baseLineHeight = css`
+  line-height: ${BASE_LINE_HEIGHT};
+`;
 
 export const headerFontNormalCss = css`
   ${CSS_FONT_FAMILY_PROPERTY}: ${headerFontStack};

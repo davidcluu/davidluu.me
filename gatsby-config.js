@@ -1,3 +1,5 @@
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 module.exports = {
   siteMetadata: {
     title: 'David Luu',
@@ -15,6 +17,7 @@ module.exports = {
       },
     },
     'gatsby-plugin-emotion',
+    'gatsby-plugin-graphql-loader',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
@@ -39,4 +42,15 @@ module.exports = {
     },
     'gatsby-transformer-sharp',
   ],
+  developMiddleware: app => {
+    app.use(
+      '/.netlify/functions/',
+      createProxyMiddleware({
+        target: 'http://localhost:9000',
+        pathRewrite: {
+          '/.netlify/functions/': '',
+        },
+      })
+    );
+  },
 };

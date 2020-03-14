@@ -58,6 +58,9 @@ typings/
 .cache/
 public
 
+# netlify-lambda files
+built-lambda
+
 # Mac files
 .DS_Store
 

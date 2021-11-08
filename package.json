@@ -37,7 +37,7 @@
     "@mdx-js/mdx": "^1.5.7",
     "@mdx-js/react": "^1.5.7",
     "@mdx-js/tag": "^0.20.3",
-    "apollo-server": "^2.11.0",
+    "apollo-server": "^2.25.3",
     "apollo-server-lambda": "^2.11.0",
     "bufferutil": "^4.0.1",
     "emotion-theming": "^10.0.14",

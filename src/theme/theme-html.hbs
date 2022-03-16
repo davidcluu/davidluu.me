@@ -1,0 +1,50 @@
+<script>
+(function () {
+  var DARK_THEME = 'dark';
+  var LIGHT_THEME = 'light';
+
+  var THEME_CLASS_NAME_MAP = {};
+  THEME_CLASS_NAME_MAP[DARK_THEME] = '{{darkModeClassName}}';
+  THEME_CLASS_NAME_MAP[LIGHT_THEME] = '{{lightModeClassName}}';
+
+  var THEME_LOCAL_STORAGE_KEY = '{{themeLocalStorageKey}}';
+
+  window.__onThemeChange = function() {};
+
+  var preferredTheme;
+
+  function setTheme(newTheme) {
+    window.__theme = newTheme;
+    preferredTheme = newTheme;
+    document.body.className = THEME_CLASS_NAME_MAP[newTheme];
+    window.__onThemeChange(newTheme);
+  }
+
+  try {
+    preferredTheme = localStorage.getItem(THEME_LOCAL_STORAGE_KEY);
+  } catch (err) {
+    console.log('Failed to retrieve preferred theme from local storage');
+  }
+
+  window.__setPreferredTheme = function(newTheme) {
+    if (newTheme != DARK_THEME && newTheme != LIGHT_THEME) {
+      console.warn('Received an invalid request to set preferred theme, ignoring...');
+      return;
+    }
+
+    setTheme(newTheme);
+    try {
+      localStorage.setItem(THEME_LOCAL_STORAGE_KEY, newTheme);
+    } catch (err) {
+      console.log('Failed to save preferred theme to local storage');
+    }
+  };
+
+  var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  darkQuery.addListener(function(evt) {
+    window.__setPreferredTheme(evt.matches ? DARK_THEME : LIGHT_THEME);
+  });
+
+  setTheme(preferredTheme || (darkQuery.matches ? DARK_THEME : LIGHT_THEME));
+})();
+</script>

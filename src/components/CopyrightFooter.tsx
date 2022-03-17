@@ -22,7 +22,7 @@ export default ({
     `}
   >
     Copyright © 2015-{getYear(new Date())}{' '}
-    <AnchorComponent href="#">David Luu</AnchorComponent>. Custom designed and
-    built.
+    <AnchorComponent href="/humans.txt">David Luu</AnchorComponent>. Custom
+    designed and built.
   </div>
 );

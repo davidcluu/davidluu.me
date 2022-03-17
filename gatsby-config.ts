@@ -7,6 +7,26 @@ const config: GatsbyConfig = {
   },
   plugins: [
     'gatsby-plugin-emotion',
+    {
+      resolve: 'gatsby-plugin-humans-txt',
+      options: {
+        metaTag: false,
+        header: 'davidluu.me',
+        team: [
+          {
+            Owner: 'David Luu',
+            GitHub: 'davidcluu',
+          },
+        ],
+        thanks: undefined,
+        site: {
+          Standards: 'HTML5, CSS3',
+          Components: 'React, Gatsby, Emotion, Redux',
+          Softwares: 'Visual Studio Code',
+        },
+        note: undefined,
+      },
+    },
     'gatsby-plugin-image',
     {
       resolve: 'gatsby-plugin-manifest',
@@ -16,6 +36,7 @@ const config: GatsbyConfig = {
     },
     'gatsby-plugin-mdx',
     'gatsby-plugin-react-helmet',
+    { resolve: 'gatsby-plugin-robots-txt', options: { policy: [] } },
     'gatsby-plugin-sitemap',
     'gatsby-plugin-sharp',
     {

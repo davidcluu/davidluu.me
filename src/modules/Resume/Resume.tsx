@@ -4,7 +4,13 @@ import styled from '@emotion/styled';
 
 import { MDXProvider } from '@mdx-js/react';
 
-import { resumePadding, resumeWidthCss } from './styles';
+import ResumeAnchor from './ResumeAnchor';
+
+import {
+  resumeBackgroundFontColor,
+  resumePaddingSize,
+  resumeWidthCss,
+} from './styles';
 import {
   baseFontSizeCss,
   baseLineHeightCss,
@@ -14,10 +20,8 @@ import {
 
 import ResumeMDXDocument from './ResumeContent.mdx';
 
-const bodyFontColorCssVariable = 'var(--resume--body--font-color)';
-
 const bodyFontColorCss = css`
-  color: ${bodyFontColorCssVariable};
+  color: ${resumeBackgroundFontColor};
 
   @media print {
     color: var(--default--resume--body--font-color);
@@ -55,7 +59,7 @@ const h6 = styled.h6`
 
 const h2 = styled.h2`
   margin: 0;
-  border-bottom: 2px solid ${bodyFontColorCssVariable};
+  border-bottom: 2px solid ${resumeBackgroundFontColor};
 
   ${bodyFontBoldCss}
   ${bodyFontColorCss}
@@ -135,37 +139,7 @@ const p = styled.p`
   ${bodyFontColorCss}
 `;
 
-const AutomaticNewTabAnchor = ({ href, ...props }) => (
-  <a
-    href={href}
-    // If the link is non-empty and not an email link, open in a new tab
-    {...((!href || !href.startsWith('mailto:')) && {
-      target: '_blank',
-      rel: 'noopener noreferrer',
-    })}
-    {...props}
-  />
-);
-
-const a = styled(AutomaticNewTabAnchor)`
-  color: var(--resume--anchor--font-color);
-
-  &:active,
-  &:hover,
-  &:visited {
-    text-decoration: none;
-  }
-
-  @media print {
-    &,
-    &:active,
-    &:hover,
-    &:visited {
-      text-decoration: none;
-      color: var(--default--resume--body--font-color);
-    }
-  }
-`;
+const a = ResumeAnchor;
 
 const mdxComponents = {
   p,
@@ -192,7 +166,7 @@ export default () => (
         @media print {
           @page {
             size: auto;
-            margin: ${resumePadding};
+            margin: ${resumePaddingSize};
           }
         }
       `}

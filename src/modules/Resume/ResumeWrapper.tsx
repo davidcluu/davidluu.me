@@ -2,7 +2,7 @@ import type { SerializedStyles } from '@emotion/react';
 
 import { css } from '@emotion/react';
 
-import { resumePadding } from './styles';
+import { resumePaddingSize } from './styles';
 
 const notPrint = (styles: SerializedStyles) => ({
   '@media not print': styles,
@@ -19,7 +19,7 @@ export default ({ children }) => (
   >
     <div
       css={notPrint(css`
-        padding: ${resumePadding};
+        padding: ${resumePaddingSize};
         margin: 2.5vh 0;
 
         background-color: var(--resume--page--background-color);

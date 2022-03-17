@@ -1,8 +1,14 @@
-import ResumeWrapper from './ResumeWrapper';
+import { Fragment } from 'react';
+
+import Wrapper from './ResumeWrapper';
 import Resume from './Resume';
+import CopyrightFooter from './ResumeCopyrightFooter';
 
 export default () => (
-  <ResumeWrapper>
-    <Resume />
-  </ResumeWrapper>
+  <Fragment>
+    <Wrapper>
+      <Resume />
+    </Wrapper>
+    <CopyrightFooter />
+  </Fragment>
 );

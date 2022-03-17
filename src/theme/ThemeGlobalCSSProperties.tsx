@@ -1,31 +1,52 @@
+import type { Leaves } from '../utils/object-paths/types';
+
 import { css, Global } from '@emotion/react';
+import { get, replace } from 'lodash/fp';
 
-import { darkModeClassName } from './constants';
+import themeConfig, { isPath } from './theme-config';
+import { lightModeClassName, darkModeClassName } from './constants';
 
-export default (): JSX.Element => (
+import { leaves } from '../utils/object-paths/objects';
+import { mapToObject } from '../utils/lodash';
+
+const mapLeafToCSSProperty = (leaf: string) =>
+  `--${replace(/\./g, '--', leaf)}`;
+
+function mapLeafToCSSValue<T>(object: T): (leaf: Leaves<T>) => string {
+  return (leaf: Leaves<T>) => {
+    // @ts-ignore
+    const cssValueOrPath = get(leaf, object);
+    if (isPath(cssValueOrPath)) {
+      return `var(${mapLeafToCSSProperty(cssValueOrPath.path)})`;
+    }
+    return cssValueOrPath;
+  };
+}
+
+function mapThemeConfigToCss(config: object) {
+  const themeConfigLeaves = leaves(config, isPath);
+
+  return mapToObject(
+    mapLeafToCSSProperty,
+    mapLeafToCSSValue(config)
+  )(themeConfigLeaves);
+}
+
+export default () => (
   <Global
     styles={css`
       // Theme-invariant properties
       body {
-        --theme-blue: #acf8fc;
-
-        --default--resume--page--background-color: #ffffff;
-        --default--resume--body--font-color: #000000;
+        ${mapThemeConfigToCss(themeConfig.themeInvariant)}
       }
 
       // Theme-dependent properties
-      body {
-        --resume--background--background-color: #ebebeb;
-        // prettier-ignore
-        --resume--page--background-color: var(--default--resume--page--background-color);
-        --resume--body--font-color: var(--default--resume--body--font-color);
-        --resume--anchor--font-color: #0066cc;
+      body,
+      body.${lightModeClassName} {
+        ${mapThemeConfigToCss(themeConfig.lightMode)}
       }
       body.${darkModeClassName} {
-        --resume--background--background-color: #212121;
-        --resume--page--background-color: #181818;
-        --resume--body--font-color: #ffffff;
-        --resume--anchor--font-color: var(--theme-blue);
+        ${mapThemeConfigToCss(themeConfig.darkMode)}
       }
     `}
   />

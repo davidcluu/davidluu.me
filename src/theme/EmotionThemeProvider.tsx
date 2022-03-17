@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { StateSelector } from '../store/selectors';
 
 import { ThemeProvider } from '@emotion/react';
@@ -23,7 +24,7 @@ declare module '@emotion/react' {
 }
 
 interface EmotionThemeProviderProps {
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 const getEmotionDarkModeTheme: StateSelector<EmotionDarkModeTheme> =
@@ -34,7 +35,7 @@ const getEmotionDarkModeTheme: StateSelector<EmotionDarkModeTheme> =
     (theme, darkMode, lightMode) => ({ theme, darkMode, lightMode })
   );
 
-export default ({ children }: EmotionThemeProviderProps): JSX.Element => (
+export default ({ children }: EmotionThemeProviderProps) => (
   <ThemeProvider theme={useAppSelector(getEmotionDarkModeTheme)}>
     {children}
   </ThemeProvider>

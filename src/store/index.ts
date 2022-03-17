@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
 
-import themeReducer, { name as themeReducerName } from './slices/Theme/index';
+import themeReducer, { name as themeReducerName } from './slices/Theme';
+import scrollReducer, { name as scrollReducerName } from './slices/Scroll';
 
 import rootSaga from './root-saga';
 
@@ -11,6 +12,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
     [themeReducerName]: themeReducer,
+    [scrollReducerName]: scrollReducer,
   },
   middleware: (getDefaultMiddleware) => {
     const defaultMiddleware = getDefaultMiddleware().prepend(sagaMiddleware);

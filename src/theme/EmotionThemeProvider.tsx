@@ -1,4 +1,5 @@
-import type { Theme } from '@emotion/react';
+import type { SerializedStyles, Theme } from '@emotion/react';
+
 import {
   ThemeConfig,
   ThemeInvariantConfigPath,
@@ -12,7 +13,7 @@ import { ThemeProvider } from '@emotion/react';
 import { createSelector } from '@reduxjs/toolkit';
 
 import themeConfig from './config';
-import { mapPathToCSSValue } from './mappers';
+import { mapPathToCSSValue, pathToCssVariable } from './mappers';
 import { Theme as DarkModeTheme } from './api';
 
 import { useAppSelector } from '../store/hooks';
@@ -33,11 +34,8 @@ interface EmotionCSSTheme {
 }
 
 interface EmotionThemeUtils {
-  getThemeInvariantCSSValue: (path: ThemeInvariantConfigPath) => string;
-  getThemeVariantCSSValue: (
-    path: ThemeVariantConfigPath,
-    theme?: DarkModeTheme
-  ) => string;
+  getThemeInvariantCSSVariable: (path: ThemeInvariantConfigPath) => string;
+  getThemeVariantCSSVariable: (path: ThemeVariantConfigPath) => string;
 }
 
 declare module '@emotion/react' {
@@ -60,21 +58,14 @@ const getEmotionDarkModeTheme: StateSelector<EmotionDarkModeTheme> =
     (theme, darkMode, lightMode) => ({ theme, darkMode, lightMode })
   );
 
-const getThemeInvariantCSSValue = (path: ThemeInvariantConfigPath) =>
-  mapPathToCSSValue(themeConfig.themeInvariant)(path);
+const getThemeInvariantCSSVariable = (path: ThemeInvariantConfigPath) =>
+  pathToCssVariable(path);
+
+const getThemeVariantCSSVariable = (path: ThemeVariantConfigPath) =>
+  pathToCssVariable(path);
 
 export default ({ children }: EmotionThemeProviderProps) => {
   const darkMode = useAppSelector(getEmotionDarkModeTheme);
-
-  const getThemeVariantCSSValue = (
-    path: ThemeVariantConfigPath,
-    theme: DarkModeTheme = darkMode.theme
-  ): string =>
-    mapPathToCSSValue(
-      theme === DarkModeTheme.Light
-        ? themeConfig.lightMode
-        : themeConfig.darkMode
-    )(path);
 
   const theme: Theme = {
     darkMode,
@@ -82,8 +73,8 @@ export default ({ children }: EmotionThemeProviderProps) => {
       themeConfig,
     },
     utils: {
-      getThemeInvariantCSSValue,
-      getThemeVariantCSSValue,
+      getThemeInvariantCSSVariable,
+      getThemeVariantCSSVariable,
     },
   };
 

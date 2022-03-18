@@ -1,4 +1,8 @@
-import type { ThemeVariantConfigValue } from './config';
+import type {
+  ThemeInvariantConfigPath,
+  ThemeVariantConfigPath,
+  ThemeVariantConfigValue,
+} from './config';
 import type { Leaves } from '../utils/object-paths/types';
 
 import { get, replace } from 'lodash/fp';
@@ -19,12 +23,18 @@ export function getCSSValueOrPath<T>(
   return get(leaf, object);
 }
 
+export function pathToCssVariable(
+  variablePath: ThemeVariantConfigPath | ThemeInvariantConfigPath
+): string {
+  return `var(${mapPathToCSSProperty(variablePath)})`;
+}
+
 export function mapPathToCSSValue<T>(object: T): (leaf: Leaves<T>) => string {
   return (leaf: Leaves<T>) => {
     // @ts-ignore
     const cssValueOrPath = getCSSValueOrPath(object, leaf);
     if (isPath(cssValueOrPath)) {
-      return `var(${mapPathToCSSProperty(cssValueOrPath.path)})`;
+      return pathToCssVariable(cssValueOrPath.path);
     }
     return cssValueOrPath as string;
   };

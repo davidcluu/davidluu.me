@@ -10,7 +10,7 @@ enum OtherKeys {
 }
 
 type CSSValue = string;
-type CSSVariablePath<PathType> = {
+export type CSSVariablePath<PathType> = {
   path: PathType;
 };
 

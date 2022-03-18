@@ -1,7 +1,6 @@
 import type {
   ThemeInvariantConfigPath,
   ThemeVariantConfigPath,
-  ThemeVariantConfigValue,
 } from './config';
 import type { Leaves } from '../utils/object-paths/types';
 
@@ -15,26 +14,21 @@ import { mapToObject } from '../utils/lodash';
 export const mapPathToCSSProperty = (leaf: string) =>
   `--${replace(/\./g, '--', leaf)}`;
 
-export function getCSSValueOrPath<T>(
-  object: T,
-  leaf: Leaves<T>
-): ThemeVariantConfigValue {
-  // @ts-ignore
-  return get(leaf, object);
-}
-
-export function pathToCssVariable(
-  variablePath: ThemeVariantConfigPath | ThemeInvariantConfigPath
+export function mapPathToCssVariable(
+  variablePath: ThemeVariantConfigPath | ThemeInvariantConfigPath,
+  fallback?: string
 ): string {
-  return `var(${mapPathToCSSProperty(variablePath)})`;
+  return `var(${mapPathToCSSProperty(variablePath)}${
+    fallback ? `, ${fallback}` : ''
+  })`;
 }
 
 export function mapPathToCSSValue<T>(object: T): (leaf: Leaves<T>) => string {
   return (leaf: Leaves<T>) => {
     // @ts-ignore
-    const cssValueOrPath = getCSSValueOrPath(object, leaf);
+    const cssValueOrPath = get(leaf, object);
     if (isPath(cssValueOrPath)) {
-      return pathToCssVariable(cssValueOrPath.path);
+      return mapPathToCssVariable(cssValueOrPath.path);
     }
     return cssValueOrPath as string;
   };

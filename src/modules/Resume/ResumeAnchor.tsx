@@ -3,7 +3,11 @@ import styled from '@emotion/styled';
 import AutomaticNewTabAnchor from '../../components/AutomaticNewTabAnchor';
 
 export default styled(AutomaticNewTabAnchor)`
-  color: var(--resume--anchor--font-color);
+  ${(props) =>
+    props.theme.utils.getThemeVariantCSSWithFallback(
+      'color',
+      'resume.anchor.font-color'
+    )}
 
   &:active,
   &:hover,
@@ -17,7 +21,11 @@ export default styled(AutomaticNewTabAnchor)`
     &:hover,
     &:visited {
       text-decoration: none;
-      color: var(--default--resume--body--font-color);
+      ${(props) =>
+        props.theme.utils.getThemeInvariantCSSWithFallback(
+          'color',
+          'default.resume.body.font-color'
+        )}
     }
   }
 `;

@@ -10,20 +10,30 @@ const notPrint = (styles: SerializedStyles) => ({
 
 export default ({ children }) => (
   <div
-    css={notPrint(css`
-      display: flex;
-      justify-content: center;
+    css={(props) =>
+      notPrint(css`
+        display: flex;
+        justify-content: center;
 
-      background-color: var(--resume--background--background-color);
-    `)}
+        ${props.utils.getThemeVariantCSSWithFallback(
+          'background-color',
+          'resume.background.background-color'
+        )}
+      `)
+    }
   >
     <div
-      css={notPrint(css`
-        padding: ${resumePaddingSize};
-        margin: 2.5vh 0;
+      css={(props) =>
+        notPrint(css`
+          padding: ${resumePaddingSize};
+          margin: 2.5vh 0;
 
-        background-color: var(--resume--page--background-color);
-      `)}
+          ${props.utils.getThemeVariantCSSWithFallback(
+            'background-color',
+            'resume.page.background-color'
+          )}
+        `)
+      }
     >
       {children}
     </div>

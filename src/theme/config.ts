@@ -104,7 +104,7 @@ const themeConfig: ThemeConfig = {
       background: { [CSSPropertyKeys.backgroundColor]: '#212121' },
       page: { [CSSPropertyKeys.backgroundColor]: '#181818' },
       body: { [CSSPropertyKeys.fontColor]: '#ffffff' },
-      anchor: { [CSSPropertyKeys.fontColor]: '#0066cc' },
+      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('theme-blue') },
     },
   },
 };

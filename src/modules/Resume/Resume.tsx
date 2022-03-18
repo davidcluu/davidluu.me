@@ -18,14 +18,16 @@ import {
 import ResumeMDXDocument from './ResumeContent.mdx';
 
 const bodyFontColorCss = (props: { theme: Theme }) => css`
-  color: ${props.theme.utils.getThemeVariantCSSVariable(
+  ${props.theme.utils.getThemeVariantCSSWithFallback(
+    'color',
     'resume.body.font-color'
-  )};
+  )}
 
   @media print {
-    color: ${props.theme.utils.getThemeInvariantCSSVariable(
+    ${props.theme.utils.getThemeInvariantCSSWithFallback(
+      'color',
       'default.resume.body.font-color'
-    )};
+    )}
   }
 `;
 
@@ -60,19 +62,23 @@ const h6 = styled.h6`
 
 const h2 = styled.h2`
   margin: 0;
-  border-bottom: 2px solid
-    ${(props) =>
-      props.theme.utils.getThemeVariantCSSVariable('resume.body.font-color')};
+  ${(props) =>
+    props.theme.utils.getThemeVariantCSSWithFallback(
+      'border-bottom',
+      'resume.body.font-color',
+      '2px solid'
+    )}
 
   ${bodyFontBoldCss}
   ${bodyFontColorCss}
 
   @media print {
-    border-bottom: 2px solid
-      ${(props) =>
-        props.theme.utils.getThemeInvariantCSSVariable(
-          'default.resume.body.font-color'
-        )};
+    ${(props) =>
+      props.theme.utils.getThemeInvariantCSSWithFallback(
+        'border-bottom',
+        'default.resume.body.font-color',
+        '2px solid'
+      )}
   }
 `;
 

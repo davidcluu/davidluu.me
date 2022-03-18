@@ -1,6 +1,6 @@
-import type { SerializedStyles, Theme } from '@emotion/react';
+import type { Theme } from '@emotion/react';
 
-import {
+import type {
   ThemeConfig,
   ThemeInvariantConfigPath,
   ThemeVariantConfigPath,
@@ -12,8 +12,11 @@ import type { StateSelector } from '../store/selectors';
 import { ThemeProvider } from '@emotion/react';
 import { createSelector } from '@reduxjs/toolkit';
 
+import { camelCase } from 'lodash/fp';
+
 import themeConfig from './config';
-import { mapPathToCSSValue, pathToCssVariable } from './mappers';
+import { mapPathToCssVariable } from './mappers';
+import { resolvePathToCSSValue } from './utils';
 import { Theme as DarkModeTheme } from './api';
 
 import { useAppSelector } from '../store/hooks';
@@ -34,8 +37,28 @@ interface EmotionCSSTheme {
 }
 
 interface EmotionThemeUtils {
-  getThemeInvariantCSSVariable: (path: ThemeInvariantConfigPath) => string;
-  getThemeVariantCSSVariable: (path: ThemeVariantConfigPath) => string;
+  getThemeInvariantCSSVariable: (
+    path: ThemeInvariantConfigPath,
+    fallback?: string
+  ) => string;
+  getThemeInvariantCSSValue: (path: ThemeInvariantConfigPath) => string;
+  getThemeInvariantCSSWithFallback: (
+    property: string,
+    path: ThemeInvariantConfigPath,
+    prefix?: string,
+    suffix?: string
+  ) => { [property: string]: string[] };
+  getThemeVariantCSSVariable: (
+    path: ThemeVariantConfigPath,
+    fallback?: string
+  ) => string;
+  getThemeVariantCSSValue: (path: ThemeVariantConfigPath) => string;
+  getThemeVariantCSSWithFallback: (
+    property: string,
+    path: ThemeVariantConfigPath,
+    prefix?: string,
+    suffix?: string
+  ) => { [property: string]: string[] };
 }
 
 declare module '@emotion/react' {
@@ -58,14 +81,63 @@ const getEmotionDarkModeTheme: StateSelector<EmotionDarkModeTheme> =
     (theme, darkMode, lightMode) => ({ theme, darkMode, lightMode })
   );
 
-const getThemeInvariantCSSVariable = (path: ThemeInvariantConfigPath) =>
-  pathToCssVariable(path);
+const getThemeInvariantCSSVariable = (
+  path: ThemeInvariantConfigPath,
+  fallback?: string
+) => mapPathToCssVariable(path, fallback);
 
-const getThemeVariantCSSVariable = (path: ThemeVariantConfigPath) =>
-  pathToCssVariable(path);
+const getThemeVariantCSSVariable = (
+  path: ThemeVariantConfigPath,
+  fallback?: string
+) => mapPathToCssVariable(path, fallback);
+
+const getThemeInvariantCSSValue = (path: ThemeInvariantConfigPath) =>
+  // @ts-ignore
+  resolvePathToCSSValue(
+    themeConfig.themeInvariant,
+    themeConfig.themeInvariant,
+    path
+  );
+
+function getThemeCSSWithFallbackValueFactory<P>(
+  valueGetter: (path: P) => string,
+  variableGetter: (path: P, fallback?: string) => string
+): (
+  property: string,
+  path: P,
+  prefix?: string,
+  suffix?: string
+) => { [property: string]: string[] } {
+  return (
+    property: string,
+    path: P,
+    prefix: string = '',
+    suffix: string = ''
+  ) => ({
+    [camelCase(property)]: [
+      `${prefix} ${valueGetter(path)} ${suffix}`,
+      `${prefix} ${variableGetter(path, valueGetter(path))} ${suffix}`,
+    ],
+  });
+}
+
+const getThemeInvariantCSSWithFallback = getThemeCSSWithFallbackValueFactory(
+  getThemeInvariantCSSValue,
+  getThemeInvariantCSSVariable
+);
 
 export default ({ children }: EmotionThemeProviderProps) => {
   const darkMode = useAppSelector(getEmotionDarkModeTheme);
+
+  const getThemeVariantCSSValue = (path: ThemeVariantConfigPath) =>
+    // @ts-ignore
+    resolvePathToCSSValue(
+      darkMode.theme === DarkModeTheme.Light
+        ? themeConfig.lightMode
+        : themeConfig.darkMode,
+      themeConfig.themeInvariant,
+      path
+    );
 
   const theme: Theme = {
     darkMode,
@@ -74,7 +146,14 @@ export default ({ children }: EmotionThemeProviderProps) => {
     },
     utils: {
       getThemeInvariantCSSVariable,
+      getThemeInvariantCSSValue,
+      getThemeInvariantCSSWithFallback,
       getThemeVariantCSSVariable,
+      getThemeVariantCSSValue,
+      getThemeVariantCSSWithFallback: getThemeCSSWithFallbackValueFactory(
+        getThemeVariantCSSValue,
+        getThemeVariantCSSVariable
+      ),
     },
   };
 

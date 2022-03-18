@@ -1,21 +1,20 @@
 import type { Leaves } from '../utils/object-paths/types';
 
-export enum CSSPropertyKeys {
+enum CSSPropertyKeys {
   backgroundColor = 'background-color',
   fontColor = 'font-color',
 }
 
-export enum OtherKeys {
+enum OtherKeys {
   themeBlue = 'theme-blue',
 }
 
-export type CSSValue = string;
-export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
-export type CSSVariablePath<PathType> = {
+type CSSValue = string;
+type CSSVariablePath<PathType> = {
   path: PathType;
 };
 
-type ThemeVariantConfigValue =
+export type ThemeVariantConfigValue =
   | CSSVariablePath<ThemeInvariantConfigPath>
   | CSSValue;
 
@@ -53,6 +52,8 @@ export type ThemeInvariantConfig = {
   };
 };
 
+export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
+
 export type ThemeVariantConfig = {
   resume: {
     background: {
@@ -69,6 +70,8 @@ export type ThemeVariantConfig = {
     };
   };
 };
+
+export type ThemeVariantConfigPath = Leaves<ThemeVariantConfig>;
 
 const themeConfig: ThemeConfig = {
   themeInvariant: {

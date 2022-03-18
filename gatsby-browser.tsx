@@ -4,7 +4,7 @@ import 'normalize.css';
 
 import EmotionThemeProvider from './src/theme/EmotionThemeProvider';
 
-import ThemeGlobalCSSProperties from './src/theme/ThemeGlobalCSSProperties';
+import EmotionThemeGlobalCSSProperties from './src/theme/EmotionThemeGlobalCSSProperties';
 
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './src/store';
@@ -14,7 +14,7 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = ({
 }) => (
   <ReduxProvider store={store}>
     <EmotionThemeProvider>
-      <ThemeGlobalCSSProperties />
+      <EmotionThemeGlobalCSSProperties />
       {element}
     </EmotionThemeProvider>
   </ReduxProvider>

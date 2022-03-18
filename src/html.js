@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import themeHtml from './theme/theme-html';
+import themeHtml from './theme/html';
 
 export default function HTML(props) {
   return (

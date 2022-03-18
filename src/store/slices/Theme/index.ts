@@ -1,8 +1,8 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Theme } from '../../../theme/theme-api';
+import { Theme } from '../../../theme/api';
 
-export { Theme } from '../../../theme/theme-api';
+export { Theme } from '../../../theme/api';
 
 export const themeKey = 'theme';
 

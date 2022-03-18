@@ -1,4 +1,4 @@
-import themeHtmlTemplate from '!!handlebars-loader!./theme-html.hbs';
+import themeHtmlTemplate from '!!handlebars-loader!./html.hbs';
 
 import {
   themeLocalStorageKey,

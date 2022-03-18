@@ -9,7 +9,7 @@ import {
   getTheme as getGlobalTheme,
   setTheme as setGlobalTheme,
   setThemeChangeCallback as setGlobalThemeChangeCallback,
-} from '../../../theme/theme-api';
+} from '../../../theme/api';
 
 function* updateStore() {
   yield put(actions.themeUpdated(getGlobalTheme()));

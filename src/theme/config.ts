@@ -5,8 +5,11 @@ enum CSSPropertyKeys {
   fontColor = 'font-color',
 }
 
-enum OtherKeys {
-  themeBlue = 'theme-blue',
+enum ThemeKeys {
+  white0 = 'dl-white-0',
+  black0 = 'dl-black-0',
+  blue1 = 'dl-blue-1',
+  blue2 = 'dl-blue-2',
 }
 
 type CSSValue = string;
@@ -39,17 +42,10 @@ export type ThemeConfig = {
 };
 
 export type ThemeInvariantConfig = {
-  [OtherKeys.themeBlue]: CSSValue;
-  default: {
-    resume: {
-      page: {
-        [CSSPropertyKeys.backgroundColor]: CSSValue;
-      };
-      body: {
-        [CSSPropertyKeys.fontColor]: CSSValue;
-      };
-    };
-  };
+  [ThemeKeys.white0]: CSSValue;
+  [ThemeKeys.black0]: CSSValue;
+  [ThemeKeys.blue1]: CSSValue;
+  [ThemeKeys.blue2]: CSSValue;
 };
 
 export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
@@ -75,26 +71,19 @@ export type ThemeVariantConfigPath = Leaves<ThemeVariantConfig>;
 
 const themeConfig: ThemeConfig = {
   themeInvariant: {
-    [OtherKeys.themeBlue]: '#acf8fc',
-    default: {
-      resume: {
-        page: { [CSSPropertyKeys.backgroundColor]: '#ffffff' },
-        body: { [CSSPropertyKeys.fontColor]: '#000000' },
-      },
-    },
+    [ThemeKeys.white0]: '#ffffff',
+    [ThemeKeys.black0]: '#000000',
+    [ThemeKeys.blue1]: '#acf8fc',
+    [ThemeKeys.blue2]: '#0f1a3a',
   },
   lightMode: {
     resume: {
       background: { [CSSPropertyKeys.backgroundColor]: '#ebebeb' },
       page: {
-        [CSSPropertyKeys.backgroundColor]: VariablePath(
-          'default.resume.page.background-color'
-        ),
+        [CSSPropertyKeys.backgroundColor]: VariablePath('dl-white-0'),
       },
       body: {
-        [CSSPropertyKeys.fontColor]: VariablePath(
-          'default.resume.body.font-color'
-        ),
+        [CSSPropertyKeys.fontColor]: VariablePath('dl-black-0'),
       },
       anchor: { [CSSPropertyKeys.fontColor]: '#0066cc' },
     },
@@ -104,7 +93,7 @@ const themeConfig: ThemeConfig = {
       background: { [CSSPropertyKeys.backgroundColor]: '#212121' },
       page: { [CSSPropertyKeys.backgroundColor]: '#181818' },
       body: { [CSSPropertyKeys.fontColor]: '#ffffff' },
-      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('theme-blue') },
+      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('dl-blue-1') },
     },
   },
 };

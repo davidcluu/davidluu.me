@@ -16,16 +16,9 @@ export default styled(AutomaticNewTabAnchor)`
   }
 
   @media print {
-    &,
-    &:active,
-    &:hover,
-    &:visited {
-      text-decoration: none;
-      ${(props) =>
-        props.theme.utils.getThemeInvariantCSSWithFallback(
-          'color',
-          'default.resume.body.font-color'
-        )}
-    }
+    ${(props) =>
+      props.theme.utils.getThemeInvariantCSSWithFallback('color', 'dl-black-0')}
+
+    text-decoration: none;
   }
 `;

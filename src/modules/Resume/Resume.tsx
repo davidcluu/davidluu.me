@@ -22,12 +22,8 @@ const bodyFontColorCss = (props: { theme: Theme }) => css`
     'color',
     'resume.body.font-color'
   )}
-
   @media print {
-    ${props.theme.utils.getThemeInvariantCSSWithFallback(
-      'color',
-      'default.resume.body.font-color'
-    )}
+    ${props.theme.utils.getThemeInvariantCSSWithFallback('color', 'dl-black-0')}
   }
 `;
 
@@ -60,13 +56,15 @@ const h6 = styled.h6`
 
 // Section header
 
+const h2BorderBottomPrefix = '2px solid';
+
 const h2 = styled.h2`
   margin: 0;
   ${(props) =>
     props.theme.utils.getThemeVariantCSSWithFallback(
       'border-bottom',
       'resume.body.font-color',
-      '2px solid'
+      h2BorderBottomPrefix
     )}
 
   ${bodyFontBoldCss}
@@ -76,8 +74,8 @@ const h2 = styled.h2`
     ${(props) =>
       props.theme.utils.getThemeInvariantCSSWithFallback(
         'border-bottom',
-        'default.resume.body.font-color',
-        '2px solid'
+        'dl-black-0',
+        h2BorderBottomPrefix
       )}
   }
 `;

@@ -5,7 +5,10 @@ import subscribeToWindowEvent from '../../utils/sagas/subscribe-to-window-event'
 
 function* updateScrollPosition() {
   yield put(
-    actions.scrollPositionUpdated({ x: window.scrollX, y: window.scrollY })
+    actions.scrollPositionUpdated({
+      x: window.pageXOffset || window.scrollX,
+      y: window.pageYOffset || window.scrollY,
+    })
   );
 }
 

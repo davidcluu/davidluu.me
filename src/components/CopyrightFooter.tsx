@@ -9,7 +9,7 @@ interface CopyrightFooterProps {
 }
 
 export default ({
-  AnchorComponent = React.createFactory('a'),
+  AnchorComponent = (props) => <a {...props} />,
   className,
 }: CopyrightFooterProps) => (
   <div

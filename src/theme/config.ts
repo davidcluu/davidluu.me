@@ -2,6 +2,7 @@ import type { Leaves } from '../utils/object-paths/types';
 
 enum CSSPropertyKeys {
   backgroundColor = 'background-color',
+  color = 'color',
   fontColor = 'font-color',
 }
 
@@ -53,6 +54,18 @@ export type ThemeInvariantConfig = {
 export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
 
 export type ThemeVariantConfig = {
+  landing: {
+    navbar: {
+      animationInViewport: {
+        [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      animationNotInViewport: {
+        [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+    };
+  };
   resume: {
     background: {
       [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
@@ -80,6 +93,18 @@ const themeConfig: ThemeConfig = {
     [ThemeKeys.black2]: '#212121',
   },
   lightMode: {
+    landing: {
+      navbar: {
+        animationInViewport: {
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-white-0'),
+          [CSSPropertyKeys.color]: VariablePath('dl-black-0'),
+        },
+        animationNotInViewport: {
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-2'),
+          [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+        },
+      },
+    },
     resume: {
       background: { [CSSPropertyKeys.backgroundColor]: '#ebebeb' },
       page: {
@@ -92,6 +117,18 @@ const themeConfig: ThemeConfig = {
     },
   },
   darkMode: {
+    landing: {
+      navbar: {
+        animationInViewport: {
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1'),
+          [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+        },
+        animationNotInViewport: {
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1'),
+          [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+        },
+      },
+    },
     resume: {
       background: {
         [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-2'),

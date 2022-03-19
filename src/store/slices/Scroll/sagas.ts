@@ -1,6 +1,7 @@
-import { eventChannel } from 'redux-saga';
-import { fork, put, take } from 'redux-saga/effects';
+import { fork, put } from 'redux-saga/effects';
+
 import { actions } from '.';
+import subscribeToWindowEvent from '../../utils/sagas/subscribe-to-window-event';
 
 function* updateScrollPosition() {
   yield put(
@@ -8,26 +9,11 @@ function* updateScrollPosition() {
   );
 }
 
-function* subscribeToScrollPositionChanges() {
-  const scrollPositionChangeChannel = eventChannel<void>((emit) => {
-    const eventListener = emit as () => void;
-
-    window.addEventListener('scroll', eventListener);
-
-    return () => window.removeEventListener('scroll', eventListener);
-  });
-
-  while (true) {
-    yield take(scrollPositionChangeChannel);
-    yield fork(updateScrollPosition);
-  }
-}
-
 function* scrollSaga() {
   // Update the store once initially to populate the state
   yield fork(updateScrollPosition);
   // Everytime a scroll event happens, update the scroll position
-  yield fork(subscribeToScrollPositionChanges);
+  yield fork(subscribeToWindowEvent('scroll', updateScrollPosition));
 }
 
 export default scrollSaga;

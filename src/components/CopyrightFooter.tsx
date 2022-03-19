@@ -12,7 +12,7 @@ export default ({
   AnchorComponent = (props) => <a {...props} />,
   className,
 }: CopyrightFooterProps) => (
-  <div
+  <footer
     className={className}
     css={css`
       padding: 2em 0;
@@ -24,5 +24,5 @@ export default ({
     Copyright © 2015-{getYear(new Date())}{' '}
     <AnchorComponent href="/humans.txt">David Luu</AnchorComponent>. Custom
     designed and built.
-  </div>
+  </footer>
 );

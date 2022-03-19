@@ -6,10 +6,11 @@ enum CSSPropertyKeys {
 }
 
 enum ThemeKeys {
+  themeBlue = 'dl-theme-blue',
   white0 = 'dl-white-0',
   black0 = 'dl-black-0',
-  blue1 = 'dl-blue-1',
-  blue2 = 'dl-blue-2',
+  black1 = 'dl-black-1',
+  black2 = 'dl-black-2',
 }
 
 type CSSValue = string;
@@ -42,10 +43,11 @@ export type ThemeConfig = {
 };
 
 export type ThemeInvariantConfig = {
+  [ThemeKeys.themeBlue]: CSSValue;
   [ThemeKeys.white0]: CSSValue;
   [ThemeKeys.black0]: CSSValue;
-  [ThemeKeys.blue1]: CSSValue;
-  [ThemeKeys.blue2]: CSSValue;
+  [ThemeKeys.black1]: CSSValue;
+  [ThemeKeys.black2]: CSSValue;
 };
 
 export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
@@ -71,10 +73,11 @@ export type ThemeVariantConfigPath = Leaves<ThemeVariantConfig>;
 
 const themeConfig: ThemeConfig = {
   themeInvariant: {
+    [ThemeKeys.themeBlue]: '#acf8fc',
     [ThemeKeys.white0]: '#ffffff',
     [ThemeKeys.black0]: '#000000',
-    [ThemeKeys.blue1]: '#acf8fc',
-    [ThemeKeys.blue2]: '#0f1a3a',
+    [ThemeKeys.black1]: '#181818',
+    [ThemeKeys.black2]: '#212121',
   },
   lightMode: {
     resume: {
@@ -85,15 +88,17 @@ const themeConfig: ThemeConfig = {
       body: {
         [CSSPropertyKeys.fontColor]: VariablePath('dl-black-0'),
       },
-      anchor: { [CSSPropertyKeys.fontColor]: '#0066cc' },
+      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('dl-black-0') },
     },
   },
   darkMode: {
     resume: {
-      background: { [CSSPropertyKeys.backgroundColor]: '#212121' },
-      page: { [CSSPropertyKeys.backgroundColor]: '#181818' },
-      body: { [CSSPropertyKeys.fontColor]: '#ffffff' },
-      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('dl-blue-1') },
+      background: {
+        [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-2'),
+      },
+      page: { [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1') },
+      body: { [CSSPropertyKeys.fontColor]: VariablePath('dl-white-0') },
+      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('dl-theme-blue') },
     },
   },
 };

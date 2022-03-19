@@ -1,6 +1,10 @@
 import { css } from '@emotion/react';
 
+import NavigationLink from './NavigationLink';
+
 import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
+
+import { headerFontNormalCss } from '../../../config/typography';
 
 export default () => {
   const landingAnimationInViewport = useLandingScrollPercent() < 1;
@@ -8,7 +12,6 @@ export default () => {
   return (
     <section
       css={({ utils }) => css`
-        padding: 0 10px;
         width: 100%;
         height: 60px;
         position: fixed;
@@ -24,13 +27,13 @@ export default () => {
             ? 'landing.navbar.animationInViewport.background-color'
             : 'landing.navbar.animationNotInViewport.background-color'
         )}
+        ${headerFontNormalCss}
         ${utils.getThemeVariantCSSWithFallback(
           'color',
           landingAnimationInViewport
             ? 'landing.navbar.animationInViewport.color'
             : 'landing.navbar.animationNotInViewport.color'
         )}
-
         opacity: ${landingAnimationInViewport ? 0.9 : 1};
 
         & > * {
@@ -38,8 +41,12 @@ export default () => {
         }
       `}
     >
-      <div>Hello{/* TODO Put logo here */}</div>
-      <div>{/* TODO Put page navigation and dark mode toggle here */}</div>
+      <div>{/* TODO Put logo here */}</div>
+      <div>
+        <NavigationLink href="/resume">Resume</NavigationLink>
+        <NavigationLink href="/resume">Resume</NavigationLink>
+        <NavigationLink href="/resume">Resume</NavigationLink>
+      </div>
     </section>
   );
 };

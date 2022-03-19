@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const scrollKey = 'scroll';
-
 export const positionKey = 'position';
 
 export type Coordinate = {
@@ -9,9 +7,9 @@ export type Coordinate = {
   y: number;
 };
 
-export type ScrollState = { [positionKey]: Coordinate };
+export type SliceState = { [positionKey]: Coordinate };
 
-const initialState: ScrollState = { [positionKey]: {} as Coordinate };
+const initialState: SliceState = { [positionKey]: {} as Coordinate };
 
 export const name = 'scroll';
 

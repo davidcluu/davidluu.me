@@ -1,10 +1,10 @@
 import type { StateSelector } from '../../selectors';
-import { SliceState, Theme } from '.';
+import type { SliceState } from '.';
 
 import { createSelector } from '@reduxjs/toolkit';
 
 import { getTheme as getThemeState } from '../../selectors';
-import { themeKey } from '.';
+import { Theme, themeKey } from '.';
 
 const createStateSelector = <Result>(key: string): StateSelector<Result> =>
   createSelector(getThemeState, (state: SliceState) => state[key]);

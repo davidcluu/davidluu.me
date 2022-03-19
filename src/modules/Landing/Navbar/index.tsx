@@ -1,14 +1,9 @@
-import { useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 
-import { getWindowHeight } from '../../../store/slices/Window/selectors';
-import { getScrollY } from '../../../store/slices/Scroll/selectors';
+import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
 
 export default () => {
-  const windowHeight = useSelector(getWindowHeight);
-  const scrollY = useSelector(getScrollY);
-
-  const landingAnimationInViewport = scrollY < windowHeight;
+  const landingAnimationInViewport = useLandingScrollPercent() < 1;
 
   return (
     <section

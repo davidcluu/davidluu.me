@@ -65,6 +65,16 @@ export type ThemeVariantConfig = {
         [CSSPropertyKeys.color]: ThemeVariantConfigValue;
       };
     };
+    animation: {
+      background: {
+        initial: {
+          [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+        };
+        final: {
+          [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+        };
+      };
+    };
   };
   resume: {
     background: {
@@ -104,6 +114,16 @@ const themeConfig: ThemeConfig = {
           [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
         },
       },
+      animation: {
+        background: {
+          initial: {
+            [CSSPropertyKeys.backgroundColor]: VariablePath('dl-theme-blue'),
+          },
+          final: {
+            [CSSPropertyKeys.backgroundColor]: '#ff9966',
+          },
+        },
+      },
     },
     resume: {
       background: { [CSSPropertyKeys.backgroundColor]: '#ebebeb' },
@@ -126,6 +146,16 @@ const themeConfig: ThemeConfig = {
         animationNotInViewport: {
           [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1'),
           [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+        },
+      },
+      animation: {
+        background: {
+          initial: {
+            [CSSPropertyKeys.backgroundColor]: VariablePath('dl-theme-blue'),
+          },
+          final: {
+            [CSSPropertyKeys.backgroundColor]: '#ff9966',
+          },
         },
       },
     },

@@ -15,10 +15,6 @@ export default () => (
             'color',
             'landing.navbar.animationNotInViewport.color'
           )}
-
-          @media print {
-            display: none;
-          }
         `}
       />
     )}

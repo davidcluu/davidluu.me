@@ -9,7 +9,10 @@ enum CSSPropertyKeys {
 
 enum ThemeKeys {
   themeBlue = 'dl-theme-blue',
+  themeBlueDark = 'dl-theme-blue-dark',
   white0 = 'dl-white-0',
+  white1 = 'dl-white-1',
+  white2 = 'dl-white-2',
   black0 = 'dl-black-0',
   black1 = 'dl-black-1',
   black2 = 'dl-black-2',
@@ -52,7 +55,10 @@ export type ThemeConfig = {
 
 export type ThemeInvariantConfig = {
   [ThemeKeys.themeBlue]: CSSValue;
+  [ThemeKeys.themeBlueDark]: CSSValue;
   [ThemeKeys.white0]: CSSValue;
+  [ThemeKeys.white1]: CSSValue;
+  [ThemeKeys.white2]: CSSValue;
   [ThemeKeys.black0]: CSSValue;
   [ThemeKeys.black1]: CSSValue;
   [ThemeKeys.black2]: CSSValue;
@@ -121,7 +127,10 @@ export type ThemeVariantConfigPath = Leaves<ThemeVariantConfig>;
 const themeConfig: ThemeConfig = {
   themeInvariant: {
     [ThemeKeys.themeBlue]: '#acf8fc',
+    [ThemeKeys.themeBlueDark]: '#0f1a3a',
     [ThemeKeys.white0]: '#ffffff',
+    [ThemeKeys.white1]: '#f2f2f2',
+    [ThemeKeys.white2]: '#eaeaea',
     [ThemeKeys.black0]: '#000000',
     [ThemeKeys.black1]: '#181818',
     [ThemeKeys.black2]: '#212121',

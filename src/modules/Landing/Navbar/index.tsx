@@ -38,7 +38,7 @@ export default () => {
             ? 'landing.navbar.animationInViewport.color'
             : 'landing.navbar.animationNotInViewport.color'
         )}
-        opacity: ${landingAnimationInViewport ? 0.9 : 1};
+        opacity: ${landingAnimationInViewport ? 0.8 : 1};
 
         & > * {
           opacity: 1;

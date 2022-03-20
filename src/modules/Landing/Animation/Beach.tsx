@@ -1,11 +1,12 @@
 import { css } from '@emotion/react';
 
-import { navbarHeightPixels } from '../config';
-
 export default () => (
   <div
     css={({ utils }) => css`
-      height: ${navbarHeightPixels}px;
+      ${utils.getThemeInvariantCSSWithFallback(
+        'height',
+        'landing.navbar.desktop.height'
+      )}
 
       ${utils.getThemeVariantCSSWithFallback(
         'background-color',

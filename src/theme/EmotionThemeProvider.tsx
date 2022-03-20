@@ -12,7 +12,7 @@ import type { StateSelector } from '../store/selectors';
 import { ThemeProvider } from '@emotion/react';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { camelCase } from 'lodash/fp';
+import { camelCase, identity } from 'lodash/fp';
 
 import themeConfig from './config';
 import { mapPathToCssVariable } from './mappers';
@@ -36,12 +36,17 @@ interface EmotionCSSTheme {
   themeConfig: ThemeConfig;
 }
 
+type CSSValueTransformer<R> = (cssValue: string) => R;
+
 interface EmotionThemeUtils {
   getThemeInvariantCSSVariable: (
     path: ThemeInvariantConfigPath,
     fallback?: string
   ) => string;
-  getThemeInvariantCSSValue: (path: ThemeInvariantConfigPath) => string;
+  getThemeInvariantCSSValue: <R>(
+    path: ThemeInvariantConfigPath,
+    cssValueTransformer?: CSSValueTransformer<R>
+  ) => R;
   getThemeInvariantCSSWithFallback: (
     property: string,
     path: ThemeInvariantConfigPath,
@@ -52,13 +57,19 @@ interface EmotionThemeUtils {
     path: ThemeVariantConfigPath,
     fallback?: string
   ) => string;
-  getThemeVariantCSSValue: (path: ThemeVariantConfigPath) => string;
+  getThemeVariantCSSValue: <R>(
+    path: ThemeVariantConfigPath,
+    cssValueTransformer?: CSSValueTransformer<R>
+  ) => R;
   getThemeVariantCSSWithFallback: (
     property: string,
     path: ThemeVariantConfigPath,
     prefix?: string,
     suffix?: string
   ) => { [property: string]: string[] };
+  cssValueTransformers: {
+    pixelToNumber: (cssValue: string) => number;
+  };
 }
 
 declare module '@emotion/react' {
@@ -91,13 +102,19 @@ const getThemeVariantCSSVariable = (
   fallback?: string
 ) => mapPathToCssVariable(path, fallback);
 
-const getThemeInvariantCSSValue = (path: ThemeInvariantConfigPath) =>
-  // @ts-ignore
-  resolvePathToCSSValue(
-    themeConfig.themeInvariant,
-    themeConfig.themeInvariant,
-    path
+function getThemeInvariantCSSValue<R>(
+  path: ThemeInvariantConfigPath,
+  cssValueTransformer: CSSValueTransformer<R> = identity
+): R {
+  return cssValueTransformer(
+    // @ts-ignore
+    resolvePathToCSSValue(
+      themeConfig.themeInvariant,
+      themeConfig.themeInvariant,
+      path
+    )
   );
+}
 
 function getThemeCSSWithFallbackValueFactory<P>(
   valueGetter: (path: P) => string,
@@ -129,15 +146,20 @@ const getThemeInvariantCSSWithFallback = getThemeCSSWithFallbackValueFactory(
 export default ({ children }: EmotionThemeProviderProps) => {
   const darkMode = useAppSelector(getEmotionDarkModeTheme);
 
-  const getThemeVariantCSSValue = (path: ThemeVariantConfigPath) =>
-    // @ts-ignore
-    resolvePathToCSSValue(
-      darkMode.theme === DarkModeTheme.Light
-        ? themeConfig.lightMode
-        : themeConfig.darkMode,
-      themeConfig.themeInvariant,
-      path
+  function getThemeVariantCSSValue<R>(
+    path: ThemeVariantConfigPath,
+    cssValueTransformer: CSSValueTransformer<R> = identity
+  ): R {
+    return cssValueTransformer(
+      resolvePathToCSSValue(
+        darkMode.theme === DarkModeTheme.Light
+          ? themeConfig.lightMode
+          : themeConfig.darkMode,
+        themeConfig.themeInvariant,
+        path
+      )
     );
+  }
 
   const theme: Theme = {
     darkMode,
@@ -154,6 +176,9 @@ export default ({ children }: EmotionThemeProviderProps) => {
         getThemeVariantCSSValue,
         getThemeVariantCSSVariable
       ),
+      cssValueTransformers: {
+        pixelToNumber: parseInt,
+      },
     },
   };
 

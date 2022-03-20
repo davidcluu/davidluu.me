@@ -5,18 +5,25 @@ import { use100vh } from 'react-div-100vh';
 
 import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
 
-import { navbarHeightPixels } from '../config';
-
 export default () => {
   const {
-    utils: { getThemeVariantCSSValue },
+    utils: {
+      getThemeVariantCSSValue,
+      getThemeInvariantCSSValue,
+      cssValueTransformers,
+    },
   } = useTheme();
   const landingScrollPercent = useLandingScrollPercent();
+
+  const viewportHeight = use100vh() || 0;
+  const navbarHeight = getThemeInvariantCSSValue(
+    'landing.navbar.desktop.height',
+    cssValueTransformers.pixelToNumber
+  );
 
   const initialBackgroundColor = Color(
     getThemeVariantCSSValue('landing.animation.sky.initial.background-color')
   );
-
   const finalBackgroundColor = Color(
     getThemeVariantCSSValue('landing.animation.sky.final.background-color')
   );
@@ -24,7 +31,7 @@ export default () => {
   return (
     <div
       style={{
-        height: (use100vh() as number) - navbarHeightPixels + 'px',
+        height: `${viewportHeight - navbarHeight}px`,
         backgroundColor: initialBackgroundColor
           .mix(finalBackgroundColor, landingScrollPercent)
           .hex(),

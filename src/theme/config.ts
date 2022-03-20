@@ -1,6 +1,7 @@
 import type { Leaves } from '../utils/object-paths/types';
 
 enum CSSPropertyKeys {
+  height = 'height',
   backgroundColor = 'background-color',
   color = 'color',
   fontColor = 'font-color',
@@ -49,6 +50,13 @@ export type ThemeInvariantConfig = {
   [ThemeKeys.black0]: CSSValue;
   [ThemeKeys.black1]: CSSValue;
   [ThemeKeys.black2]: CSSValue;
+  landing: {
+    navbar: {
+      desktop: {
+        [CSSPropertyKeys.height]: CSSValue;
+      };
+    };
+  };
 };
 
 export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
@@ -104,6 +112,13 @@ const themeConfig: ThemeConfig = {
     [ThemeKeys.black0]: '#000000',
     [ThemeKeys.black1]: '#181818',
     [ThemeKeys.black2]: '#212121',
+    landing: {
+      navbar: {
+        desktop: {
+          [CSSPropertyKeys.height]: '60px',
+        },
+      },
+    },
   },
   lightMode: {
     landing: {

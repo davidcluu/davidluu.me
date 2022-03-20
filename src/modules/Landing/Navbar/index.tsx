@@ -4,7 +4,6 @@ import NavigationLink from './NavigationLink';
 
 import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
 
-import { navbarHeightPixels } from '../config';
 import { headerFontNormalCss } from '../../../config/typography';
 
 export default () => {
@@ -14,7 +13,10 @@ export default () => {
     <nav
       css={({ utils }) => css`
         width: 100%;
-        height: ${navbarHeightPixels}px;
+        ${utils.getThemeInvariantCSSWithFallback(
+          'height',
+          'landing.navbar.desktop.height'
+        )}
         position: fixed;
 
         z-index: 9999;

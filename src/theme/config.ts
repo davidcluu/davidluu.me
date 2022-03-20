@@ -15,6 +15,10 @@ enum ThemeKeys {
   black2 = 'dl-black-2',
 }
 
+enum OtherKeys {
+  radius = 'radius',
+}
+
 type CSSValue = string;
 export type CSSVariablePath<PathType> = {
   path: PathType;
@@ -54,6 +58,11 @@ export type ThemeInvariantConfig = {
     navbar: {
       desktop: {
         [CSSPropertyKeys.height]: CSSValue;
+      };
+    };
+    animation: {
+      sun: {
+        [OtherKeys.radius]: CSSValue;
       };
     };
   };
@@ -118,6 +127,7 @@ const themeConfig: ThemeConfig = {
           [CSSPropertyKeys.height]: '60px',
         },
       },
+      animation: { sun: { [OtherKeys.radius]: '125px' } },
     },
   },
   lightMode: {

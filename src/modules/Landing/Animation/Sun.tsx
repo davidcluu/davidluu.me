@@ -5,11 +5,25 @@ import Sun from './svg/Sun';
 export default () => {
   return (
     <div
-      css={css`
+      data-label="SunOrMoon"
+      css={({ utils }) => css`
+        ${utils.getThemeInvariantCSSWithFallback(
+          'width',
+          'landing.animation.sun.radius'
+        )}
+        ${utils.getThemeInvariantCSSWithFallback(
+          'height',
+          'landing.animation.sun.radius'
+        )}
+
         position: absolute;
       `}
+      style={{
+        top: 25,
+        right: 25,
+      }}
     >
-      <Sun />
+      <Sun width="100%" height="100%" />
     </div>
   );
 };

@@ -1,13 +1,11 @@
-import Sky from './Sky';
-import Beach from './Beach';
-import Sun from './Sun';
 import Banner from './Banner';
+import SkyBackground from './SkyBackground';
+import Foreground from './Foreground';
 
 export default () => (
   <section>
-    <Sky />
-    <Beach />
-    <Sun />
     <Banner />
+    <SkyBackground />
+    <Foreground />
   </section>
 );

@@ -17,8 +17,9 @@ export default () => {
           'height',
           'landing.navbar.desktop.height'
         )}
-        position: fixed;
 
+        position: fixed;
+        top: 0;
         z-index: 9999;
         display: flex;
         justify-content: space-between;

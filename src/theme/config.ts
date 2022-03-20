@@ -17,6 +17,8 @@ enum ThemeKeys {
 
 enum OtherKeys {
   radius = 'radius',
+  initialX = 'initial-x',
+  initialY = 'initial-y',
 }
 
 type CSSValue = string;
@@ -62,6 +64,8 @@ export type ThemeInvariantConfig = {
     };
     animation: {
       sun: {
+        [OtherKeys.initialX]: CSSValue;
+        [OtherKeys.initialY]: CSSValue;
         [OtherKeys.radius]: CSSValue;
       };
     };
@@ -127,7 +131,13 @@ const themeConfig: ThemeConfig = {
           [CSSPropertyKeys.height]: '60px',
         },
       },
-      animation: { sun: { [OtherKeys.radius]: '125px' } },
+      animation: {
+        sun: {
+          [OtherKeys.initialX]: '25px',
+          [OtherKeys.initialY]: '25px',
+          [OtherKeys.radius]: '110px',
+        },
+      },
     },
   },
   lightMode: {

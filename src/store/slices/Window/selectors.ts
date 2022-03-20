@@ -9,7 +9,7 @@ import { sizeKey } from '.';
 const createStateSelector = <Result>(key: string): StateSelector<Result> =>
   createSelector(getRootState, (state: SliceState) => state[key]);
 
-const getSize: StateSelector<Dimension> = createStateSelector(sizeKey);
+export const getSize: StateSelector<Dimension> = createStateSelector(sizeKey);
 
 export const getWindowWidth: StateSelector<number> = createSelector(
   getSize,

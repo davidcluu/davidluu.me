@@ -10,13 +10,14 @@ export default () => {
   } = useTheme();
 
   const windowHeight = useSelector(getWindowHeight);
-  const scrollY = useSelector(getScrollY);
+  const scrollY = Math.ceil(useSelector(getScrollY));
   const navbarHeight = getThemeInvariantCSSValue(
-    'landing.navbar.desktop.height',
+    'navbar.desktop.height',
     cssValueTransformers.pixelToNumber
   );
 
-  const windowScrollRatio = scrollY / (windowHeight - navbarHeight);
   // If the viewport is scrolled past the animation (i.e. windowScrollRatio > 1), just return 1
-  return windowScrollRatio > 1 ? 1 : windowScrollRatio;
+  return scrollY >= windowHeight - navbarHeight
+    ? 1
+    : scrollY / (windowHeight - navbarHeight);
 };

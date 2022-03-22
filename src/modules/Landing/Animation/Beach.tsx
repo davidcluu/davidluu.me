@@ -7,7 +7,7 @@ export default () => (
       width: 100%;
       ${utils.getThemeInvariantCSSWithFallback(
         'height',
-        'landing.navbar.desktop.height'
+        'navbar.desktop.height'
       )}
 
       position: absolute;

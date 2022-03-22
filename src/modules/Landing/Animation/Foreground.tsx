@@ -8,9 +8,9 @@ export default () => {
   const {
     utils: { getThemeInvariantCSSValue, cssValueTransformers },
   } = useTheme();
-  const viewportHeight = use100vh() || 0;
+  const viewportHeight = use100vh() || (window && window.innerHeight) || 0;
   const navbarHeight = getThemeInvariantCSSValue(
-    'landing.navbar.desktop.height',
+    'navbar.desktop.height',
     cssValueTransformers.pixelToNumber
   );
 
@@ -23,7 +23,7 @@ export default () => {
       css={({ utils }) => css`
         ${utils.getThemeInvariantCSSWithFallback(
           'margin-top',
-          'landing.navbar.desktop.height'
+          'navbar.desktop.height'
         )}
 
         position: relative;

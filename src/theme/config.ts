@@ -62,12 +62,12 @@ export type ThemeInvariantConfig = {
   [ThemeKeys.black0]: CSSValue;
   [ThemeKeys.black1]: CSSValue;
   [ThemeKeys.black2]: CSSValue;
-  landing: {
-    navbar: {
-      desktop: {
-        [CSSPropertyKeys.height]: CSSValue;
-      };
+  navbar: {
+    desktop: {
+      [CSSPropertyKeys.height]: CSSValue;
     };
+  };
+  landing: {
     animation: {
       sun: {
         [OtherKeys.initialX]: CSSValue;
@@ -134,12 +134,8 @@ const themeConfig: ThemeConfig = {
     [ThemeKeys.black0]: '#000000',
     [ThemeKeys.black1]: '#181818',
     [ThemeKeys.black2]: '#212121',
+    navbar: { desktop: { [CSSPropertyKeys.height]: '60px' } },
     landing: {
-      navbar: {
-        desktop: {
-          [CSSPropertyKeys.height]: '60px',
-        },
-      },
       animation: {
         sun: {
           [OtherKeys.initialX]: '25px',

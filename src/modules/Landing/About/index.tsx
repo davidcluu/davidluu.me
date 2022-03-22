@@ -1,22 +1,29 @@
-import styled from '@emotion/styled';
-
 import { MDXProvider } from '@mdx-js/react';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import AutomaticNewTabAnchor from '../../../components/AutomaticNewTabAnchor';
 
+import IDs from '../../../components/Navbar/ids';
 import { bodyFontNormalCss } from '../../../config/typography';
 
 import AboutMDXDocument from './AboutContent.mdx';
 
 // Page wrapper
 
-const wrapper = styled.section`
-  margin: 5em auto;
-  width: 750px;
+const wrapper = (props: any) => (
+  <section
+    css={css`
+      margin: 0 auto;
+      padding: 5em 0;
+      width: 750px;
 
-  text-align: left;
-`;
-
+      text-align: left;
+    `}
+    {...props}
+    id={IDs.About}
+  />
+);
 // Text elements
 
 const h2 = styled.h2`

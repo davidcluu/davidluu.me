@@ -3,6 +3,8 @@ import { useTheme } from '@emotion/react';
 import { css } from '@emotion/react';
 
 import Sun from './svg/Sun';
+import { sun as zIndex } from './z-indices';
+
 import { getSize } from '../../../store/slices/Window/selectors';
 
 import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
@@ -46,6 +48,7 @@ export default () => {
           'landing.animation.sun.radius'
         )}
 
+        z-index: ${zIndex};
         position: absolute;
       `}
       style={{

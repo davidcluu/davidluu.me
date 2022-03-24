@@ -3,6 +3,7 @@ import { max } from 'lodash/fp';
 
 import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
 
+import { banner as zIndex } from './z-indices';
 import {
   headerFontBoldCss,
   headerFontNormalCss,
@@ -13,12 +14,14 @@ export default () => {
 
   return (
     <header
-      style={{ opacity: max([0, 1 - landingScrollPercent * 4]) }}
+      style={{ opacity: max([0, 1 - landingScrollPercent * 3]) }}
       css={css`
         width: 100%;
 
+        z-index: ${zIndex};
         position: absolute;
         top: 25%;
+        user-select: none;
 
         text-align: center;
       `}

@@ -1,5 +1,7 @@
 import { css } from '@emotion/react';
 
+import { beach as zIndex } from './z-indices';
+
 export default () => (
   <div
     data-label="Beach"
@@ -10,6 +12,7 @@ export default () => (
         'navbar.desktop.height'
       )}
 
+      z-index: ${zIndex};
       position: absolute;
       bottom: 0;
 

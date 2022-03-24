@@ -3,6 +3,8 @@ import { use100vh } from 'react-div-100vh';
 
 import Beach from './Beach';
 import Sun from './Sun';
+import Clouds from './Clouds';
+import Waves from './Waves';
 
 export default () => {
   const {
@@ -27,11 +29,14 @@ export default () => {
         )}
 
         position: relative;
+        overflow: hidden;
 
         background: transparent;
       `}
     >
       <Sun />
+      <Clouds />
+      <Waves />
       <Beach />
     </div>
   );

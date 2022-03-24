@@ -34,7 +34,7 @@ const h2 = styled.h2`
 `;
 
 const p = styled.p`
-  margin-bottom: 0.25em;
+  margin-bottom: 0.5em;
 
   font-size: 1.1em;
 

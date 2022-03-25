@@ -24,7 +24,7 @@ import {
 
 const STATIC_CLOUD_TRANSLATE_RANGE = 50;
 const MOVING_CLOUD_TRANSLATE_RANGE = 5;
-const SCROLL_TARGET_TOP = '80%';
+const SCROLL_TARGET_TOP = '90%';
 
 const getTop = (startingTop: string) =>
   useTweenPercentMotionValue(useLandingScrollPercentMotionValue(), [
@@ -118,11 +118,11 @@ const MovingCloud = ({
 }: MovingCloudProps) => {
   const [cloudDistanceRatio] = useState(Math.random() * 0.5 + 0.1);
   const [topPercent] = useState(`${Math.random() * 40}%`);
-  const [initialLeftValue] = useState(Math.random() * 100);
+  const [initialLeftValue] = useState(Math.random() * 150 - 25);
   const initialLeft = `${initialLeftValue}%`;
   // If the cloud is initially on the left side of the page, animate it to the right and vice versa...
   const [targetLeftValue] = useState(
-    Math.random() * 50 + (initialLeftValue <= 50 ? 50 : 0)
+    Math.random() * 75 + (initialLeftValue <= 50 ? 50 : -25)
   );
   const targetLeft = `${targetLeftValue}%`;
 
@@ -159,11 +159,12 @@ const MovingCloud = ({
           left: targetLeft,
         },
         {
-          // ((distance [0%-100%] / 100) * windowWidth) / 50 [pixels/sec]
+          // ((distance [0%-100%] / 100) * windowWidth) / 50 [pixels/sec] * randomization factor
           duration:
-            ((Math.abs(targetLeftValue - initialLeftValue) / 50) *
+            (((Math.abs(targetLeftValue - initialLeftValue) / 50) *
               windowWidth) /
-            100,
+              100) *
+            (Math.random() * 0.4 + 0.8),
           ease: 'linear',
         }
       )
@@ -198,7 +199,7 @@ const MovingCloud = ({
       initial="hidden"
       animate="visible"
       exit="hidden"
-      transition={{ duration: 1 }}
+      transition={{ type: 'tween', ease: 'easeOut', duration: 2 }}
     >
       <m.div
         key="cloud"

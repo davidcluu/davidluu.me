@@ -1,6 +1,12 @@
 import type { Leaves } from '../utils/object-paths/types';
 
+enum ViewportSizeKeys {
+  desktop = 'desktop',
+  mobile = 'mobile',
+}
+
 enum CSSPropertyKeys {
+  width = 'width',
   height = 'height',
   backgroundColor = 'background-color',
   color = 'color',
@@ -53,6 +59,11 @@ export type ThemeConfig = {
   darkMode: ThemeVariantConfig;
 };
 
+export type ViewportVariantConfig<T> = {
+  [ViewportSizeKeys.desktop]: T;
+  [ViewportSizeKeys.mobile]: T;
+};
+
 export type ThemeInvariantConfig = {
   [ThemeKeys.themeBlue]: CSSValue;
   [ThemeKeys.themeBlueDark]: CSSValue;
@@ -62,19 +73,20 @@ export type ThemeInvariantConfig = {
   [ThemeKeys.black0]: CSSValue;
   [ThemeKeys.black1]: CSSValue;
   [ThemeKeys.black2]: CSSValue;
-  navbar: {
-    desktop: {
-      [CSSPropertyKeys.height]: CSSValue;
-    };
-  };
+  navbar: ViewportVariantConfig<{
+    [CSSPropertyKeys.height]: CSSValue;
+  }>;
   landing: {
-    animation: {
+    animation: ViewportVariantConfig<{
       sun: {
         [OtherKeys.initialX]: CSSValue;
         [OtherKeys.initialY]: CSSValue;
         [OtherKeys.radius]: CSSValue;
       };
-    };
+      cloud: {
+        [CSSPropertyKeys.width]: CSSValue;
+      };
+    }>;
   };
 };
 
@@ -134,13 +146,31 @@ const themeConfig: ThemeConfig = {
     [ThemeKeys.black0]: '#000000',
     [ThemeKeys.black1]: '#181818',
     [ThemeKeys.black2]: '#212121',
-    navbar: { desktop: { [CSSPropertyKeys.height]: '60px' } },
+    navbar: {
+      desktop: { [CSSPropertyKeys.height]: '60px' },
+      mobile: { [CSSPropertyKeys.height]: '60px' },
+    },
     landing: {
       animation: {
-        sun: {
-          [OtherKeys.initialX]: '25px',
-          [OtherKeys.initialY]: '25px',
-          [OtherKeys.radius]: '110px',
+        desktop: {
+          sun: {
+            [OtherKeys.initialX]: '25px',
+            [OtherKeys.initialY]: '25px',
+            [OtherKeys.radius]: '110px',
+          },
+          cloud: {
+            [CSSPropertyKeys.width]: '110px',
+          },
+        },
+        mobile: {
+          sun: {
+            [OtherKeys.initialX]: '25px',
+            [OtherKeys.initialY]: '25px',
+            [OtherKeys.radius]: '110px',
+          },
+          cloud: {
+            [CSSPropertyKeys.width]: '110px',
+          },
         },
       },
     },

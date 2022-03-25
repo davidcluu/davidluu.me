@@ -17,11 +17,11 @@ export default () => {
   const { width, height } = useSelector(getSize);
 
   const sunInitialX = getThemeInvariantCSSValue(
-    'landing.animation.sun.initial-x',
+    'landing.animation.desktop.sun.initial-x',
     cssValueTransformers.pixelToNumber
   );
   const sunInitialY = getThemeInvariantCSSValue(
-    'landing.animation.sun.initial-y',
+    'landing.animation.desktop.sun.initial-y',
     cssValueTransformers.pixelToNumber
   );
 
@@ -52,11 +52,11 @@ export default () => {
       css={({ utils }) => css`
         ${utils.getThemeInvariantCSSWithFallback(
           'width',
-          'landing.animation.sun.radius'
+          'landing.animation.desktop.sun.radius'
         )}
         ${utils.getThemeInvariantCSSWithFallback(
           'height',
-          'landing.animation.sun.radius'
+          'landing.animation.desktop.sun.radius'
         )}
 
         z-index: ${zIndex};

@@ -39,6 +39,7 @@ export function mapThemeConfigToCssObject(config: object) {
 
   return mapToObject(
     mapPathToCSSProperty,
+    // @ts-ignore
     mapPathToCSSValue(config)
   )(themeConfigLeaves);
 }

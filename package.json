@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.8.0",
     "@types/lodash": "^4.14.180",
     "@types/mdx": "^2.0.1",
+    "@types/react-helmet": "^6.1.5",
     "@types/redux-logger": "^3.0.9",
     "@types/typography": "^0.16.4",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",

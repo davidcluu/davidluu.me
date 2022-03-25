@@ -5,11 +5,17 @@ import PropTypes from 'prop-types';
 
 import themeHtml from './theme/html';
 
+const CHARSET = 'utf-8';
+
 export default function HTML(props) {
   return (
     <html {...props.htmlAttributes}>
       <head>
-        <meta charSet="utf-8" />
+        <meta charSet={CHARSET} />
+        <meta
+          httpEquiv="Content-Type"
+          content={`text/html; charset=${CHARSET}`}
+        />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta
           name="viewport"

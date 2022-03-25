@@ -1,6 +1,6 @@
 import type { MotionValue } from 'framer-motion';
 
-import { motion, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { css } from '@emotion/react';
@@ -9,7 +9,10 @@ import { map, compose } from 'lodash/fp';
 import Wave from './svg/Wave';
 
 import { waves as baseZIndex } from './z-indices';
+
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
+import useTweenPercentMotionValue from '../../../hooks/use-tween-percent-motion-value';
+import useMotionValueAsPercent from '../../../hooks/use-motion-value-as-percent';
 
 const svgStrings = map(
   compose(encodeURIComponent, renderToString, (color: string) => (
@@ -19,12 +22,12 @@ const svgStrings = map(
 );
 
 const getTop = (landingScrollPercent: MotionValue<number>, index: number) =>
-  useTransform(landingScrollPercent, (percent) => {
-    const initialTop = 50 + 9 * index;
-    const maxTop = 50 + 9 * (svgStrings.length - 1);
-
-    return `${percent * maxTop + (1 - percent) * initialTop}%`;
-  });
+  useMotionValueAsPercent(
+    useTweenPercentMotionValue(landingScrollPercent, [
+      50 + 9 * index,
+      50 + 9 * (svgStrings.length - 1),
+    ])
+  );
 
 export default () => {
   const landingScrollPercent = useLandingScrollPercentMotionValue();

@@ -1,16 +1,17 @@
 import { css, useTheme } from '@emotion/react';
-import { use100vh } from 'react-div-100vh';
 
 import Beach from './Beach';
 import Sun from './Sun';
 import Clouds from './Clouds';
 import Waves from './Waves';
 
+import useViewportHeight from '../hooks/use-viewport-height';
+
 export default () => {
   const {
     utils: { getThemeInvariantCSSValue, cssValueTransformers },
   } = useTheme();
-  const viewportHeight = use100vh() || (window && window.innerHeight) || 0;
+  const viewportHeight = useViewportHeight();
   const navbarHeight = getThemeInvariantCSSValue(
     'navbar.desktop.height',
     cssValueTransformers.pixelToNumber

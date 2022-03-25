@@ -1,20 +1,20 @@
 import { useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/react';
+import { motion, useTransform } from 'framer-motion';
 
 import Sun from './svg/Sun';
 import { sun as zIndex } from './z-indices';
 
 import { getSize } from '../../../store/slices/Window/selectors';
 
-import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
+import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 
 export default () => {
   const {
     utils: { getThemeInvariantCSSValue, cssValueTransformers },
   } = useTheme();
   const { width, height } = useSelector(getSize);
-  const landingScrollPercent = useLandingScrollPercent();
 
   const sunInitialX = getThemeInvariantCSSValue(
     'landing.animation.sun.initial-x',
@@ -26,17 +26,28 @@ export default () => {
   );
 
   const sunGoalX = width;
-  const sunGoalY = height;
+  const sunGoalY = height * 1.5;
+
+  const landingScrollPercent = useLandingScrollPercentMotionValue();
 
   // Scroll-responsively animate the sun from the starting point at 0 degrees
   // to the ending point at 90 degrees (pi)
-  const sunRadian = landingScrollPercent * (Math.PI / 2);
+  const landingScrollRadian = useTransform(
+    landingScrollPercent,
+    (percent) => percent * (Math.PI / 2)
+  );
 
-  const top = sunGoalY - Math.cos(sunRadian) * (sunGoalY - sunInitialY);
-  const right = sunInitialX + Math.sin(sunRadian) * (sunGoalX - sunInitialX);
+  const top = useTransform(
+    landingScrollRadian,
+    (radian) => sunGoalY - Math.cos(radian) * (sunGoalY - sunInitialY)
+  );
+  const right = useTransform(
+    landingScrollRadian,
+    (radian) => sunInitialX + Math.sin(radian) * (sunGoalX - sunInitialX)
+  );
 
   return (
-    <div
+    <motion.div
       data-label="SunOrMoon"
       css={({ utils }) => css`
         ${utils.getThemeInvariantCSSWithFallback(
@@ -57,6 +68,6 @@ export default () => {
       }}
     >
       <Sun width="100%" height="100%" />
-    </div>
+    </motion.div>
   );
 };

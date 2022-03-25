@@ -1,3 +1,6 @@
+import type { MotionValue } from 'framer-motion';
+
+import { motion, useTransform } from 'framer-motion';
 import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { css } from '@emotion/react';
@@ -6,6 +9,7 @@ import { map, compose } from 'lodash/fp';
 import Wave from './svg/Wave';
 
 import { waves as baseZIndex } from './z-indices';
+import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 
 const svgStrings = map(
   compose(encodeURIComponent, renderToString, (color: string) => (
@@ -14,11 +18,21 @@ const svgStrings = map(
   ['#28ded5', '#3ce6e0', '#65f0f0', '#82faf8', '#99f7f6']
 );
 
+const getTop = (landingScrollPercent: MotionValue<number>, index: number) =>
+  useTransform(landingScrollPercent, (percent) => {
+    const initialTop = 50 + 9 * index;
+    const maxTop = 50 + 9 * (svgStrings.length - 1);
+
+    return `${percent * maxTop + (1 - percent) * initialTop}%`;
+  });
+
 export default () => {
+  const landingScrollPercent = useLandingScrollPercentMotionValue();
+
   return (
     <Fragment>
       {svgStrings.map((svgString, index) => (
-        <div
+        <motion.div
           key={svgString}
           data-label={`Wave${index}`}
           css={css`
@@ -27,11 +41,13 @@ export default () => {
 
             z-index: ${baseZIndex + index};
             position: absolute;
-            top: ${50 + 9 * index}%;
 
             background: url('data:image/svg+xml,${svgString}');
             background-position: ${40 * index}px 0;
           `}
+          style={{
+            top: getTop(landingScrollPercent, index),
+          }}
         />
       ))}
     </Fragment>

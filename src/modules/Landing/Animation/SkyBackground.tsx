@@ -1,30 +1,29 @@
+import { motion, useTransform } from 'framer-motion';
 import { css, useTheme } from '@emotion/react';
-import Color from 'color';
 
-import Div100vh from 'react-div-100vh';
-
-import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
+import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
+import useViewportHeight from '../hooks/use-viewport-height';
 
 export default () => {
   const {
     utils: { getThemeVariantCSSValue },
   } = useTheme();
-  const landingScrollPercent = useLandingScrollPercent();
-
-  const initialBackgroundColor = Color(
-    getThemeVariantCSSValue('landing.animation.sky.initial.background-color')
-  );
-  const finalBackgroundColor = Color(
-    getThemeVariantCSSValue('landing.animation.sky.final.background-color')
+  const landingScrollPercent = useLandingScrollPercentMotionValue();
+  const backgroundColor = useTransform(
+    landingScrollPercent,
+    [0, 1],
+    [
+      getThemeVariantCSSValue('landing.animation.sky.initial.background-color'),
+      getThemeVariantCSSValue('landing.animation.sky.final.background-color'),
+    ]
   );
 
   return (
-    <Div100vh
+    <motion.div
       data-label="Sky"
       style={{
-        backgroundColor: initialBackgroundColor
-          .mix(finalBackgroundColor, landingScrollPercent)
-          .hex(),
+        height: useViewportHeight(),
+        backgroundColor,
       }}
       css={css`
         width: 100%;

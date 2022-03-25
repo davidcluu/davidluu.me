@@ -2,11 +2,13 @@ import { ClassNames, css } from '@emotion/react';
 
 import Navbar from '../../../components/Navbar';
 import DefaultNavigationLink from '../../../components/Navbar/NavigationLink';
+import useMotionValueListener from '../../../hooks/use-motion-value-listener';
 
-import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
+import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 
 const NavigationLink = (props) => {
-  const landingAnimationInViewport = useLandingScrollPercent() < 1;
+  const landingAnimationInViewport =
+    useMotionValueListener(useLandingScrollPercentMotionValue()) < 1;
 
   return (
     <DefaultNavigationLink
@@ -24,7 +26,8 @@ const NavigationLink = (props) => {
 };
 
 export default () => {
-  const landingAnimationInViewport = useLandingScrollPercent() < 1;
+  const landingAnimationInViewport =
+    useMotionValueListener(useLandingScrollPercentMotionValue()) < 1;
 
   return (
     <ClassNames>

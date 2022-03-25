@@ -1,7 +1,8 @@
+import { motion, useTransform } from 'framer-motion';
 import { css } from '@emotion/react';
 import { max } from 'lodash/fp';
 
-import useLandingScrollPercent from '../hooks/use-landing-scroll-percent';
+import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 
 import { banner as zIndex } from './z-indices';
 import {
@@ -10,11 +11,14 @@ import {
 } from '../../../config/typography';
 
 export default () => {
-  const landingScrollPercent = useLandingScrollPercent();
+  const opacity = useTransform(
+    useLandingScrollPercentMotionValue(),
+    (percent) => max([0, 1 - percent * 3])
+  );
 
   return (
-    <header
-      style={{ opacity: max([0, 1 - landingScrollPercent * 3]) }}
+    <motion.header
+      style={{ opacity }}
       css={css`
         width: 100%;
 
@@ -46,6 +50,6 @@ export default () => {
       >
         Software Development Engineer II, Amazon
       </h2>
-    </header>
+    </motion.header>
   );
 };

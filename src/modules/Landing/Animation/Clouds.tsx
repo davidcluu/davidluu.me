@@ -14,12 +14,17 @@ import useMotionValueAsPercent from '../../../hooks/use-motion-value-as-percent'
 
 const width = '110px';
 
-const getTop = (landingScrollPercent: MotionValue<number>) =>
+const getTop = (
+  landingScrollPercent: MotionValue<number>,
+  percentRange: number[]
+) =>
   useMotionValueAsPercent(
-    useTweenPercentMotionValue(landingScrollPercent, [10, 75])
+    useTweenPercentMotionValue(landingScrollPercent, percentRange)
   );
 
 export default () => {
+  const landingScrollPercent = useLandingScrollPercentMotionValue();
+
   var zIndex = baseZIndex;
 
   return (
@@ -35,7 +40,7 @@ export default () => {
 
           opacity: 0.8;
         `}
-        style={{ top: getTop(useLandingScrollPercentMotionValue()) }}
+        style={{ top: getTop(landingScrollPercent, [10, 75]) }}
       >
         <Cloud width={width} />
       </motion.div>

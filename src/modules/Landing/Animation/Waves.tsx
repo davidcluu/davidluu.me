@@ -1,6 +1,6 @@
 import type { MotionValue } from 'framer-motion';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { css } from '@emotion/react';
@@ -35,7 +35,7 @@ export default () => {
   return (
     <Fragment>
       {svgStrings.map((svgString, index) => (
-        <motion.div
+        <m.div
           key={svgString}
           data-label={`Wave${index}`}
           css={css`

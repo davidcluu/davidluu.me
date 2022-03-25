@@ -1,4 +1,4 @@
-import { motion, useTransform } from 'framer-motion';
+import { m, useTransform } from 'framer-motion';
 import { css } from '@emotion/react';
 import { max } from 'lodash/fp';
 
@@ -17,7 +17,7 @@ export default () => {
   );
 
   return (
-    <motion.header
+    <m.header
       style={{ opacity }}
       css={css`
         width: 100%;
@@ -50,6 +50,6 @@ export default () => {
       >
         Software Development Engineer II, Amazon
       </h2>
-    </motion.header>
+    </m.header>
   );
 };

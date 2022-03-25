@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/react';
-import { motion, useTransform } from 'framer-motion';
+import { m, useTransform } from 'framer-motion';
 
 import Sun from './svg/Sun';
 import { sun as zIndex } from './z-indices';
@@ -47,7 +47,7 @@ export default () => {
   );
 
   return (
-    <motion.div
+    <m.div
       data-label="SunOrMoon"
       css={({ utils }) => css`
         ${utils.getThemeInvariantCSSWithFallback(
@@ -68,6 +68,6 @@ export default () => {
       }}
     >
       <Sun width="100%" height="100%" />
-    </motion.div>
+    </m.div>
   );
 };

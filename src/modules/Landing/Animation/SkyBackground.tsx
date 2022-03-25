@@ -1,4 +1,4 @@
-import { motion, useTransform } from 'framer-motion';
+import { m, useTransform } from 'framer-motion';
 import { css, useTheme } from '@emotion/react';
 
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
@@ -19,7 +19,7 @@ export default () => {
   );
 
   return (
-    <motion.div
+    <m.div
       data-label="Sky"
       style={{
         height: useViewportHeight(),

@@ -1,7 +1,7 @@
 import { MotionValue, useAnimation } from 'framer-motion';
 
 import { Fragment, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { css } from '@emotion/react';
 
 import SvgCloud from './svg/Cloud';
@@ -54,7 +54,7 @@ const Cloud = ({ index, left, top }: CloudProps) => {
   useEffect(startAnimation as () => void, []);
 
   return (
-    <motion.div
+    <m.div
       data-label={`Cloud${index}`}
       css={css`
         width: ${width};
@@ -69,7 +69,7 @@ const Cloud = ({ index, left, top }: CloudProps) => {
       style={{ top: getTop(landingScrollPercent, [top, '80%']) }}
     >
       <SvgCloud width={width} />
-    </motion.div>
+    </m.div>
   );
 };
 

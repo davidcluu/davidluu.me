@@ -216,30 +216,27 @@ const MovingCloud = ({
   return (
     <m.div
       data-label={`MovingCloud${index}`}
+      css={css`
+        position: absolute;
+      `}
       style={{
         zIndex: baseZIndex + zIndexOffset + index,
+        top: getTop(topPercent),
+        left: initialLeft,
       }}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity },
-      }}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      transition={{ type: 'tween', ease: 'easeOut', duration: 2 }}
+      animate={sideToSideAnimation}
     >
-      <m.div
-        key="cloud"
-        css={css`
-          position: absolute;
-        `}
-        style={{
-          top: getTop(topPercent),
-          left: initialLeft,
-        }}
-        animate={sideToSideAnimation}
-      >
-        <m.div animate={jiggleAnimation}>
+      <m.div animate={jiggleAnimation}>
+        <m.div
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity },
+          }}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          transition={{ type: 'tween', ease: 'easeOut', duration: 2 }}
+        >
           <SvgCloud width={width} />
         </m.div>
       </m.div>

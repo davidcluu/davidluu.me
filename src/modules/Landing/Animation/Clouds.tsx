@@ -13,18 +13,16 @@ import { values, omit } from 'lodash/fp';
 import SvgCloud from './svg/Cloud';
 
 import { clouds as baseZIndex } from './z-indices';
+import { getRandomizationRatio } from './utils';
 
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 import useTweenPercentMotionValue from '../../../hooks/use-tween-percent-motion-value';
 import { useAppSelector } from '../../../store/hooks';
+
 import {
   getWindowWidth,
   getWindowHeight,
 } from '../../../store/slices/Window/selectors';
-
-const RANDOMIZATION_FACTOR = 0.4;
-const getRandomizationRatio = () =>
-  Math.random() * RANDOMIZATION_FACTOR + 2 * RANDOMIZATION_FACTOR;
 
 const SCROLL_TARGET_TOP = '90%';
 const getTop = (startingTop: string) =>

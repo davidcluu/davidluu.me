@@ -9,6 +9,7 @@ import { map, compose } from 'lodash/fp';
 import WaveSvg from './svg/Wave';
 
 import { waves as baseZIndex } from './z-indices';
+import { getRandomizationRatio } from './utils';
 
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 import useTweenPercentMotionValue from '../../../hooks/use-tween-percent-motion-value';
@@ -53,7 +54,7 @@ export const Wave = ({ svgString, index }: WaveProps) => {
     await animation.start(
       { translateX, translateY },
       {
-        duration: (distance / 20) * (Math.random() * 0.4 + 0.8),
+        duration: (distance / 20) * getRandomizationRatio(),
         ease: 'linear',
       }
     );

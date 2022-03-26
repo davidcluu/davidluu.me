@@ -22,10 +22,11 @@ import {
   getWindowHeight,
 } from '../../../store/slices/Window/selectors';
 
-const STATIC_CLOUD_TRANSLATE_RANGE = 50;
-const MOVING_CLOUD_TRANSLATE_RANGE = 5;
-const SCROLL_TARGET_TOP = '90%';
+const RANDOMIZATION_FACTOR = 0.4;
+const getRandomizationRatio = () =>
+  Math.random() * RANDOMIZATION_FACTOR + 2 * RANDOMIZATION_FACTOR;
 
+const SCROLL_TARGET_TOP = '90%';
 const getTop = (startingTop: string) =>
   useTweenPercentMotionValue(useLandingScrollPercentMotionValue(), [
     startingTop,
@@ -38,27 +39,31 @@ interface CloudProps {
 }
 
 interface StaticCloudProps extends CloudProps {
-  className?: string;
   top: string;
+  left: string;
   style?: Omit<MotionStyle, 'top' | 'translateX' | 'translateY'>;
 }
 
+const STATIC_CLOUD_TRANSLATE_RANGE = 50;
+const STATIC_CLOUD_PERCENT_PER_SECOND = 20;
+
 const StaticCloud = ({
   index,
-  className,
   zIndexOffset = 0,
   top,
+  left,
   style = {},
 }: StaticCloudProps) => {
   const {
     utils: { getThemeInvariantCSSValue },
   } = useTheme();
-
-  const animation = useAnimation();
-
   const width = getThemeInvariantCSSValue<string>(
     'landing.animation.desktop.cloud.width'
   );
+
+  // Infinite looping animation that makes the cloud move around randomly
+  // within a bounding box defined by STATIC_CLOUD_TRANSLATE_RANGE
+  const animation = useAnimation();
 
   const startAnimation = async (
     previousX: number = 0,
@@ -74,13 +79,15 @@ const StaticCloud = ({
     const distance = Math.sqrt(
       Math.pow(previousX - currentX, 2) + Math.pow(previousY - currentY, 2)
     );
+    const duration =
+      (distance / STATIC_CLOUD_PERCENT_PER_SECOND) * getRandomizationRatio();
 
     await animation.start(
       {
         translateX: `${currentX}%`,
         translateY: `${currentY}%`,
       },
-      { duration: distance / 20, ease: 'linear' }
+      { duration, ease: 'linear' }
     );
     startAnimation(currentX, currentY);
   };
@@ -90,16 +97,16 @@ const StaticCloud = ({
   return (
     <m.div
       data-label={`StaticCloud${index}`}
-      className={className}
       css={css`
         width: ${width};
 
-        z-index: ${baseZIndex + zIndexOffset + index};
         position: absolute;
       `}
       style={{
         ...style,
         top: getTop(top),
+        left,
+        zIndex: baseZIndex + zIndexOffset + index,
       }}
       animate={animation}
     >
@@ -112,15 +119,24 @@ interface MovingCloudProps extends CloudProps {
   onAnimationComplete?: () => void;
 }
 
+const MOVING_CLOUD_TRANSLATE_Y_RANGE = 5;
+const MOVING_CLOUD_HORIZONTAL_PIXELS_PER_SECOND = 5000;
+const MOVING_CLOUD_VERTICAL_PERCENT_PER_SECOND = 10;
+
 const MovingCloud = ({
   index,
+  zIndexOffset = 0,
   onAnimationComplete = () => {},
 }: MovingCloudProps) => {
+  // Ratio that indicates how "far" away the cloud is (smaller = closer)
   const [cloudDistanceRatio] = useState(Math.random() * 0.5 + 0.1);
+  // Top% of the cloud, in the range [0%, 40%]
   const [topPercent] = useState(`${Math.random() * 40}%`);
+  // Initial left% of the cloud, in the range [-25%, 125%]
   const [initialLeftValue] = useState(Math.random() * 150 - 25);
   const initialLeft = `${initialLeftValue}%`;
-  // If the cloud is initially on the left side of the page, animate it to the right and vice versa...
+  // If the cloud is initially on the left side of the page, animate it to the
+  // right and vice versa, in the range [-25%, 125%]
   const [targetLeftValue] = useState(
     Math.random() * 75 + (initialLeftValue <= 50 ? 50 : -25)
   );
@@ -128,7 +144,30 @@ const MovingCloud = ({
 
   const windowWidth = useAppSelector(getWindowWidth);
 
-  const leftAnimation = useAnimation();
+  // Animation that makes the cloud move from initialLeft to targetLeft
+  const sideToSideAnimation = useAnimation();
+  const startSideToSideAnimation = async () => {
+    const distancePercent = Math.abs(targetLeftValue - initialLeftValue);
+    const distance = distancePercent * windowWidth;
+    const duration =
+      (distance / MOVING_CLOUD_HORIZONTAL_PIXELS_PER_SECOND) *
+      getRandomizationRatio();
+
+    await sideToSideAnimation.start(
+      {
+        left: targetLeft,
+      },
+      {
+        duration,
+        ease: 'linear',
+      }
+    );
+    return;
+  };
+
+  // Infinite looping animation that makes the cloud move up and down in a
+  // bound defined by MOVING_CLOUD_TRANSLATE_Y_RANGE. The animation is stopped
+  // imperatively when stopJiggleAnimation is called.
   const jiggleAnimation = useAnimation();
 
   const shouldStopJiggleAnimationRef = useRef(false);
@@ -136,16 +175,19 @@ const MovingCloud = ({
     (shouldStopJiggleAnimationRef.current = true);
   const startJiggleAnimation = async (previousY: number = 0) => {
     const currentY =
-      Math.random() * 2 * MOVING_CLOUD_TRANSLATE_RANGE -
-      MOVING_CLOUD_TRANSLATE_RANGE;
+      Math.random() * 2 * MOVING_CLOUD_TRANSLATE_Y_RANGE -
+      MOVING_CLOUD_TRANSLATE_Y_RANGE;
 
     const distance = Math.abs(previousY - currentY);
+    const duration =
+      (distance / MOVING_CLOUD_VERTICAL_PERCENT_PER_SECOND) *
+      getRandomizationRatio();
 
     await jiggleAnimation.start(
       {
         translateY: `${currentY}%`,
       },
-      { duration: distance / 10, ease: 'easeInOut' }
+      { duration, ease: 'easeInOut' }
     );
     if (!shouldStopJiggleAnimationRef.current) {
       startJiggleAnimation(currentY);
@@ -153,27 +195,12 @@ const MovingCloud = ({
   };
 
   useEffect(() => {
-    leftAnimation
-      .start(
-        {
-          left: targetLeft,
-        },
-        {
-          // ((distance [0%-100%] / 100) * windowWidth) / 50 [pixels/sec] * randomization factor
-          duration:
-            (((Math.abs(targetLeftValue - initialLeftValue) / 50) *
-              windowWidth) /
-              100) *
-            (Math.random() * 0.4 + 0.8),
-          ease: 'linear',
-        }
-      )
-      .then(() => {
+    Promise.all([startSideToSideAnimation(), startJiggleAnimation()]).then(
+      () => {
         stopJiggleAnimation();
         onAnimationComplete();
-      });
-
-    startJiggleAnimation();
+      }
+    );
   }, []);
 
   const {
@@ -187,11 +214,13 @@ const MovingCloud = ({
   const valueRatio = 1 - cloudDistanceRatio;
   const width = `${widthValue * valueRatio}px`;
   const opacity = 0.8 * valueRatio;
-  const top = getTop(topPercent);
 
   return (
     <m.div
       data-label={`MovingCloud${index}`}
+      style={{
+        zIndex: baseZIndex + zIndexOffset + index,
+      }}
       variants={{
         hidden: { opacity: 0 },
         visible: { opacity },
@@ -207,10 +236,10 @@ const MovingCloud = ({
           position: absolute;
         `}
         style={{
-          top,
+          top: getTop(topPercent),
           left: initialLeft,
         }}
-        animate={leftAnimation}
+        animate={sideToSideAnimation}
       >
         <m.div animate={jiggleAnimation}>
           <SvgCloud width={width} />
@@ -220,7 +249,11 @@ const MovingCloud = ({
   );
 };
 
-const MovingCloudManager = () => {
+interface MovingCloudManagerSize {
+  zIndexOffset: number;
+}
+
+const MovingCloudManager = ({ zIndexOffset }: MovingCloudManagerSize) => {
   const indexRef = useRef(0);
 
   const {
@@ -234,8 +267,9 @@ const MovingCloudManager = () => {
   const windowPixels =
     useAppSelector(getWindowWidth) * useAppSelector(getWindowHeight);
   const cloudArea = windowPixels * 0.5;
-
-  const cloudGenerationProbability = Math.pow(cloudWidth, 2) / cloudArea / 5;
+  // The cloud SVG isn't exactly a square, but this is good enough...
+  const cloudSize = Math.pow(cloudWidth, 2);
+  const cloudGenerationProbability = cloudSize / cloudArea / 5;
 
   const [cloudRefs, setCloudRefs] = useState({});
   const removeCloudCallback = (index: number) => () =>
@@ -250,7 +284,7 @@ const MovingCloudManager = () => {
           key={newIndex}
           index={newIndex}
           onAnimationComplete={removeCloudCallback(newIndex)}
-          zIndexOffset={10}
+          zIndexOffset={zIndexOffset}
         />
       ),
     });
@@ -267,23 +301,16 @@ const MovingCloudManager = () => {
   return <AnimatePresence>{values(cloudRefs)}</AnimatePresence>;
 };
 
+const STATIC_CLOUD_CONFIG = [
+  { left: '5%', top: '10%' },
+  { left: '80%', top: '15%' },
+];
+
 export default () => (
   <Fragment>
-    {[
-      { left: '5%', top: '10%' },
-      { left: '80%', top: '15%' },
-    ].map(({ left, top }, index) => (
-      <StaticCloud
-        key={index}
-        index={index}
-        css={css`
-          left: ${left};
-
-          opacity: 0.8;
-        `}
-        top={top}
-      />
+    {STATIC_CLOUD_CONFIG.map(({ left, top }, index) => (
+      <StaticCloud key={index} index={index} left={left} top={top} />
     ))}
-    <MovingCloudManager />
+    <MovingCloudManager zIndexOffset={STATIC_CLOUD_CONFIG.length} />
   </Fragment>
 );

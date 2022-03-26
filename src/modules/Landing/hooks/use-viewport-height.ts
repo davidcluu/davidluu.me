@@ -1,3 +1,6 @@
 import { use100vh } from 'react-div-100vh';
 
-export default () => use100vh() || (window && window.innerHeight) || 0;
+import { isBrowser } from '../../../constants';
+
+export default () =>
+  use100vh() || (isBrowser ? window && window.innerHeight : 0);

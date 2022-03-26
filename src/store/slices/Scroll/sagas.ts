@@ -1,13 +1,14 @@
 import { fork, put } from 'redux-saga/effects';
 
 import { actions } from '.';
+import { isBrowser } from '../../../constants';
 import subscribeToWindowEvent from '../../utils/sagas/subscribe-to-window-event';
 
 function* updateScrollPosition() {
   yield put(
     actions.scrollPositionUpdated({
-      x: window.pageXOffset || window.scrollX,
-      y: window.pageYOffset || window.scrollY,
+      x: isBrowser ? window.pageXOffset || window.scrollX : 0,
+      y: isBrowser ? window.pageYOffset || window.scrollY : 0,
     })
   );
 }

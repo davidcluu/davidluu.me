@@ -3,11 +3,13 @@ import { fork, put } from 'redux-saga/effects';
 import { actions } from '.';
 import subscribeToWindowEvent from '../../utils/sagas/subscribe-to-window-event';
 
+import { isBrowser } from '../../../constants';
+
 function* updateWindowSize() {
   yield put(
     actions.windowSizeUpdated({
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: isBrowser ? window.innerWidth : 0,
+      height: isBrowser ? window.innerHeight : 0,
     })
   );
 }

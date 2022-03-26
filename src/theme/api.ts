@@ -1,3 +1,5 @@
+import { isBrowser } from '../constants';
+
 export enum Theme {
   Dark = 'dark',
   Light = 'light',
@@ -12,13 +14,20 @@ declare global {
 }
 
 export function getTheme(): Theme {
-  return window.__theme;
+  if (isBrowser) {
+    return window.__theme;
+  }
+  return Theme.Light;
 }
 
 export function setTheme(theme: Theme): void {
-  window.__setPreferredTheme(theme);
+  if (isBrowser) {
+    window.__setPreferredTheme(theme);
+  }
 }
 
 export function setThemeChangeCallback(callback: (theme: Theme) => void): void {
-  window.__onThemeChange = callback;
+  if (isBrowser) {
+    window.__onThemeChange = callback;
+  }
 }

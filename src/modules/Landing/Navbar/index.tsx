@@ -2,8 +2,9 @@ import { ClassNames, css } from '@emotion/react';
 
 import Navbar from '../../../components/Navbar';
 import DefaultNavigationLink from '../../../components/Navbar/NavigationLink';
-import useMotionValueListener from '../../../hooks/use-motion-value-listener';
+import ClientOnly from '../../../components/ClientOnly';
 
+import useMotionValueListener from '../../../hooks/use-motion-value-listener';
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 
 const NavigationLink = (props) => {
@@ -30,11 +31,12 @@ export default () => {
     useMotionValueListener(useLandingScrollPercentMotionValue()) < 1;
 
   return (
-    <ClassNames>
-      {({ css: classCss, theme: { utils } }) => (
-        <Navbar
-          NavigationLink={NavigationLink}
-          wrapperClassName={classCss`
+    <ClientOnly>
+      <ClassNames>
+        {({ css: classCss, theme: { utils } }) => (
+          <Navbar
+            NavigationLink={NavigationLink}
+            wrapperClassName={classCss`
             ${utils.getThemeVariantCSSWithFallback(
               'background-color',
               landingAnimationInViewport
@@ -53,8 +55,9 @@ export default () => {
               opacity: 1;
             }
           `}
-        />
-      )}
-    </ClassNames>
+          />
+        )}
+      </ClassNames>
+    </ClientOnly>
   );
 };

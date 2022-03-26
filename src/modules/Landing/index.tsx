@@ -6,14 +6,10 @@ import LandingAnimation from './Animation';
 import About from './About';
 import CopyrightFooter from './CopyrightFooter';
 
-import ClientOnly from '../../components/ClientOnly';
-
 export default () => (
   <Fragment>
     <Navbar />
-    <ClientOnly>
-      <LandingAnimation />
-    </ClientOnly>
+    <LandingAnimation />
     <About />
     <Div100vh style={{ backgroundColor: 'green' }} />
     <CopyrightFooter />

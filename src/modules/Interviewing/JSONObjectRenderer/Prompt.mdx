@@ -1,0 +1,32 @@
+# JSON Object Renderer
+
+Given an input JavaScript object, implement a component that renders the object. *For simplicity, only values that are valid JSON data types (null, boolean, number, string, array, object) need to be considered.* Objects should be rendered as follows:
+* null - `null`
+* boolean - The stringified boolean value (i.e. `true` or `false`)
+* number - The stringified number (e.g. `123`)
+* string - The string wrapped with apostrophes (e.g. `"Hello World!"`)
+* array - The rendered elements of the array, each separated by a comma and a newline. The elements should be wrapped with a square bracket.
+
+```json
+[
+  null,
+  true,
+  1
+]
+```
+
+* object - The key/rendered value pairs of the object, separated by a colon. The pairs should be wrapped with curly braces.
+
+```json
+{
+  foo: "bar",
+  one: 2
+}
+```
+
+In addition, non-flat elements (arrays and objects) should have a button that expands and collapses the element and all of its children. *Children arrays and objects can remain collapsed/uncollapsed when the parent array or object is expanded again.* When collapsed, the object should instead be rendered as follows:
+
+* array - The number of items in the array, wrapped with a square bracket (e.g. `[42]`)
+* object - The number of key/values in the object, wrapped with curly braces (e.g. `{42}`)
+
+The unicode characters ⮞ (expand; U+2B9E) and ⮟ (collapse; U+2B9F) can be used as the text for the expand/collapse buttons.

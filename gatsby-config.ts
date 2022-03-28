@@ -42,8 +42,9 @@ const config: GatsbyConfig = {
     'gatsby-plugin-netlify',
     'gatsby-plugin-react-helmet',
     { resolve: 'gatsby-plugin-robots-txt', options: { policy: [] } },
-    'gatsby-plugin-sitemap',
+    'gatsby-plugin-sass',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-typography',
       options: {

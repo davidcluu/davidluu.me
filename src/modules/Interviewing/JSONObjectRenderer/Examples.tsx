@@ -7,9 +7,6 @@ import { useMDXComponents } from '@mdx-js/react';
 
 import ObjectRenderer from './Solution';
 
-import 'react-tabs/style/react-tabs.css';
-import language from 'react-syntax-highlighter/dist/esm/languages/hljs/1c';
-
 class MDXComponentFactory {
   mdxComponents: MDXProviderComponents;
 

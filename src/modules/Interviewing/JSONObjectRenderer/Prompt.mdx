@@ -1,12 +1,14 @@
+import { Fragment } from 'react';
+
 import { HideIf, Comparision } from '../context/LevelContingentRendering';
+import Var from '../components/Var';
+
+export const EXPANDED_BUTTON_TEXT = '⬇️';
+export const COLLAPSED_BUTTON_TEXT = '➡️';
 
 # JSON Object Renderer
 
-Given an input JavaScript object, implement a component that renders the object.
-
-For simplicity, only values that are valid JSON data types (null, boolean, number, string, array, object) need to be considered. <HideIf comparision={Comparision.GreaterThan} level={1} />
-
-Objects should be rendered as follows:
+Given an input JavaScript object, implement a component that renders the object. <HideIf comparision={Comparision.GreaterThan} level={1}>For simplicity, only values that are valid JSON data types (null, boolean, number, string, array, object) need to be considered.</HideIf> Objects should be rendered as follows:
 * null - `null`
 * boolean - The stringified boolean value (i.e. `true` or `false`)
 * number - The stringified number (e.g. `123`)
@@ -35,4 +37,6 @@ In addition, non-flat elements (arrays and objects) should have a button that ex
 * array - The number of items in the array, wrapped with a square bracket (e.g. `[42]`)
 * object - The number of key/values in the object, wrapped with curly braces (e.g. `{42}`)
 
-The unicode characters ⮞ (expand; U+2B9E) and ⮟ (collapse; U+2B9F) can be used as the text for the expand/collapse buttons. <HideIf comparision={Comparision.GreaterThan} level={1} />
+***
+
+***Note:*** <Var value={EXPANDED_BUTTON_TEXT} /> (expanded) and <Var value={COLLAPSED_BUTTON_TEXT} /> (collapsed) can be used as the text for the expand/collapse buttons. <HideIf comparision={Comparision.GreaterThan} level={1} />

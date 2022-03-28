@@ -6,6 +6,9 @@ import { Fragment, useState } from 'react';
 import { css } from '@emotion/react';
 import { isNumber, isString, isArray, isNull, isBoolean } from 'lodash';
 
+// @ts-ignore
+import { EXPANDED_BUTTON_TEXT, COLLAPSED_BUTTON_TEXT } from './Prompt.mdx';
+
 interface ButtonProps {
   onClick: () => void;
 }
@@ -33,9 +36,13 @@ const Button = ({ children, onClick }: GenericButtonProps) => (
   </button>
 );
 
-const ExpandedButton = (props: ButtonProps) => <Button {...props}>⮟</Button>;
+const ExpandedButton = (props: ButtonProps) => (
+  <Button {...props}>{EXPANDED_BUTTON_TEXT}</Button>
+);
 
-const CollapsedButton = (props: ButtonProps) => <Button {...props}>⮞</Button>;
+const CollapsedButton = (props: ButtonProps) => (
+  <Button {...props}>{COLLAPSED_BUTTON_TEXT}</Button>
+);
 
 const Tab = ({ children }: { children: ReactNode }) => (
   <div

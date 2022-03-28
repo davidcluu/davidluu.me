@@ -40,6 +40,10 @@ interface InterviewingContextProviderProps {
   children: ReactNode;
 }
 
+const DEFAULT_INTERVIEWING_CONTEXT: InterviewingContextType = {
+  level: DEFAULT_LEVEL,
+};
+
 const InterviewingContextProvider = ({
   children,
 }: InterviewingContextProviderProps) => {
@@ -59,7 +63,12 @@ const InterviewingContextProvider = ({
   }
 
   return (
-    <InterviewingContext.Provider value={state as InterviewingContextType}>
+    <InterviewingContext.Provider
+      value={{
+        ...DEFAULT_INTERVIEWING_CONTEXT,
+        ...(state as InterviewingContextType),
+      }}
+    >
       {children}
     </InterviewingContext.Provider>
   );

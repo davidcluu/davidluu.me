@@ -32,7 +32,7 @@ class MDXComponentFactory {
   }
 }
 
-export default () => {
+const Examples = () => {
   const componentFactory = new MDXComponentFactory(useMDXComponents());
   const Wrapper = componentFactory.getComponent('wrapper');
   const P = componentFactory.getComponent('p');
@@ -145,3 +145,5 @@ export default () => {
     </Wrapper>
   );
 };
+
+export default Examples;

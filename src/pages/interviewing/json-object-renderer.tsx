@@ -1,11 +1,10 @@
-import { Fragment } from 'react';
-
+import InterviewingContextProvider from '../../modules/Interviewing/context/InterviewingContextProvider';
 import SEO from '../../components/SEO';
 import JSONObjectRenderer from '../../modules/Interviewing/JSONObjectRenderer';
 
 export default () => (
-  <Fragment>
+  <InterviewingContextProvider>
     <SEO title="Interviewing/JSON Object Renderer" />
     <JSONObjectRenderer />
-  </Fragment>
+  </InterviewingContextProvider>
 );

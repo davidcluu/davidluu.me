@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
-import Div100vh from 'react-div-100vh';
 
 import Navbar from './Navbar';
 import LandingAnimation from './Animation';
 import About from './About';
+import Contact from './Contact';
 import CopyrightFooter from './CopyrightFooter';
 
 export default () => (
@@ -11,7 +11,7 @@ export default () => (
     <Navbar />
     <LandingAnimation />
     <About />
-    <Div100vh style={{ backgroundColor: 'green' }} />
+    <Contact />
     <CopyrightFooter />
   </Fragment>
 );

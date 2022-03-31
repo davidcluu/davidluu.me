@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { Fragment, useState } from 'react';
 import { css } from '@emotion/react';
@@ -13,11 +13,12 @@ interface ButtonProps {
   onClick: () => void;
 }
 
-interface GenericButtonProps extends ButtonProps {
-  children: ReactNode;
-}
+interface GenericButtonProps extends ButtonProps {}
 
-const Button = ({ children, onClick }: GenericButtonProps) => (
+const Button = ({
+  children,
+  onClick,
+}: PropsWithChildren<GenericButtonProps>) => (
   <button
     css={css`
       border: none;
@@ -44,7 +45,7 @@ const CollapsedButton = (props: ButtonProps) => (
   <Button {...props}>{COLLAPSED_BUTTON_TEXT}</Button>
 );
 
-const Tab = ({ children }: { children: ReactNode }) => (
+const Tab = ({ children }: PropsWithChildren<{}>) => (
   <div
     css={css`
       margin-left: 20px;

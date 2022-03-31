@@ -66,6 +66,13 @@ export default ({
               >
                 About
               </NavigationSublink>
+              <NavigationSublink
+                href="/"
+                navigationTarget={NavigationTarget.Scroll}
+                scrollTarget={IDs.Contact}
+              >
+                Contact
+              </NavigationSublink>
             </NavigationSublinks>
             <NavigationLink
               href="/resume"

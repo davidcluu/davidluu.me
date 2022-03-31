@@ -1,12 +1,14 @@
 import type { GatsbyBrowser, GatsbySSR } from 'gatsby';
 
 import { Provider as ReduxProvider } from 'react-redux';
-import { LazyMotion, domAnimation } from 'framer-motion';
+import { store } from './src/store';
 
 import EmotionThemeProvider from './src/theme/EmotionThemeProvider';
-
 import EmotionThemeGlobalCSSProperties from './src/theme/EmotionThemeGlobalCSSProperties';
-import { store } from './src/store';
+
+import { LazyMotion, domAnimation } from 'framer-motion';
+
+import FormContextProvider from './src/context/FormContext';
 
 import './src/styles/main.scss';
 
@@ -18,7 +20,7 @@ export const wrapRootElement: WrapRootElementType = ({ element }) => (
     <EmotionThemeProvider>
       <EmotionThemeGlobalCSSProperties />
       <LazyMotion features={domAnimation} strict>
-        {element}
+        <FormContextProvider>{element}</FormContextProvider>
       </LazyMotion>
     </EmotionThemeProvider>
   </ReduxProvider>

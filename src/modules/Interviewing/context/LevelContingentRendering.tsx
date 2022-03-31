@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, PropsWithChildren } from 'react';
 import type { Level } from './InterviewingContextProvider';
 
 import { createContext, Fragment, useState } from 'react';
@@ -21,13 +21,11 @@ const LevelContingentRenderingContext =
     {} as LevelContingentRenderingContextType
   );
 
-interface LevelContingentRenderingContextProviderProps {
-  children: ReactNode;
-}
+interface LevelContingentRenderingContextProviderProps {}
 
 export const LevelContingentRenderingContextProvider = ({
   children,
-}: LevelContingentRenderingContextProviderProps) => {
+}: PropsWithChildren<LevelContingentRenderingContextProviderProps>) => {
   const { level } = useInterviewingContext();
   const [conditions, setConditions] = useState<LevelCondition[]>([]);
   const addCondition = (condition: LevelCondition) =>
@@ -66,14 +64,13 @@ export enum Comparision {
 interface HideIfProps {
   comparision: Comparision;
   level: Level;
-  children?: ReactNode;
 }
 
-export const HideIf: ComponentType<HideIfProps> = ({
+export const HideIf: ComponentType<PropsWithChildren<HideIfProps>> = ({
   comparision,
   level,
   children,
-}: HideIfProps) => {
+}: PropsWithChildren<HideIfProps>) => {
   const { level: currentLevel, addCondition } =
     useLevelContingentRenderingContext();
 

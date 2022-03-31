@@ -16,6 +16,8 @@ enum CSSPropertyKeys {
 enum ThemeKeys {
   themeBlue = 'dl-theme-blue',
   themeBlueDark = 'dl-theme-blue-dark',
+  themeRed = 'dl-theme-red',
+  themeRedDark = 'dl-theme-red-dark',
   white0 = 'dl-white-0',
   white1 = 'dl-white-1',
   white2 = 'dl-white-2',
@@ -67,6 +69,8 @@ export type ViewportVariantConfig<T> = {
 export type ThemeInvariantConfig = {
   [ThemeKeys.themeBlue]: CSSValue;
   [ThemeKeys.themeBlueDark]: CSSValue;
+  [ThemeKeys.themeRed]: CSSValue;
+  [ThemeKeys.themeRedDark]: CSSValue;
   [ThemeKeys.white0]: CSSValue;
   [ThemeKeys.white1]: CSSValue;
   [ThemeKeys.white2]: CSSValue;
@@ -117,6 +121,25 @@ export type ThemeVariantConfig = {
         [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
       };
     };
+    evenIndexedContent: {
+      [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+    };
+    oddIndexedContent: {
+      [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+    };
+    form: {
+      errorMessage: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      submitButton: {
+        [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+        hover: {
+          [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
+          [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+        };
+      };
+    };
   };
   resume: {
     background: {
@@ -140,6 +163,8 @@ const themeConfig: ThemeConfig = {
   themeInvariant: {
     [ThemeKeys.themeBlue]: '#acf8fc',
     [ThemeKeys.themeBlueDark]: '#0f1a3a',
+    [ThemeKeys.themeRed]: '#fcb0ac',
+    [ThemeKeys.themeRedDark]: '#de2831',
     [ThemeKeys.white0]: '#ffffff',
     [ThemeKeys.white1]: '#f2f2f2',
     [ThemeKeys.white2]: '#eaeaea',
@@ -200,6 +225,25 @@ const themeConfig: ThemeConfig = {
           [CSSPropertyKeys.backgroundColor]: '#eed6af',
         },
       },
+      evenIndexedContent: {
+        [CSSPropertyKeys.backgroundColor]: VariablePath('dl-white-0'),
+      },
+      oddIndexedContent: {
+        [CSSPropertyKeys.backgroundColor]: VariablePath('dl-white-1'),
+      },
+      form: {
+        errorMessage: {
+          [CSSPropertyKeys.color]: VariablePath('dl-theme-red-dark'),
+        },
+        submitButton: {
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-2'),
+          [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+          hover: {
+            [CSSPropertyKeys.backgroundColor]: VariablePath('dl-theme-blue'),
+            [CSSPropertyKeys.color]: VariablePath('dl-black-2'),
+          },
+        },
+      },
     },
     resume: {
       background: { [CSSPropertyKeys.backgroundColor]: '#ebebeb' },
@@ -235,6 +279,25 @@ const themeConfig: ThemeConfig = {
         },
         beach: {
           [CSSPropertyKeys.backgroundColor]: '#eed6af',
+        },
+      },
+      evenIndexedContent: {
+        [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1'),
+      },
+      oddIndexedContent: {
+        [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-2'),
+      },
+      form: {
+        errorMessage: {
+          [CSSPropertyKeys.color]: VariablePath('dl-theme-red'),
+        },
+        submitButton: {
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-white-2'),
+          [CSSPropertyKeys.color]: VariablePath('dl-black-0'),
+          hover: {
+            [CSSPropertyKeys.backgroundColor]: VariablePath('dl-theme-blue'),
+            [CSSPropertyKeys.color]: VariablePath('dl-black-2'),
+          },
         },
       },
     },

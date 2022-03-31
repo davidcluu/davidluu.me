@@ -6,7 +6,7 @@ import type {
   ThemeVariantConfigPath,
 } from './config';
 
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import type { StateSelector } from '../store/selectors';
 
 import { ThemeProvider } from '@emotion/react';
@@ -80,9 +80,7 @@ declare module '@emotion/react' {
   }
 }
 
-interface EmotionThemeProviderProps {
-  children: ReactNode;
-}
+interface EmotionThemeProviderProps {}
 
 const getEmotionDarkModeTheme: StateSelector<EmotionDarkModeTheme> =
   createSelector(
@@ -143,7 +141,7 @@ const getThemeInvariantCSSWithFallback = getThemeCSSWithFallbackValueFactory(
   getThemeInvariantCSSVariable
 );
 
-export default ({ children }: EmotionThemeProviderProps) => {
+export default ({ children }: PropsWithChildren<EmotionThemeProviderProps>) => {
   const darkMode = useAppSelector(getEmotionDarkModeTheme);
 
   function getThemeVariantCSSValue<R>(

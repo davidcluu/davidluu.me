@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { createContext, useContext } from 'react';
 import { navigate } from 'gatsby';
@@ -36,9 +36,7 @@ const getLevel = (urlSearchParams: URLSearchParams): Level => {
   }
 };
 
-interface InterviewingContextProviderProps {
-  children: ReactNode;
-}
+interface InterviewingContextProviderProps {}
 
 const DEFAULT_INTERVIEWING_CONTEXT: InterviewingContextType = {
   level: DEFAULT_LEVEL,
@@ -46,7 +44,7 @@ const DEFAULT_INTERVIEWING_CONTEXT: InterviewingContextType = {
 
 const InterviewingContextProvider = ({
   children,
-}: InterviewingContextProviderProps) => {
+}: PropsWithChildren<InterviewingContextProviderProps>) => {
   const { pathname, search, state } = useLocation();
   const hasSearchParams = !isEmpty(search);
 

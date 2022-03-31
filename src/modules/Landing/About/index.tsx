@@ -3,35 +3,41 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import AutomaticNewTabAnchor from '../../../components/AutomaticNewTabAnchor';
+import ContentWrapper from '../components/ContentWrapper';
+import ContentHeader from '../components/ContentHeader';
+import ContentHr from '../components/ContentHr';
 
 import IDs from '../../../components/Navbar/ids';
-import { bodyFontNormalCss } from '../../../config/typography';
 
 import AboutMDXDocument from './AboutContent.mdx';
 
 // Page wrapper
 
-const wrapper = (props: any) => (
-  <section
-    css={css`
-      margin: 0 auto;
-      padding: 5em 0;
-      width: 750px;
-
+const wrapper = ({ children, ...props }: any) => (
+  <ContentWrapper
+    css={({ utils }) => css`
+      ${utils.getThemeVariantCSSWithFallback(
+        'background-color',
+        'landing.evenIndexedContent.background-color'
+      )}
       text-align: left;
     `}
     {...props}
     id={IDs.About}
-  />
+  >
+    <div
+      css={css`
+        width: 750px;
+      `}
+    >
+      {children}
+    </div>
+  </ContentWrapper>
 );
+
 // Text elements
 
-const h2 = styled.h2`
-  margin-bottom: 0.5em;
-
-  font-size: 1.5em;
-  ${bodyFontNormalCss}
-`;
+const h2 = ContentHeader;
 
 const p = styled.p`
   margin-bottom: 0.5em;
@@ -80,28 +86,7 @@ const a = styled(AutomaticNewTabAnchor)`
   }
 `;
 
-const hr = styled.hr`
-  margin: 0;
-  height: auto;
-  width: 100%;
-
-  display: block;
-
-  background-color: transparent;
-
-  &:after {
-    content: '•••••';
-
-    margin: 1em 0;
-
-    display: block;
-
-    text-align: center;
-    letter-spacing: 0.5em;
-    font-size: 1.25em;
-    color: #ccc;
-  }
-`;
+const hr = ContentHr;
 
 const mdxComponents = {
   p,

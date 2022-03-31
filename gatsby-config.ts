@@ -41,7 +41,6 @@ const config: GatsbyConfig = {
       },
     },
     'gatsby-plugin-mdx',
-    'gatsby-plugin-netlify',
     'gatsby-plugin-react-helmet',
     { resolve: 'gatsby-plugin-robots-txt', options: { policy: [] } },
     'gatsby-plugin-sass',

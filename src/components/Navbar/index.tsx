@@ -2,7 +2,6 @@ import type { NavigationLinkProps } from './NavigationLink';
 
 import { ClassNames } from '@emotion/react';
 import styled from '@emotion/styled';
-import { DarkModeToggle } from 'react-dark-mode-toggle-2';
 
 import DefaultNavigationLink, { NavigationTarget } from './NavigationLink';
 import DefaultNavigationSublinks from './NavigationSublinks';
@@ -23,57 +22,63 @@ interface NavbarProps {
   sublinkActiveClassName?: string;
 }
 
-const ThemeToggle = () => {
+const DarkModeToggle = ({ toggleWidth, toggleClassName }) => {
+  const DarkModeToggleComponent =
+    require('react-dark-mode-toggle-2').DarkModeToggle;
+
   const isDarkMode = useAppSelector(getDarkMode);
   const dispatch = useAppDispatch();
 
   return (
-    <ClassNames>
-      {({ css, cx, theme: { utils } }) => {
-        const navbarHeight = utils.getThemeInvariantCSSValue(
-          'navbar.desktop.height',
-          utils.cssValueTransformers.pixelToNumber
-        );
-
-        const toggleHeight = navbarHeight * 0.6;
-        const toggleWidth = toggleHeight * 2;
-
-        const toggleClassName = css`
-          margin: 0 0.5em;
-
-          display: inline;
-        `;
-
-        const placeholderClassName = cx(
-          toggleClassName,
-          css`
-            width: ${toggleWidth}px;
-            height: ${toggleHeight}px;
-          `
-        );
-
-        return (
-          <ClientOnly
-            PlaceholderComponent={() => (
-              <div className={placeholderClassName} />
-            )}
-          >
-            <DarkModeToggle
-              isDarkMode={isDarkMode}
-              onChange={() =>
-                dispatch(
-                  actions.setTheme(isDarkMode ? Theme.Light : Theme.Dark)
-                )
-              }
-              size={`${toggleWidth}px`}
-              className={toggleClassName}
-            />
-          </ClientOnly>
-        );
-      }}
-    </ClassNames>
+    <DarkModeToggleComponent
+      isDarkMode={isDarkMode}
+      onChange={() =>
+        dispatch(actions.setTheme(isDarkMode ? Theme.Light : Theme.Dark))
+      }
+      size={`${toggleWidth}px`}
+      className={toggleClassName}
+    />
   );
 };
+
+const ThemeToggle = () => (
+  <ClassNames>
+    {({ css, cx, theme: { utils } }) => {
+      const navbarHeight = utils.getThemeInvariantCSSValue(
+        'navbar.desktop.height',
+        utils.cssValueTransformers.pixelToNumber
+      );
+
+      const toggleHeight = navbarHeight * 0.6;
+      const toggleWidth = toggleHeight * 2;
+
+      const toggleClassName = css`
+        margin: 0 0.5em;
+
+        display: inline;
+      `;
+
+      const placeholderClassName = cx(
+        toggleClassName,
+        css`
+          width: ${toggleWidth}px;
+          height: ${toggleHeight}px;
+        `
+      );
+
+      return (
+        <ClientOnly
+          PlaceholderComponent={() => <div className={placeholderClassName} />}
+        >
+          <DarkModeToggle
+            toggleWidth={toggleWidth}
+            toggleClassName={toggleClassName}
+          />
+        </ClientOnly>
+      );
+    }}
+  </ClassNames>
+);
 
 export default ({
   wrapperClassName,

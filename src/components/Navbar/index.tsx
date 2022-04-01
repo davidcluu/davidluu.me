@@ -2,11 +2,15 @@ import type { NavigationLinkProps } from './NavigationLink';
 
 import { ClassNames } from '@emotion/react';
 import styled from '@emotion/styled';
+import { DarkModeToggle } from 'react-dark-mode-toggle-2';
 
 import DefaultNavigationLink, { NavigationTarget } from './NavigationLink';
 import DefaultNavigationSublinks from './NavigationSublinks';
 
 import IDs from './ids';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Theme, actions } from '../../store/slices/Theme';
+import { getDarkMode } from '../../store/slices/Theme/selectors';
 
 interface NavbarProps {
   wrapperClassName?: string;
@@ -27,6 +31,9 @@ export default ({
   sublinkClassName,
   sublinkActiveClassName,
 }: NavbarProps) => {
+  const isDarkMode = useAppSelector(getDarkMode);
+  const dispatch = useAppDispatch();
+
   const NavigationSublink = styled(NavigationLink)`
     font-size: 1em;
   `;
@@ -59,45 +66,73 @@ export default ({
           <div
             className={css`
               display: flex;
-              align-items: flex-end;
+              align-items: center;
             `}
           >
-            <NavigationLink
-              href="/"
-              className={linkClassName}
-              activeClassName={linkActiveClassName}
-              navigationTarget={NavigationTarget.Page}
+            <div
+              className={css`
+                display: flex;
+                align-items: flex-end;
+              `}
             >
-              Home
-            </NavigationLink>
-            <NavigationSublinks>
-              <NavigationSublink
+              <NavigationLink
                 href="/"
-                className={cx(linkClassName, sublinkClassName)}
-                activeClassName={sublinkActiveClassName}
-                navigationTarget={NavigationTarget.Scroll}
-                scrollTarget={IDs.About}
+                className={linkClassName}
+                activeClassName={linkActiveClassName}
+                navigationTarget={NavigationTarget.Page}
               >
-                About
-              </NavigationSublink>
-              <NavigationSublink
-                href="/"
-                className={cx(linkClassName, sublinkClassName)}
-                activeClassName={sublinkActiveClassName}
-                navigationTarget={NavigationTarget.Scroll}
-                scrollTarget={IDs.Contact}
+                Home
+              </NavigationLink>
+              <NavigationSublinks>
+                <NavigationSublink
+                  href="/"
+                  className={cx(linkClassName, sublinkClassName)}
+                  activeClassName={sublinkActiveClassName}
+                  navigationTarget={NavigationTarget.Scroll}
+                  scrollTarget={IDs.About}
+                >
+                  About
+                </NavigationSublink>
+                <NavigationSublink
+                  href="/"
+                  className={cx(linkClassName, sublinkClassName)}
+                  activeClassName={sublinkActiveClassName}
+                  navigationTarget={NavigationTarget.Scroll}
+                  scrollTarget={IDs.Contact}
+                >
+                  Contact
+                </NavigationSublink>
+              </NavigationSublinks>
+              <NavigationLink
+                href="/resume"
+                className={linkClassName}
+                activeClassName={linkActiveClassName}
+                navigationTarget={NavigationTarget.Page}
               >
-                Contact
-              </NavigationSublink>
-            </NavigationSublinks>
-            <NavigationLink
-              href="/resume"
-              className={linkClassName}
-              activeClassName={linkActiveClassName}
-              navigationTarget={NavigationTarget.Page}
-            >
-              Resume
-            </NavigationLink>
+                Resume
+              </NavigationLink>
+            </div>
+            <DarkModeToggle
+              isDarkMode={isDarkMode}
+              onChange={() =>
+                dispatch(
+                  actions.setTheme(isDarkMode ? Theme.Light : Theme.Dark)
+                )
+              }
+              size={`${
+                2 *
+                0.6 *
+                utils.getThemeInvariantCSSValue(
+                  'navbar.desktop.height',
+                  utils.cssValueTransformers.pixelToNumber
+                )
+              }px`}
+              className={css`
+                margin: 0 0.5em;
+
+                display: inline;
+              `}
+            />
           </div>
         </nav>
       )}

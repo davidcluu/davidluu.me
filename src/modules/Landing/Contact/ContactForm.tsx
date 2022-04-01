@@ -129,7 +129,7 @@ const genericTextInputStyles = ({ utils }: Theme) => css`
   padding: 1em;
   width: 100%;
 
-  transition: all 0.5s;
+  transition: border 0.5s;
 
   ${utils.getThemeVariantCSSWithFallback(
     'background-color',
@@ -224,7 +224,7 @@ const SubmitButton = ({ disabled = false }: SubmitButtonProps) => (
             'landing.form.submitButton.color'
           )}
 
-          transition: all 0.5s;
+          transition: background-color 0.5s, color 0.5s;
 
           &:hover {
             ${theme.utils.getThemeVariantCSSWithFallback(

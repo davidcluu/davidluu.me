@@ -14,6 +14,8 @@ import { getRandomizationRatio } from './utils';
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 import useTweenPercentMotionValue from '../../../hooks/use-tween-percent-motion-value';
 import useMotionValueAsPercent from '../../../hooks/use-motion-value-as-percent';
+import { useAppSelector } from '../../../store/hooks';
+import { getWindowHeight } from '../../../store/slices/Window/selectors';
 
 const svgStrings = map(
   compose(encodeURIComponent, renderToString, (color: string) => (
@@ -37,6 +39,10 @@ interface WaveProps {
 
 export const Wave = ({ svgString, index }: WaveProps) => {
   const landingScrollPercent = useLandingScrollPercentMotionValue();
+  const windowHeight = useAppSelector(getWindowHeight);
+
+  const translatePixels = Math.floor(0.02 * windowHeight);
+  const height = Math.floor(0.15 * windowHeight);
 
   const animation = useAnimation();
 
@@ -44,8 +50,8 @@ export const Wave = ({ svgString, index }: WaveProps) => {
     previousX: number = 0,
     previousY: number = 0
   ) => {
-    const translateX = Math.random() * 40 - 20;
-    const translateY = Math.random() * 40 - 20;
+    const translateX = Math.random() * 2 * translatePixels - translatePixels;
+    const translateY = Math.random() * 2 * translatePixels - translatePixels;
 
     const distance = Math.sqrt(
       Math.pow(previousX - translateX, 2) + Math.pow(previousY - translateY, 2)
@@ -69,7 +75,7 @@ export const Wave = ({ svgString, index }: WaveProps) => {
       data-label={`Wave${index}`}
       css={css`
         width: 200%;
-        height: 140px;
+        height: ${height}px;
 
         z-index: ${baseZIndex + index};
         position: absolute;

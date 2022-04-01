@@ -20,6 +20,7 @@ const wrapper = ({ children, ...props }: any) => (
         'background-color',
         'landing.evenIndexedContent.background-color'
       )}
+      ${utils.getThemeVariantCSSWithFallback('color', 'landing.font-color')}
       text-align: left;
     `}
     {...props}

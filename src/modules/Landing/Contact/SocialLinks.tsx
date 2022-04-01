@@ -1,42 +1,50 @@
 import type { ComponentType, HTMLProps } from 'react';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 
 import AutomaticNewTabAnchor from '../../../components/AutomaticNewTabAnchor';
 
 import LinkedinIcon from './svg/linkedin-icon';
 import GithubIcon from './svg/github-icon';
+import { useAppSelector } from '../../../store/hooks';
+import { getDarkMode } from '../../../store/slices/Theme/selectors';
 
 interface SvgLinkProps extends HTMLProps<HTMLAnchorElement> {
   SvgComponent: ComponentType<any>;
 }
 
-const SvgLink = ({ SvgComponent, href, ...props }: SvgLinkProps) => (
-  <li
-    css={css`
-      margin: 0 0.5em;
-      padding: 0;
+const SvgLink = ({ SvgComponent, href, ...props }: SvgLinkProps) => {
+  const darkMode = useAppSelector(getDarkMode);
+  const bodyFont =
+    useTheme().utils.getThemeVariantCSSValue('landing.font-color');
 
-      line-height: 0;
-    `}
-  >
-    <AutomaticNewTabAnchor
-      href={href}
+  return (
+    <li
       css={css`
-        display: inline-block;
+        margin: 0 0.5em;
+        padding: 0;
 
-        opacity: 0.9;
-
-        &:hover {
-          opacity: 1;
-        }
+        line-height: 0;
       `}
-      {...props}
     >
-      <SvgComponent height={'2em'} />
-    </AutomaticNewTabAnchor>
-  </li>
-);
+      <AutomaticNewTabAnchor
+        href={href}
+        css={css`
+          display: inline-block;
+
+          opacity: 0.9;
+
+          &:hover {
+            opacity: 1;
+          }
+        `}
+        {...props}
+      >
+        <SvgComponent height="2em" color={darkMode && bodyFont} />
+      </AutomaticNewTabAnchor>
+    </li>
+  );
+};
 
 const socialLinkProps = [
   {

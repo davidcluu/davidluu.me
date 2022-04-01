@@ -136,6 +136,7 @@ export type ThemeInvariantConfigPath = Leaves<ThemeInvariantConfig>;
 
 export type ThemeVariantConfig = {
   landing: {
+    [CSSPropertyKeys.fontColor]: ThemeVariantConfigValue;
     navbar: {
       animationInViewport: {
         [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
@@ -264,6 +265,7 @@ const themeConfig: ThemeConfig = {
   },
   lightMode: {
     landing: {
+      [CSSPropertyKeys.fontColor]: VariablePath('dl-black-0'),
       navbar: {
         animationInViewport: {
           [CSSPropertyKeys.backgroundColor]: VariablePath('dl-white-0'),
@@ -320,13 +322,14 @@ const themeConfig: ThemeConfig = {
   },
   darkMode: {
     landing: {
+      [CSSPropertyKeys.fontColor]: VariablePath('dl-white-0'),
       navbar: {
         animationInViewport: {
           [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1'),
           [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
         },
         animationNotInViewport: {
-          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1'),
+          [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-0'),
           [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
         },
       },

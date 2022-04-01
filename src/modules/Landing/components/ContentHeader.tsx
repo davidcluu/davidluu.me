@@ -5,6 +5,8 @@ const ContentHeader = styled.h2`
 
   font-size: 1.5em;
   ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('normal')}
+  ${({ theme: { utils } }) =>
+    utils.getThemeVariantCSSWithFallback('color', 'landing.font-color')}
 `;
 
 export default ContentHeader;

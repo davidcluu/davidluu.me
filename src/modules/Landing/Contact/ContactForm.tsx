@@ -99,6 +99,11 @@ function GenericTextInput<P>({
         </div>
         <div
           css={({ utils }) => css`
+            ${utils.getThemeVariantCSSWithFallback(
+              'color',
+              'landing.font-color'
+            )}
+
             ${touched &&
             maxCharacters &&
             (length === 0 || length > maxCharacters) &&
@@ -130,6 +135,7 @@ const genericTextInputStyles = ({ utils }: Theme) => css`
     'background-color',
     'landing.evenIndexedContent.background-color'
   )}
+  ${utils.getThemeVariantCSSWithFallback('color', 'landing.font-color')}
 
   &:hover {
     border: 1px solid gray;

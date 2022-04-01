@@ -90,7 +90,9 @@ const StaticCloud = ({
     startAnimation(currentX, currentY);
   };
 
-  useEffect(startAnimation as () => void, []);
+  useEffect(() => {
+    startAnimation();
+  }, []);
 
   return (
     <m.div

@@ -41,7 +41,7 @@ export const Wave = ({ svgString, index }: WaveProps) => {
   const landingScrollPercent = useLandingScrollPercentMotionValue();
   const windowHeight = useAppSelector(getWindowHeight);
 
-  const translatePixels = Math.floor(0.02 * windowHeight);
+  const translatePixels = 0.02 * windowHeight;
   const height = Math.floor(0.15 * windowHeight);
 
   const animation = useAnimation();
@@ -67,7 +67,9 @@ export const Wave = ({ svgString, index }: WaveProps) => {
     startAnimation(translateX, translateY);
   };
 
-  useEffect(startAnimation as () => void, []);
+  useEffect(() => {
+    startAnimation();
+  }, []);
 
   return (
     <m.div

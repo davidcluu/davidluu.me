@@ -5,10 +5,6 @@ import { max } from 'lodash/fp';
 import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-percent-motion-value';
 
 import { banner as zIndex } from './z-indices';
-import {
-  headerFontBoldCss,
-  headerFontNormalCss,
-} from '../../../config/typography';
 
 export default () => {
   const opacity = useTransform(
@@ -31,20 +27,20 @@ export default () => {
       `}
     >
       <h1
-        css={css`
+        css={({ utils }) => css`
           margin: 0;
 
-          ${headerFontBoldCss}
+          ${utils.getHeaderFontCSSWithFallback('bold')}
           font-size: 2.5em;
         `}
       >
         David Luu
       </h1>
       <h2
-        css={css`
+        css={({ utils }) => css`
           margin: 0;
 
-          ${headerFontNormalCss}
+          ${utils.getHeaderFontCSSWithFallback('normal')}
           font-size: 1.5em;
         `}
       >

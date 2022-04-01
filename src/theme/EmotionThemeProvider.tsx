@@ -1,4 +1,4 @@
-import type { Theme } from '@emotion/react';
+import type { SerializedStyles, Theme } from '@emotion/react';
 
 import type {
   ThemeConfig,
@@ -9,7 +9,7 @@ import type {
 import type { PropsWithChildren } from 'react';
 import type { StateSelector } from '../store/selectors';
 
-import { ThemeProvider } from '@emotion/react';
+import { css, ThemeProvider } from '@emotion/react';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { camelCase, identity } from 'lodash/fp';
@@ -67,8 +67,12 @@ interface EmotionThemeUtils {
     prefix?: string,
     suffix?: string
   ) => { [property: string]: string[] };
+  getHeaderFontCSSWithFallback(variant: 'normal' | 'bold'): SerializedStyles;
+  getBodyFontCSSWithFallback(
+    variant: 'light' | 'normal' | 'bold'
+  ): SerializedStyles;
   cssValueTransformers: {
-    pixelToNumber: (cssValue: string) => number;
+    pixelToNumber: CSSValueTransformer<number>;
   };
 }
 
@@ -141,6 +145,24 @@ const getThemeInvariantCSSWithFallback = getThemeCSSWithFallbackValueFactory(
   getThemeInvariantCSSVariable
 );
 
+const getHeaderFontCSSWithFallback = (variant: 'normal' | 'bold') => css`
+  ${getThemeInvariantCSSWithFallback('font-family', 'font.header.font-family')}
+  ${getThemeInvariantCSSWithFallback(
+    'font-weight',
+    `font.body.${variant}.font-weight`
+  )}
+`;
+
+const getBodyFontCSSWithFallback = (
+  variant: 'light' | 'normal' | 'bold'
+) => css`
+  ${getThemeInvariantCSSWithFallback('font-family', 'font.body.font-family')}
+  ${getThemeInvariantCSSWithFallback(
+    'font-weight',
+    `font.body.${variant}.font-weight`
+  )}
+`;
+
 export default ({ children }: PropsWithChildren<EmotionThemeProviderProps>) => {
   const darkMode = useAppSelector(getEmotionDarkModeTheme);
 
@@ -174,6 +196,8 @@ export default ({ children }: PropsWithChildren<EmotionThemeProviderProps>) => {
         getThemeVariantCSSValue,
         getThemeVariantCSSVariable
       ),
+      getHeaderFontCSSWithFallback,
+      getBodyFontCSSWithFallback,
       cssValueTransformers: {
         pixelToNumber: parseInt,
       },

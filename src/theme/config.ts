@@ -1,5 +1,16 @@
 import type { Leaves } from '../utils/object-paths/types';
 
+import {
+  BODY_FONT_CSS,
+  BODY_FONT_WEIGHT_LIGHT,
+  BODY_FONT_WEIGHT_NORMAL,
+  BODY_FONT_WEIGHT_BOLD,
+  HEADER_FONT_CSS,
+  HEADER_FONT_WEIGHT_NORMAL,
+  HEADER_FONT_WEIGHT_BOLD,
+  BASE_LINE_HEIGHT_CSS,
+} from '../config/typography';
+
 enum ViewportSizeKeys {
   desktop = 'desktop',
   mobile = 'mobile',
@@ -10,7 +21,10 @@ enum CSSPropertyKeys {
   height = 'height',
   backgroundColor = 'background-color',
   color = 'color',
+  fontFamily = 'font-family',
+  fontWeight = 'font-weight',
   fontColor = 'font-color',
+  lineHeight = 'line-height',
 }
 
 enum ThemeKeys {
@@ -77,6 +91,30 @@ export type ThemeInvariantConfig = {
   [ThemeKeys.black0]: CSSValue;
   [ThemeKeys.black1]: CSSValue;
   [ThemeKeys.black2]: CSSValue;
+  font: {
+    header: {
+      [CSSPropertyKeys.fontFamily]: CSSValue;
+      normal: {
+        [CSSPropertyKeys.fontWeight]: CSSValue;
+      };
+      bold: {
+        [CSSPropertyKeys.fontWeight]: CSSValue;
+      };
+    };
+    body: {
+      [CSSPropertyKeys.fontFamily]: CSSValue;
+      light: {
+        [CSSPropertyKeys.fontWeight]: CSSValue;
+      };
+      normal: {
+        [CSSPropertyKeys.fontWeight]: CSSValue;
+      };
+      bold: {
+        [CSSPropertyKeys.fontWeight]: CSSValue;
+      };
+    };
+    [CSSPropertyKeys.lineHeight]: CSSValue;
+  };
   navbar: ViewportVariantConfig<{
     [CSSPropertyKeys.height]: CSSValue;
   }>;
@@ -171,6 +209,30 @@ const themeConfig: ThemeConfig = {
     [ThemeKeys.black0]: '#000000',
     [ThemeKeys.black1]: '#181818',
     [ThemeKeys.black2]: '#212121',
+    font: {
+      header: {
+        [CSSPropertyKeys.fontFamily]: HEADER_FONT_CSS,
+        normal: {
+          [CSSPropertyKeys.fontWeight]: HEADER_FONT_WEIGHT_NORMAL,
+        },
+        bold: {
+          [CSSPropertyKeys.fontWeight]: HEADER_FONT_WEIGHT_BOLD,
+        },
+      },
+      body: {
+        [CSSPropertyKeys.fontFamily]: BODY_FONT_CSS,
+        light: {
+          [CSSPropertyKeys.fontWeight]: BODY_FONT_WEIGHT_LIGHT,
+        },
+        normal: {
+          [CSSPropertyKeys.fontWeight]: BODY_FONT_WEIGHT_NORMAL,
+        },
+        bold: {
+          [CSSPropertyKeys.fontWeight]: BODY_FONT_WEIGHT_BOLD,
+        },
+      },
+      [CSSPropertyKeys.lineHeight]: BASE_LINE_HEIGHT_CSS,
+    },
     navbar: {
       desktop: { [CSSPropertyKeys.height]: '60px' },
       mobile: { [CSSPropertyKeys.height]: '60px' },

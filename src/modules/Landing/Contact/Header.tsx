@@ -2,16 +2,14 @@ import { css } from '@emotion/react';
 
 import ContentHeader from '../components/ContentHeader';
 
-import { headerFontBoldCss } from '../../../config/typography';
-
 const Header = () => (
   <ContentHeader
-    css={css`
+    css={({ utils }) => css`
       margin-bottom: 1em;
 
       text-align: center;
       font-size: 2em;
-      ${headerFontBoldCss}
+      ${utils.getHeaderFontCSSWithFallback('bold')}
     `}
   >
     Get in Touch

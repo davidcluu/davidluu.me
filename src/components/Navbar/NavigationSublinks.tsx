@@ -1,11 +1,4 @@
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
-
-const SublinkBracket = styled.span`
-  user-select: none;
-
-  line-height: 1em;
-`;
 
 export default ({ children }) => (
   <div
@@ -19,9 +12,7 @@ export default ({ children }) => (
         align-items: center;
       `}
     >
-      <SublinkBracket>[</SublinkBracket>
       {children}
-      <SublinkBracket>]</SublinkBracket>
     </div>
   </div>
 );

@@ -7,18 +7,25 @@ import DefaultNavigationLink, { NavigationTarget } from './NavigationLink';
 import DefaultNavigationSublinks from './NavigationSublinks';
 
 import IDs from './ids';
-import { headerFontNormalCss } from '../../config/typography';
 
 interface NavbarProps {
   wrapperClassName?: string;
   NavigationLink?: React.ComponentType<NavigationLinkProps>;
+  linkClassName?: string;
+  linkActiveClassName?: string;
   NavigationSublinks?: React.ComponentType<any>;
+  sublinkClassName?: string;
+  sublinkActiveClassName?: string;
 }
 
 export default ({
   wrapperClassName,
   NavigationLink = (props) => <DefaultNavigationLink {...props} />,
+  linkClassName,
+  linkActiveClassName,
   NavigationSublinks = (props) => <DefaultNavigationSublinks {...props} />,
+  sublinkClassName,
+  sublinkActiveClassName,
 }: NavbarProps) => {
   const NavigationSublink = styled(NavigationLink)`
     font-size: 1em;
@@ -43,7 +50,7 @@ export default ({
               justify-content: space-between;
               align-items: center;
 
-              ${headerFontNormalCss}
+              ${utils.getHeaderFontCSSWithFallback('normal')}
             `,
             wrapperClassName
           )}
@@ -52,15 +59,22 @@ export default ({
           <div
             className={css`
               display: flex;
-              align-items: center;
+              align-items: flex-end;
             `}
           >
-            <NavigationLink href="/" navigationTarget={NavigationTarget.Page}>
+            <NavigationLink
+              href="/"
+              className={linkClassName}
+              activeClassName={linkActiveClassName}
+              navigationTarget={NavigationTarget.Page}
+            >
               Home
             </NavigationLink>
             <NavigationSublinks>
               <NavigationSublink
                 href="/"
+                className={cx(linkClassName, sublinkClassName)}
+                activeClassName={sublinkActiveClassName}
                 navigationTarget={NavigationTarget.Scroll}
                 scrollTarget={IDs.About}
               >
@@ -68,6 +82,8 @@ export default ({
               </NavigationSublink>
               <NavigationSublink
                 href="/"
+                className={cx(linkClassName, sublinkClassName)}
+                activeClassName={sublinkActiveClassName}
                 navigationTarget={NavigationTarget.Scroll}
                 scrollTarget={IDs.Contact}
               >
@@ -76,6 +92,8 @@ export default ({
             </NavigationSublinks>
             <NavigationLink
               href="/resume"
+              className={linkClassName}
+              activeClassName={linkActiveClassName}
               navigationTarget={NavigationTarget.Page}
             >
               Resume

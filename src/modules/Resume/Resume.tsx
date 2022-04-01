@@ -8,20 +8,15 @@ import { MDXProvider } from '@mdx-js/react';
 import ResumeAnchor from './ResumeAnchor';
 
 import { resumePaddingSize, resumeWidthCss } from './styles';
-import {
-  baseFontSizeCss,
-  baseLineHeightCss,
-  bodyFontNormalCss,
-  bodyFontBoldCss,
-} from '../../config/typography';
 
 import ResumeMDXDocument from './ResumeContent.mdx';
 
-const bodyFontColorCss = (props: { theme: Theme }) => css`
+const fontColorCss = (props: { theme: Theme }) => css`
   ${props.theme.utils.getThemeVariantCSSWithFallback(
     'color',
     'resume.body.font-color'
   )}
+
   @media print {
     ${props.theme.utils.getThemeInvariantCSSWithFallback('color', 'dl-black-0')}
   }
@@ -39,8 +34,8 @@ const h1 = styled.h1`
   margin: 0;
 
   text-align: center;
-  ${bodyFontBoldCss}
-  ${bodyFontColorCss}
+  ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('bold')}
+  ${fontColorCss}
 `;
 
 // Contact information
@@ -49,9 +44,9 @@ const h6 = styled.h6`
   margin: 0;
 
   text-align: center;
-  ${baseFontSizeCss}
-  ${bodyFontNormalCss}
-  ${bodyFontColorCss}
+  ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('normal')}
+  font-size: 1rem;
+  ${fontColorCss}
 `;
 
 // Section header
@@ -67,8 +62,8 @@ const h2 = styled.h2`
       h2BorderBottomPrefix
     )}
 
-  ${bodyFontBoldCss}
-  ${bodyFontColorCss}
+  ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('bold')}
+  ${fontColorCss}
 
   @media print {
     ${(props) =>
@@ -91,18 +86,18 @@ const table = styled.table`
 `;
 
 const thead = styled.thead`
-  ${bodyFontColorCss}
+  ${fontColorCss}
 `;
 
 const tbody = styled.tbody`
-  ${bodyFontColorCss}
+  ${fontColorCss}
 `;
 
 const tr = styled.tr`
   display: flex;
   justify-content: space-between;
 
-  ${bodyFontColorCss}
+  ${fontColorCss}
 `;
 
 const tableItem = styled.td`
@@ -110,8 +105,9 @@ const tableItem = styled.td`
   border: 0;
   padding: 0;
 
-  ${baseLineHeightCss};
-  ${bodyFontColorCss}
+  ${({ theme: { utils } }) =>
+    utils.getThemeInvariantCSSWithFallback('line-height', 'font.line-height')}
+  ${fontColorCss}
 `;
 
 const th = tableItem;
@@ -128,7 +124,7 @@ const ul = styled.ul`
 const li = styled.li`
   margin: 0;
 
-  ${bodyFontColorCss}
+  ${fontColorCss}
 `;
 
 // Section item divider
@@ -147,7 +143,7 @@ const hr = styled.hr`
 const p = styled.p`
   margin: 0;
 
-  ${bodyFontColorCss}
+  ${fontColorCss}
 `;
 
 const a = ResumeAnchor;

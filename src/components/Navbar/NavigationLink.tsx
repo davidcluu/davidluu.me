@@ -1,34 +1,30 @@
 import type { GatsbyLinkProps } from 'gatsby';
+import type { Theme } from '@emotion/react';
 import type IDs from './ids';
 
 import { Link } from 'gatsby';
 import { useLocation } from '@reach/router';
 import { animate } from 'framer-motion';
-import { css, useTheme } from '@emotion/react';
+import { css, ClassNames, useTheme } from '@emotion/react';
 
-import {
-  headerFontNormalCss,
-  headerFontBoldCss,
-} from '../../config/typography';
-
-const linkCss = css`
+const linkCss = ({ utils }: Theme) => css`
   margin: 0 0.25em;
 
-  ${headerFontNormalCss}
+  ${utils.getHeaderFontCSSWithFallback('normal')}
   font-size: 1.25em;
   text-decoration: none;
 
   &:active,
   &:hover,
   &:visited {
-    ${headerFontBoldCss}
+    ${utils.getHeaderFontCSSWithFallback('bold')}
   }
 
   // https://css-tricks.com/bold-on-hover-without-the-layout-shift/
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   &::after {
     height: 0;
 
@@ -39,7 +35,7 @@ const linkCss = css`
     user-select: none;
     pointer-events: none;
 
-    ${headerFontBoldCss}
+    ${utils.getHeaderFontCSSWithFallback('bold')}
 
     @media speech {
       display: none;
@@ -76,6 +72,8 @@ export type NavigationLinkProps = CustomGatsbyLinkProps &
 export default ({
   children,
   href,
+  className,
+  activeClassName,
   navigationTarget,
   scrollTarget,
   ...props
@@ -87,13 +85,18 @@ export default ({
 
   if (navigationTarget === NavigationTarget.Page) {
     return (
-      <Link
-        css={linkCss}
-        {...props}
-        to={href}
-        title={children}
-        children={children}
-      />
+      <ClassNames>
+        {({ css: classCss, cx, theme }) => (
+          <Link
+            {...props}
+            className={cx(classCss(linkCss(theme)), className)}
+            activeClassName={cx(classCss``, activeClassName)}
+            to={href}
+            title={children}
+            children={children}
+          />
+        )}
+      </ClassNames>
     );
   } else if (navigationTarget === NavigationTarget.Scroll) {
     if (pathname === href) {
@@ -106,6 +109,7 @@ export default ({
         <a
           css={linkCss}
           {...props}
+          className={className}
           href={`${href}#${scrollTarget}`}
           onClick={(e) => {
             e.preventDefault();
@@ -133,13 +137,17 @@ export default ({
     } else {
       // TODO Render Link with scroll context
       return (
-        <Link
-          css={linkCss}
-          {...props}
-          to={href}
-          title={children}
-          children={children}
-        />
+        <ClassNames>
+          {({ css: classCss, cx, theme }) => (
+            <Link
+              {...props}
+              className={cx(classCss(linkCss(theme)), className)}
+              to={href}
+              title={children}
+              children={children}
+            />
+          )}
+        </ClassNames>
       );
     }
   }

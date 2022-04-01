@@ -4,6 +4,7 @@ import type {
   InputHTMLAttributes,
   TextareaHTMLAttributes,
 } from 'react';
+import type { Theme } from '@emotion/react';
 
 import { useRef } from 'react';
 import { Formik, useField } from 'formik';
@@ -12,8 +13,6 @@ import { useForm, ValidationError } from '@formspree/react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import ReactTextareaAutosize from 'react-textarea-autosize';
-
-import { bodyFontBoldCss } from '../../../config/typography';
 
 import formConfig from '../../../../formspree.json';
 
@@ -118,7 +117,7 @@ function GenericTextInput<P>({
   );
 }
 
-const genericTextInputStyles = ({ utils }) => css`
+const genericTextInputStyles = ({ utils }: Theme) => css`
   margin: 1em 0 0.5em;
   border: 1px solid transparent;
   border-radius: 0.25em;
@@ -183,7 +182,7 @@ interface SubmitButtonProps {
   disabled?: boolean;
 }
 
-const buttonPositioningCss = css`
+const buttonPositioningCss = ({ utils }) => css`
   margin: 1em 0 0;
   border: 0;
   border-radius: 0.25em;
@@ -191,7 +190,7 @@ const buttonPositioningCss = css`
 
   text-align: center;
   font-size: 1.1em;
-  ${bodyFontBoldCss}
+  ${utils.getBodyFontCSSWithFallback('bold')}
 `;
 
 const SubmitButton = ({ disabled = false }: SubmitButtonProps) => (
@@ -203,18 +202,18 @@ const SubmitButton = ({ disabled = false }: SubmitButtonProps) => (
     `}
   >
     <button
-      css={({ utils }) =>
+      css={(theme) =>
         css`
-          ${buttonPositioningCss}
+          ${buttonPositioningCss(theme)}
 
           cursor: pointer;
           outline: none;
 
-          ${utils.getThemeVariantCSSWithFallback(
+          ${theme.utils.getThemeVariantCSSWithFallback(
             'background-color',
             'landing.form.submitButton.background-color'
           )}
-          ${utils.getThemeVariantCSSWithFallback(
+          ${theme.utils.getThemeVariantCSSWithFallback(
             'color',
             'landing.form.submitButton.color'
           )}
@@ -222,11 +221,11 @@ const SubmitButton = ({ disabled = false }: SubmitButtonProps) => (
           transition: all 0.5s;
 
           &:hover {
-            ${utils.getThemeVariantCSSWithFallback(
+            ${theme.utils.getThemeVariantCSSWithFallback(
               'background-color',
               'landing.form.submitButton.hover.background-color'
             )}
-            ${utils.getThemeVariantCSSWithFallback(
+            ${theme.utils.getThemeVariantCSSWithFallback(
               'color',
               'landing.form.submitButton.hover.color'
             )}
@@ -317,8 +316,8 @@ const ContactForm = () => {
 
           {successfullySubmittedToFormspree ? (
             <div
-              css={css`
-                ${buttonPositioningCss}
+              css={(theme) => css`
+                ${buttonPositioningCss(theme)}
               `}
             >
               Thank you for your message!
@@ -331,7 +330,7 @@ const ContactForm = () => {
             css={({ utils }) => css`
               margin: 1em 0 0;
 
-              ${bodyFontBoldCss}
+              ${utils.getBodyFontCSSWithFallback('bold')}
               ${utils.getThemeVariantCSSWithFallback(
                 'color',
                 'landing.form.errorMessage.color'

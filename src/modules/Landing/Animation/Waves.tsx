@@ -3,7 +3,7 @@ import type { MotionValue } from 'framer-motion';
 import { Fragment, useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 import { m, useAnimation } from 'framer-motion';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import { map, compose } from 'lodash/fp';
 
 import WaveSvg from './svg/Wave';
@@ -16,19 +16,15 @@ import useTweenPercentMotionValue from '../../../hooks/use-tween-percent-motion-
 import useMotionValueAsPercent from '../../../hooks/use-motion-value-as-percent';
 import { useAppSelector } from '../../../store/hooks';
 import { getWindowHeight } from '../../../store/slices/Window/selectors';
+import { range } from 'lodash';
 
-const svgStrings = map(
-  compose(encodeURIComponent, renderToString, (color: string) => (
-    <WaveSvg color={color} />
-  )),
-  ['#28ded5', '#3ce6e0', '#65f0f0', '#82faf8', '#99f7f6']
-);
+const SVG_STRINGS = 5;
 
 const getTop = (landingScrollPercent: MotionValue<number>, index: number) =>
   useMotionValueAsPercent(
     useTweenPercentMotionValue(landingScrollPercent, [
       50 + 9 * index,
-      50 + 9 * (svgStrings.length - 1),
+      50 + 9 * (SVG_STRINGS - 1),
     ])
   );
 
@@ -94,12 +90,30 @@ export const Wave = ({ svgString, index }: WaveProps) => {
   );
 };
 
-const Waves = () => (
-  <Fragment>
-    {svgStrings.map((svgString, index) => (
-      <Wave key={index} svgString={svgString} index={index} />
-    ))}
-  </Fragment>
-);
+const Waves = () => {
+  const {
+    utils: { getThemeVariantCSSValue },
+  } = useTheme();
+
+  const svgStrings = map(
+    compose(encodeURIComponent, renderToString, (color: string) => (
+      <WaveSvg color={color} />
+    )),
+    map(
+      (index) =>
+        // @ts-ignore
+        getThemeVariantCSSValue<string>(`landing.animation.wave${index}.color`),
+      range(0, SVG_STRINGS)
+    )
+  );
+
+  return (
+    <Fragment>
+      {svgStrings.map((svgString, index) => (
+        <Wave key={index} svgString={svgString} index={index} />
+      ))}
+    </Fragment>
+  );
+};
 
 export default Waves;

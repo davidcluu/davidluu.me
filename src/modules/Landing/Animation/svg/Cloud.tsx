@@ -1,12 +1,19 @@
-interface SvgCloudWidthProps {
+interface SvgCloudProps {
+  color?: string;
+}
+
+interface SvgCloudWidthProp {
   width: string;
 }
 
-interface SvgCloudHeightProps {
+interface SvgCloudHeightProp {
   height: string;
 }
 
-const SvgCloud = (props: SvgCloudWidthProps | SvgCloudHeightProps) => (
+const SvgCloud = ({
+  color = '#fff',
+  ...props
+}: SvgCloudProps & (SvgCloudWidthProp | SvgCloudHeightProp)) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 131.414 100.932"
@@ -14,7 +21,7 @@ const SvgCloud = (props: SvgCloudWidthProps | SvgCloudHeightProps) => (
   >
     <path
       style={{
-        fill: '#fff',
+        fill: color,
         stroke: 'none',
       }}
       d="M20.85 100.587c-7.49-.72-14.718-5.798-18.23-12.806C.616 83.776-.197 79.658.04 74.707c.181-3.759.326-4.323 1.953-7.634 1.466-2.984 2.41-4.224 5.697-7.486 2.37-2.353 4.705-4.267 5.86-4.806 1.814-.845 1.934-1.003 2.172-2.852.434-3.374 1.027-5.456 2.234-7.846 3.553-7.04 9.637-12.208 15.928-13.531 1.194-.251 4.698-.475 7.787-.498 3.088-.022 6.051-.163 6.584-.312.79-.222 1.135-.844 1.857-3.34 1.082-3.746 4.082-9.48 6.936-13.257C61.146 7.721 69.374 2.326 75.974.736 81.884-.687 92.118.022 98.127 2.27c8.506 3.182 18.434 14.424 21.459 24.298 2.017 6.585 1.947 13.317-.23 21.992l-1.11 4.424 4.07 4.278c5.978 6.287 8.57 11.094 9.03 16.754.5 6.12-1.757 11.645-7.363 18.024-5.623 6.4-8.368 7.758-17.271 8.55-5.152.457-81.093.455-85.862-.003z"

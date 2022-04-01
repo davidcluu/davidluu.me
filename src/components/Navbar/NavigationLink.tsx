@@ -83,73 +83,72 @@ export default ({
     utils: { getThemeInvariantCSSValue, cssValueTransformers },
   } = useTheme();
 
-  if (navigationTarget === NavigationTarget.Page) {
-    return (
-      <ClassNames>
-        {({ css: classCss, cx, theme }) => (
-          <Link
-            {...props}
-            className={cx(classCss(linkCss(theme)), className)}
-            activeClassName={cx(classCss``, activeClassName)}
-            to={href}
-            title={children}
-            children={children}
-          />
-        )}
-      </ClassNames>
-    );
-  } else if (navigationTarget === NavigationTarget.Scroll) {
-    if (pathname === href) {
-      const navbarHeight = getThemeInvariantCSSValue(
-        'navbar.desktop.height',
-        cssValueTransformers.pixelToNumber
-      );
-
-      return (
-        <a
-          css={linkCss}
-          {...props}
-          className={className}
-          href={`${href}#${scrollTarget}`}
-          onClick={(e) => {
-            e.preventDefault();
-
-            const scrollTargetElement = document.getElementById(scrollTarget);
-
-            if (scrollTargetElement != null) {
-              const currentPosition = window.pageYOffset || window.scrollY;
-              const targetPosition =
-                scrollTargetElement.offsetTop - navbarHeight;
-              const distance = Math.abs(targetPosition - currentPosition);
-
-              animate(currentPosition, targetPosition, {
-                onUpdate: (top) => window.scrollTo({ top }),
-                type: 'tween',
-                duration: distance / 1500,
-                ease: 'easeIn',
-              });
-            }
-          }}
-          title={children}
-          children={children}
-        ></a>
-      );
-    } else {
-      // TODO Render Link with scroll context
-      return (
-        <ClassNames>
-          {({ css: classCss, cx, theme }) => (
+  return (
+    <ClassNames>
+      {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
+      {({ css, cx, theme }) => {
+        if (navigationTarget === NavigationTarget.Page) {
+          return (
             <Link
               {...props}
-              className={cx(classCss(linkCss(theme)), className)}
+              className={cx(css(linkCss(theme)), className)}
+              activeClassName={cx(css``, activeClassName)}
               to={href}
               title={children}
               children={children}
             />
-          )}
-        </ClassNames>
-      );
-    }
-  }
-  return null;
+          );
+        } else if (navigationTarget === NavigationTarget.Scroll) {
+          if (pathname === href) {
+            const navbarHeight = getThemeInvariantCSSValue(
+              'navbar.desktop.height',
+              cssValueTransformers.pixelToNumber
+            );
+
+            return (
+              <a
+                {...props}
+                className={cx(css(linkCss(theme)), className)}
+                href={`${href}#${scrollTarget}`}
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  const scrollTargetElement =
+                    document.getElementById(scrollTarget);
+
+                  if (scrollTargetElement != null) {
+                    const currentPosition =
+                      window.pageYOffset || window.scrollY;
+                    const targetPosition =
+                      scrollTargetElement.offsetTop - navbarHeight + 1;
+                    const distance = Math.abs(targetPosition - currentPosition);
+
+                    animate(currentPosition, targetPosition, {
+                      onUpdate: (top) => window.scrollTo({ top }),
+                      type: 'tween',
+                      duration: distance / 1500,
+                      ease: 'easeIn',
+                    });
+                  }
+                }}
+                title={children}
+                children={children}
+              ></a>
+            );
+          } else {
+            // TODO Render Link with scroll context
+            return (
+              <Link
+                {...props}
+                className={cx(css(linkCss(theme)), className)}
+                to={href}
+                title={children}
+                children={children}
+              />
+            );
+          }
+        }
+      }}
+    </ClassNames>
+  );
 };

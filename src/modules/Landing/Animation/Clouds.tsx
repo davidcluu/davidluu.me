@@ -53,10 +53,13 @@ const StaticCloud = ({
   style = {},
 }: StaticCloudProps) => {
   const {
-    utils: { getThemeInvariantCSSValue },
+    utils: { getThemeVariantCSSValue, getThemeInvariantCSSValue },
   } = useTheme();
   const width = getThemeInvariantCSSValue<string>(
     'landing.animation.desktop.cloud.width'
+  );
+  const color = getThemeVariantCSSValue<string>(
+    'landing.animation.cloud.color'
   );
 
   // Infinite looping animation that makes the cloud move around randomly
@@ -110,7 +113,7 @@ const StaticCloud = ({
       }}
       animate={animation}
     >
-      <SvgCloud width={width} />
+      <SvgCloud width={width} color={color} />
     </m.div>
   );
 };
@@ -204,11 +207,18 @@ const MovingCloud = ({
   }, []);
 
   const {
-    utils: { getThemeInvariantCSSValue, cssValueTransformers },
+    utils: {
+      getThemeInvariantCSSValue,
+      getThemeVariantCSSValue,
+      cssValueTransformers,
+    },
   } = useTheme();
   const widthValue = getThemeInvariantCSSValue(
     'landing.animation.desktop.cloud.width',
     cssValueTransformers.pixelToNumber
+  );
+  const color = getThemeVariantCSSValue<string>(
+    'landing.animation.cloud.color'
   );
 
   const valueRatio = 1 - cloudDistanceRatio;
@@ -239,7 +249,7 @@ const MovingCloud = ({
           exit="hidden"
           transition={{ type: 'tween', ease: 'easeOut', duration: 2 }}
         >
-          <SvgCloud width={width} />
+          <SvgCloud width={width} color={color} />
         </m.div>
       </m.div>
     </m.div>

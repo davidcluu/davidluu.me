@@ -32,6 +32,10 @@ export default () => {
 
           ${utils.getHeaderFontCSSWithFallback('bold')}
           font-size: 2.5em;
+          ${utils.getThemeVariantCSSWithFallback(
+            'color',
+            'landing.animation.banner.color'
+          )}
         `}
       >
         David Luu
@@ -42,6 +46,10 @@ export default () => {
 
           ${utils.getHeaderFontCSSWithFallback('normal')}
           font-size: 1.5em;
+          ${utils.getThemeVariantCSSWithFallback(
+            'color',
+            'landing.animation.banner.color'
+          )}
         `}
       >
         Software Development Engineer II, Amazon

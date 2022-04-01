@@ -148,6 +148,9 @@ export type ThemeVariantConfig = {
       };
     };
     animation: {
+      banner: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
       sky: {
         initial: {
           [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
@@ -155,6 +158,27 @@ export type ThemeVariantConfig = {
         final: {
           [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
         };
+      };
+      sunOrMoon: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      cloud: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      wave0: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      wave1: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      wave2: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      wave3: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
+      };
+      wave4: {
+        [CSSPropertyKeys.color]: ThemeVariantConfigValue;
       };
       beach: {
         [CSSPropertyKeys.backgroundColor]: ThemeVariantConfigValue;
@@ -277,6 +301,9 @@ const themeConfig: ThemeConfig = {
         },
       },
       animation: {
+        banner: {
+          [CSSPropertyKeys.color]: VariablePath('dl-black-0'),
+        },
         sky: {
           initial: {
             [CSSPropertyKeys.backgroundColor]: VariablePath('dl-theme-blue'),
@@ -284,6 +311,27 @@ const themeConfig: ThemeConfig = {
           final: {
             [CSSPropertyKeys.backgroundColor]: '#ff9966',
           },
+        },
+        sunOrMoon: {
+          [CSSPropertyKeys.color]: '#ffff00',
+        },
+        cloud: {
+          [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+        },
+        wave0: {
+          [CSSPropertyKeys.color]: '#28ded5',
+        },
+        wave1: {
+          [CSSPropertyKeys.color]: '#3ce6e0',
+        },
+        wave2: {
+          [CSSPropertyKeys.color]: '#65f0f0',
+        },
+        wave3: {
+          [CSSPropertyKeys.color]: '#82faf8',
+        },
+        wave4: {
+          [CSSPropertyKeys.color]: '#99f7f6',
         },
         beach: {
           [CSSPropertyKeys.backgroundColor]: '#eed6af',
@@ -334,16 +382,41 @@ const themeConfig: ThemeConfig = {
         },
       },
       animation: {
+        banner: {
+          [CSSPropertyKeys.color]: VariablePath('dl-white-0'),
+        },
         sky: {
           initial: {
-            [CSSPropertyKeys.backgroundColor]: VariablePath('dl-theme-blue'),
+            [CSSPropertyKeys.backgroundColor]:
+              VariablePath('dl-theme-blue-dark'),
           },
           final: {
-            [CSSPropertyKeys.backgroundColor]: '#ff9966',
+            [CSSPropertyKeys.backgroundColor]: '#318fb5',
           },
         },
+        sunOrMoon: {
+          [CSSPropertyKeys.color]: '#cccc00',
+        },
+        cloud: {
+          [CSSPropertyKeys.color]: VariablePath('dl-white-2'),
+        },
+        wave0: {
+          [CSSPropertyKeys.color]: '#37466d',
+        },
+        wave1: {
+          [CSSPropertyKeys.color]: '#354160',
+        },
+        wave2: {
+          [CSSPropertyKeys.color]: '#182547',
+        },
+        wave3: {
+          [CSSPropertyKeys.color]: '#0f1634',
+        },
+        wave4: {
+          [CSSPropertyKeys.color]: '#0a102b',
+        },
         beach: {
-          [CSSPropertyKeys.backgroundColor]: '#eed6af',
+          [CSSPropertyKeys.backgroundColor]: '#38230a',
         },
       },
       evenIndexedContent: {
@@ -372,7 +445,7 @@ const themeConfig: ThemeConfig = {
       },
       page: { [CSSPropertyKeys.backgroundColor]: VariablePath('dl-black-1') },
       body: { [CSSPropertyKeys.fontColor]: VariablePath('dl-white-0') },
-      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('dl-theme-blue') },
+      anchor: { [CSSPropertyKeys.fontColor]: VariablePath('dl-white-0') },
     },
   },
 };

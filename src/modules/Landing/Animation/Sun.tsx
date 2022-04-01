@@ -12,8 +12,16 @@ import useLandingScrollPercentMotionValue from '../hooks/use-landing-scroll-perc
 
 export default () => {
   const {
-    utils: { getThemeInvariantCSSValue, cssValueTransformers },
+    utils: {
+      getThemeInvariantCSSValue,
+      getThemeVariantCSSValue,
+      cssValueTransformers,
+    },
   } = useTheme();
+  const color = getThemeVariantCSSValue<string>(
+    'landing.animation.sunOrMoon.color'
+  );
+
   const { width, height } = useSelector(getSize);
 
   const sunInitialX = getThemeInvariantCSSValue(
@@ -67,7 +75,7 @@ export default () => {
         right,
       }}
     >
-      <Sun width="100%" height="100%" />
+      <Sun width="100%" height="100%" color={color} />
     </m.div>
   );
 };

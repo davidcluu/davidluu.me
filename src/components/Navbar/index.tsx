@@ -5,12 +5,9 @@ import styled from '@emotion/styled';
 
 import DefaultNavigationLink, { NavigationTarget } from './NavigationLink';
 import DefaultNavigationSublinks from './NavigationSublinks';
+import DarkModeToggle from './DarkModeToggle';
 
 import IDs from './ids';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { Theme, actions } from '../../store/slices/Theme';
-import { getDarkMode } from '../../store/slices/Theme/selectors';
-import ClientOnly from '../ClientOnly';
 
 interface NavbarProps {
   wrapperClassName?: string;
@@ -21,64 +18,6 @@ interface NavbarProps {
   sublinkClassName?: string;
   sublinkActiveClassName?: string;
 }
-
-const DarkModeToggle = ({ toggleWidth, toggleClassName }) => {
-  const DarkModeToggleComponent =
-    require('react-dark-mode-toggle-2').DarkModeToggle;
-
-  const isDarkMode = useAppSelector(getDarkMode);
-  const dispatch = useAppDispatch();
-
-  return (
-    <DarkModeToggleComponent
-      isDarkMode={isDarkMode}
-      onChange={() =>
-        dispatch(actions.setTheme(isDarkMode ? Theme.Light : Theme.Dark))
-      }
-      size={`${toggleWidth}px`}
-      className={toggleClassName}
-    />
-  );
-};
-
-const ThemeToggle = () => (
-  <ClassNames>
-    {({ css, cx, theme: { utils } }) => {
-      const navbarHeight = utils.getThemeInvariantCSSValue(
-        'navbar.desktop.height',
-        utils.cssValueTransformers.pixelToNumber
-      );
-
-      const toggleHeight = navbarHeight * 0.6;
-      const toggleWidth = toggleHeight * 2;
-
-      const toggleClassName = css`
-        margin: 0 0.5em;
-
-        display: inline;
-      `;
-
-      const placeholderClassName = cx(
-        toggleClassName,
-        css`
-          width: ${toggleWidth}px;
-          height: ${toggleHeight}px;
-        `
-      );
-
-      return (
-        <ClientOnly
-          PlaceholderComponent={() => <div className={placeholderClassName} />}
-        >
-          <DarkModeToggle
-            toggleWidth={toggleWidth}
-            toggleClassName={toggleClassName}
-          />
-        </ClientOnly>
-      );
-    }}
-  </ClassNames>
-);
 
 export default ({
   wrapperClassName,
@@ -167,7 +106,7 @@ export default ({
                 Resume
               </NavigationLink>
             </div>
-            <ThemeToggle />
+            <DarkModeToggle />
           </div>
         </nav>
       )}

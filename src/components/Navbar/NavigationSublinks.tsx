@@ -1,5 +1,14 @@
 import { css } from '@emotion/react';
 
+const NavigationSublinkBracket = (props) => (
+  <div
+    css={css`
+      font-size: 1.25em;
+    `}
+    {...props}
+  />
+);
+
 export default ({ children }) => (
   <div
     css={css`
@@ -12,7 +21,9 @@ export default ({ children }) => (
         align-items: center;
       `}
     >
+      <NavigationSublinkBracket>[</NavigationSublinkBracket>
       {children}
+      <NavigationSublinkBracket>]</NavigationSublinkBracket>
     </div>
   </div>
 );

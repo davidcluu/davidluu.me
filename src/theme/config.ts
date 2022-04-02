@@ -395,10 +395,10 @@ const themeConfig: ThemeConfig = {
           },
         },
         sunOrMoon: {
-          [CSSPropertyKeys.color]: '#cccc00',
+          [CSSPropertyKeys.color]: '#e1e7f0',
         },
         cloud: {
-          [CSSPropertyKeys.color]: VariablePath('dl-white-2'),
+          [CSSPropertyKeys.color]: 'rgba(255, 255, 255, 0.5)',
         },
         wave0: {
           [CSSPropertyKeys.color]: '#37466d',
@@ -416,7 +416,7 @@ const themeConfig: ThemeConfig = {
           [CSSPropertyKeys.color]: '#0a102b',
         },
         beach: {
-          [CSSPropertyKeys.backgroundColor]: '#38230a',
+          [CSSPropertyKeys.backgroundColor]: '#170f01',
         },
       },
       evenIndexedContent: {

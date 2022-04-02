@@ -39,11 +39,6 @@ const LandingNavbar = () => {
                 : 'landing.navbar.animationNotInViewport.color'
             )}
           `}
-          linkActiveClassName={css`
-            font-weight: ${utils.getThemeInvariantCSSValue(
-              'font.header.bold.font-weight'
-            )} !important;
-          `}
         />
       )}
     </ClassNames>

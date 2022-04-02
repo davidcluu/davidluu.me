@@ -43,6 +43,10 @@ const linkCss = ({ utils }: Theme) => css`
   }
 `;
 
+const activeLinkCss = ({ utils }: Theme) => css`
+  ${utils.getHeaderFontCSSWithFallback('bold')}
+`;
+
 export enum NavigationTarget {
   Page = 'page',
   Scroll = 'scroll',
@@ -87,19 +91,39 @@ export default ({
     <ClassNames>
       {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
       {({ css, cx, theme }) => {
+        const currentPageIsTargetPage = pathname === href;
+
         if (navigationTarget === NavigationTarget.Page) {
-          return (
-            <Link
-              {...props}
-              className={cx(css(linkCss(theme)), className)}
-              activeClassName={cx(css``, activeClassName)}
-              to={href}
-              title={children}
-              children={children}
-            />
-          );
+          if (currentPageIsTargetPage) {
+            return (
+              <div
+                className={cx(
+                  css`
+                    ${linkCss(theme)}
+                    ${activeLinkCss(theme)}
+
+                    cursor: default;
+                  `,
+                  className,
+                  activeClassName
+                )}
+                children={children}
+              />
+            );
+          } else {
+            return (
+              <Link
+                {...props}
+                className={cx(css(linkCss(theme)), className)}
+                activeClassName={cx(css(activeLinkCss(theme)), activeClassName)}
+                to={href}
+                title={children}
+                children={children}
+              />
+            );
+          }
         } else if (navigationTarget === NavigationTarget.Scroll) {
-          if (pathname === href) {
+          if (currentPageIsTargetPage) {
             const navbarHeight = getThemeInvariantCSSValue(
               'navbar.desktop.height',
               cssValueTransformers.pixelToNumber
@@ -141,6 +165,7 @@ export default ({
               <Link
                 {...props}
                 className={cx(css(linkCss(theme)), className)}
+                activeClassName={cx(css(activeLinkCss(theme)), activeClassName)}
                 to={href}
                 title={children}
                 children={children}

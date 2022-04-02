@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import themeHtml from './theme/html';
+import themeScript from './theme/theme-script';
 
 const CHARSET = 'utf-8';
 
@@ -24,11 +24,11 @@ export default function HTML(props) {
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
-        <div
-          id="___theme-html"
+        <script
+          id="___theme-script"
           style={{ display: 'none' }}
           dangerouslySetInnerHTML={{
-            __html: themeHtml,
+            __html: themeScript,
           }}
         />
         {props.preBodyComponents}

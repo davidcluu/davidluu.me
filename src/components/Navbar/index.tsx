@@ -1,7 +1,6 @@
 import type { NavigationLinkProps } from './NavigationLink';
 
 import { ClassNames } from '@emotion/react';
-import styled from '@emotion/styled';
 
 import DefaultNavigationLink, { NavigationTarget } from './NavigationLink';
 import DefaultNavigationSublinks from './NavigationSublinks';

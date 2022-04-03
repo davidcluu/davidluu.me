@@ -4,6 +4,7 @@
   "private": true,
   "description": "David Luu's Personal Portfolio Website",
   "scripts": {
+    "setup": "concurrently \"npm run deploy-forms\"",
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "concurrently \"gatsby build\" \"npm run deploy-forms\"",

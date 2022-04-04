@@ -25,7 +25,7 @@ const config: GatsbyConfig = {
         defaultDataLayer: {},
         // Plugin-specific configuration
         includeInDevelopment: true,
-        routeChangeEventName: 'davidluu.me.route_change',
+        routeChangeEventName: 'gatsby-route-change',
         enableWebVitalsTracking: false,
       },
     },

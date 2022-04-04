@@ -14,6 +14,22 @@ const config: GatsbyConfig = {
   plugins: [
     'gatsby-plugin-emotion',
     {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        // GTM script variables
+        id: process.env.GOOGLE_TAG_MANAGER_ID,
+        gtmAuth: process.env.GOOGLE_TAG_MANAGER_ENVIRONMENT_AUTH_STRING,
+        gtmPreview: process.env.GOOGLE_TAG_MANAGER_ENVIRONMENT_PREVIEW_NAME,
+        // Data layer configuration
+        dataLayerName: 'dataLayer',
+        defaultDataLayer: {},
+        // Plugin-specific configuration
+        includeInDevelopment: true,
+        routeChangeEventName: 'davidluu.me.route_change',
+        enableWebVitalsTracking: true,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-humans-txt',
       options: {
         metaTag: false,

@@ -26,7 +26,7 @@ const config: GatsbyConfig = {
         // Plugin-specific configuration
         includeInDevelopment: true,
         routeChangeEventName: 'davidluu.me.route_change',
-        enableWebVitalsTracking: true,
+        enableWebVitalsTracking: false,
       },
     },
     {

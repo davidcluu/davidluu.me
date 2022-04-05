@@ -81,12 +81,6 @@ const config: GatsbyConfig = {
             },
           },
           'gatsby-remark-autolink-headers',
-          {
-            resolve: 'gatsby-remark-prismjs',
-            options: {
-              inlineCodeMarker: '÷',
-            },
-          },
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
           {

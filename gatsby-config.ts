@@ -12,6 +12,20 @@ const config: GatsbyConfig = {
     github: 'davidcluu',
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'blog',
+        path: './src/blog/',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'pages',
+        path: './src/pages/',
+      },
+    },
     'gatsby-plugin-emotion',
     {
       resolve: 'gatsby-plugin-google-tagmanager',
@@ -56,7 +70,35 @@ const config: GatsbyConfig = {
         icon: 'src/images/icon.png',
       },
     },
-    'gatsby-plugin-mdx',
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 600,
+            },
+          },
+          'gatsby-remark-autolink-headers',
+          {
+            resolve: 'gatsby-remark-prismjs',
+            options: {
+              inlineCodeMarker: '÷',
+            },
+          },
+          'gatsby-remark-copy-linked-files',
+          'gatsby-remark-smartypants',
+          {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_blank',
+              rel: 'nofollow noopener noreferrer',
+            },
+          },
+        ],
+      },
+    },
     'gatsby-plugin-react-helmet',
     { resolve: 'gatsby-plugin-robots-txt', options: { policy: [] } },
     'gatsby-plugin-sass',
@@ -68,7 +110,6 @@ const config: GatsbyConfig = {
         pathToConfigModule: 'src/config/typography',
       },
     },
-    'gatsby-transformer-sharp',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -76,13 +117,7 @@ const config: GatsbyConfig = {
         path: './src/images/',
       },
     },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'pages',
-        path: './src/pages/',
-      },
-    },
+    'gatsby-transformer-sharp',
   ],
 };
 

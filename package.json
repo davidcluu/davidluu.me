@@ -14,7 +14,7 @@
     "deploy-forms": "formspree deploy"
   },
   "dependencies": {
-    "@emotion/react": "11.8.2",
+    "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
     "@formspree/react": "2.2.4",
     "@mdx-js/mdx": "1.6.22",

@@ -1,7 +1,7 @@
 import type { GatsbyNode } from 'gatsby';
 
 import { createFilePath } from 'gatsby-source-filesystem';
-import path from 'path';
+import nodePath from 'path';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { forEach } from 'lodash/fp';
 
@@ -48,12 +48,18 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = ({
   getNode,
 }) => {
   if (node.internal.type === 'Mdx') {
-    const value = createFilePath({ node, getNode, basePath: 'blog' });
+    const slug = createFilePath({ node, getNode, basePath: 'blog' });
 
     actions.createNodeField({
       name: 'slug',
       node,
-      value,
+      value: slug,
+    });
+
+    actions.createNodeField({
+      name: 'path',
+      node,
+      value: `/blog${slug}`,
     });
   }
 };
@@ -64,11 +70,11 @@ export const createPages: GatsbyNode['createPages'] = async ({
 }) => {
   const result = await graphql<{
     allMdx: {
-      edges: [
+      nodes: [
         {
-          node: {
-            id: string;
-            slug: string;
+          id: string;
+          fields: {
+            path: string;
           };
         }
       ];
@@ -76,20 +82,20 @@ export const createPages: GatsbyNode['createPages'] = async ({
   }>(`
     query {
       allMdx {
-        edges {
-          node {
-            id
-            slug
+        nodes {
+          id
+          fields {
+            path
           }
         }
       }
     }
   `);
 
-  result.data?.allMdx.edges.forEach(({ node: { id, slug } }) => {
+  result.data?.allMdx.nodes.forEach(({ id, fields: { path } }) => {
     actions.createPage({
-      path: `/blog/${slug}`,
-      component: path.resolve('./src/templates/BlogPost.tsx'),
+      path,
+      component: nodePath.resolve('./src/templates/BlogPost.tsx'),
       context: { id },
     });
   });

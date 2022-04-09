@@ -6,7 +6,7 @@ import Landing from '../modules/Landing';
 
 export default () => (
   <Fragment>
-    <SEO title="Software Engineer" />
+    <SEO />
     <ClientOnly>
       <Landing />
     </ClientOnly>

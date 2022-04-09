@@ -5,7 +5,6 @@ import 'dotenv/config';
 const config: GatsbyConfig = {
   siteMetadata: {
     author: 'David Luu',
-    title: 'David Luu',
     description: 'David Luu - Software Engineer',
     siteUrl: 'https://davidluu.me',
     twitter: '@davidcluu',

@@ -4,7 +4,7 @@ import JSONObjectRenderer from '../../modules/Interviewing/JSONObjectRenderer';
 
 export default () => (
   <InterviewingContextProvider>
-    <SEO title="Interviewing/JSON Object Renderer" />
+    <SEO title="JSON Object Renderer | Interviewing" />
     <JSONObjectRenderer />
   </InterviewingContextProvider>
 );

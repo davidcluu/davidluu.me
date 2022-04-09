@@ -14,27 +14,28 @@ interface PropertyContentMeta extends ContentMeta {
 }
 
 interface SEOProps {
+  description?: string;
+  keywords?: string[];
   lang?: string;
   meta?: (NameContentMeta | PropertyContentMeta)[];
-  keywords?: string[];
-  title: string;
+  title?: string;
 }
 
-const SEO = ({ lang = 'en', meta = [], keywords = [], title }: SEOProps) => {
+const SEO = ({
+  description: propDescription,
+  keywords = [],
+  lang = 'en',
+  meta = [],
+  title,
+}: SEOProps) => {
   const {
     site: {
-      siteMetadata: {
-        title: titleTemplatePrefix,
-        description,
-        siteUrl,
-        twitter,
-      },
+      siteMetadata: { description: defaultDescription, siteUrl, twitter },
     },
   } = useStaticQuery(graphql`
     {
       site {
         siteMetadata {
-          title
           description
           siteUrl
           twitter
@@ -43,13 +44,16 @@ const SEO = ({ lang = 'en', meta = [], keywords = [], title }: SEOProps) => {
     }
   `);
 
+  const description = propDescription || defaultDescription;
+
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
-      titleTemplate={`${titleTemplatePrefix} - %s`}
+      defaultTitle="David Luu - Software Engineer"
       title={title}
+      titleTemplate="%s | David Luu"
       meta={[
         {
           name: 'description',

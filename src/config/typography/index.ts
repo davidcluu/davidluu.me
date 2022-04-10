@@ -1,6 +1,6 @@
 import Typography from 'typography';
 
-const DEFAULT_FONT_STACK = ['Arial', 'Helvetica'];
+const DEFAULT_FONT_STACK = ['Arial', 'Helvetica', 'sans-serif'];
 
 const HEADER_FONT = 'Lato';
 const HEADER_FONT_STACK = [HEADER_FONT, ...DEFAULT_FONT_STACK];
@@ -15,9 +15,9 @@ export const BODY_FONT_WEIGHT_LIGHT = '100';
 export const BODY_FONT_WEIGHT_NORMAL = '400';
 export const BODY_FONT_WEIGHT_BOLD = '600';
 
-const BASE_FONT_SIZE = '16px';
+export const BASE_FONT_SIZE = '16px';
 const BASE_FONT_COLOR = '#000';
-const BASE_LINE_HEIGHT = 1.2;
+const BASE_LINE_HEIGHT = 1.5;
 export const BASE_LINE_HEIGHT_CSS = `${BASE_LINE_HEIGHT}`;
 
 const typography = new Typography({

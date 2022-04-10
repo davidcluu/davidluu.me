@@ -7,11 +7,11 @@ import { MDXProvider } from '@mdx-js/react';
 
 import ResumeAnchor from './ResumeAnchor';
 
-import { resumePaddingSize, resumeWidthCss } from './styles';
+import { resumePageCss } from './styles';
 
 import ResumeMDXDocument from './ResumeContent.mdx';
 
-const fontColorCss = (props: { theme: Theme }) => css`
+const fontCss = (props: { theme: Theme }) => css`
   ${props.theme.utils.getThemeVariantCSSWithFallback(
     'color',
     'resume.body.font-color'
@@ -19,23 +19,42 @@ const fontColorCss = (props: { theme: Theme }) => css`
 
   @media print {
     ${props.theme.utils.getThemeInvariantCSSWithFallback('color', 'dl-black-0')}
+
+    ${props.theme.utils.getThemeInvariantCSSWithFallback(
+      'font-family',
+      'font.body.font-family',
+      'Calibri, ',
+      ' !important'
+    )}
+    line-height: 1.1rem !important;
   }
 `;
 
 // Page wrapper
 
-const wrapper = styled.main`
-  ${resumeWidthCss}
-`;
+const wrapper = (props: any) => (
+  <main
+    {...props}
+    itemScope
+    itemType="https://schema.org/Person"
+    css={css`
+      ${resumePageCss};
+
+      & .anchor {
+        display: none;
+      }
+    `}
+  ></main>
+);
 
 // Name
 
 const h1 = styled.h1`
-  margin: 0;
+  margin: 0 0 0.25rem;
 
   text-align: center;
   ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('bold')}
-  ${fontColorCss}
+  ${fontCss}
 `;
 
 // Contact information
@@ -46,7 +65,7 @@ const h6 = styled.h6`
   text-align: center;
   ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('normal')}
   font-size: 1rem;
-  ${fontColorCss}
+  ${fontCss}
 `;
 
 // Section header
@@ -63,7 +82,7 @@ const h2 = styled.h2`
     )}
 
   ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('bold')}
-  ${fontColorCss}
+  ${fontCss}
 
   @media print {
     ${(props) =>
@@ -77,42 +96,13 @@ const h2 = styled.h2`
 
 // Section item header
 
-const table = styled.table`
+const h3 = styled.h3`
   margin: 0;
-  border: 0;
-  padding: 0;
 
-  line-height: inherit;
+  ${({ theme: { utils } }) => utils.getBodyFontCSSWithFallback('bold')}
+  font-size: 1rem;
+  ${fontCss}
 `;
-
-const thead = styled.thead`
-  ${fontColorCss}
-`;
-
-const tbody = styled.tbody`
-  ${fontColorCss}
-`;
-
-const tr = styled.tr`
-  display: flex;
-  justify-content: space-between;
-
-  ${fontColorCss}
-`;
-
-const tableItem = styled.td`
-  margin: 0;
-  border: 0;
-  padding: 0;
-
-  ${({ theme: { utils } }) =>
-    utils.getThemeInvariantCSSWithFallback('line-height', 'font.line-height')}
-  ${fontColorCss}
-`;
-
-const th = tableItem;
-
-const td = tableItem;
 
 // Section item achievements
 
@@ -124,7 +114,7 @@ const ul = styled.ul`
 const li = styled.li`
   margin: 0;
 
-  ${fontColorCss}
+  ${fontCss}
 `;
 
 // Section item divider
@@ -143,24 +133,23 @@ const hr = styled.hr`
 const p = styled.p`
   margin: 0;
 
-  ${fontColorCss}
+  ${fontCss}
 `;
 
-const a = ResumeAnchor;
+const a = styled(ResumeAnchor)`
+  @media print {
+    ${fontCss}
+  }
+`;
 
 const mdxComponents = {
   p,
   h1,
   h2,
+  h3,
   h6,
   ul,
   li,
-  table,
-  thead,
-  tbody,
-  tr,
-  td,
-  th,
   hr,
   a,
   wrapper,
@@ -173,7 +162,7 @@ export default () => (
         @media print {
           @page {
             size: auto;
-            margin: ${resumePaddingSize};
+            margin: 0;
           }
         }
       `}

@@ -41,8 +41,6 @@ const wrapper = ({ children, ...props }: any) => (
 const h2 = ContentHeader;
 
 const p = styled.p`
-  margin-bottom: 0.5em;
-
   font-size: 1.1em;
 
   &:last-child {

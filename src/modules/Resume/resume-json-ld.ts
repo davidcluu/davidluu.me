@@ -168,7 +168,7 @@ const resumeJsonLD: ResumeJsonLD = {
   },
   telephone: '(213) 255-8890',
   email: 'luu.david.c@gmail.com',
-  url: 'davidluu.me',
+  url: 'https://davidluu.me',
   jobTitle: 'Software Engineer',
   // Skills
   knowsAbout: [

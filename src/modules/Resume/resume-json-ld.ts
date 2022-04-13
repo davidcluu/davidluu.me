@@ -342,8 +342,9 @@ const resumeJsonLD: ResumeJsonLD = {
       // Send to Car
       `Implemented and released the "Send to Car" feature, which allows Alexa customers to send a target destination to be rendered in the vehicle's in-cabin navigation system when they enter their vehicle.`,
       // Integration Testing
-      'Proposed to . I implemented the ',
+      `Proposed and drove an initiative to replace 50% of the team's 1,000+ end-to-end tests with equivalent integration tests implemented with upstream and downstream dependency mocking to reduce the false negative rate of the test suite. I implemented the framework (setting up requests, mocking, asserting on results) that would be used by developers to implement integration tests, then handed the effort of driving the conversion of end-to-end tests to integration tests to another engineer.`,
       // Security Certifier
+      // Interviewing
       'Contributed to team and organization hiring goals by performing 30+ interviews and phone screens for both Software Development Engineer (SDE) and Front-End Engineer (FEE) roles.',
       // Tech
       'Technologies used: Java (Spring), AWS (DynamoDB, SQS, SNS)',
@@ -357,11 +358,13 @@ const resumeJsonLD: ResumeJsonLD = {
       endDate: 'February 2020',
       description: [
         // Transactions
-        'Implemented, tested, and released an enhancement to an internal microservices framework that allowed for the creation of transactions that atomically mutate entities across multiple microservices. Services that onboarded onto the transactions library were shown to only incur an average penalty of 10 ms per mutation in a production environment.',
+        'Implemented, tested, and released an enhancement to an internal microservices framework that allowed for the creation of transactions that atomically mutate entities across multiple microservices. In production, services that onboarded onto the transactions library were shown to only incur an no additional read latency and a write latency of 10 ms.',
         // ---
         'Designed, implemented and released a microservice that automatically assigns and notifies reviewers for bill of material (BOM) changes based on a series of flexible user-configured business rules applied to various aspects of the change, such as parts changed, type of change, and lifecycle state of the BOM. ',
         // Scrum Processes
         'Implemented and iterated on an 2-week agile scrum process (product/development backlogs, backlog grooming, point poker, sprint retrospective, and sprint demos) to organize and streamline team development efforts.',
+        // Interviewing
+        'Contributed to team hiring goals by performing 20+ interviews for the Software Development Engineer (SDE) role.',
         // Tech
         'Technologies used: Java, Elasticsearch, AWS (DynamoDB, S3, Kinesis, SQS, SNS, API Gateway, Cognito), JavaScript, React, GraphQL',
       ],
@@ -374,6 +377,8 @@ const resumeJsonLD: ResumeJsonLD = {
       description: [
         // OE Enhancements
         'Proposed, designed, and led the development of operational enhancements to an existing application, resulting in an 85% decrease in trouble tickets that required manual developer intervention.',
+        // PF R2/KPA
+        `Contributed to the implementation of a feature that allowed internal planning customers to perform automated demand-driven forecasting by integrating my team's services with an existing Mosel solver platform. I was the single-threaded owner of the away team work to make the new solver implementation available on the solver platform frontend, which would allow our customers to kick off ad-hoc runs of the solver - this required onboarding, modifying, and releasing the feature in a 100k+ line Ruby on Rails application. Within the codebase, I also defined a new pattern for creating inter-page permissions (the existing permissions model was page-by-page only).`,
         // React vs. Angular
         'Led an organization-wide evaluation of React vs. Angular for new applications, which resulted in all 3 peer teams that were involved adapting React for current and future UI work.',
         // Frontend Portal

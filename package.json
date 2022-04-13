@@ -4,14 +4,15 @@
   "private": true,
   "description": "David Luu's Personal Portfolio Website",
   "scripts": {
-    "setup": "concurrently \"npm run deploy-forms\"",
+    "setup": "npm run deploy",
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "concurrently \"gatsby build\" \"npm run deploy-forms\"",
-    "serve": "gatsby serve",
+    "deploy": "concurrently \"npm run deploy-forms\"",
+    "deploy-forms": "formspree deploy",
+    "build": "gatsby build",
+    "build-and-deploy": "concurrently \"npm run build\" \"npm run deploy\"",
     "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit",
-    "deploy-forms": "formspree deploy"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "11.9.0",

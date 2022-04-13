@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  frontend-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
+        - FORMSPREE_DEPLOY_KEY=${FORMSPREE_DEPLOY_KEY}
+        - FORMSPREE_PROJECT_ID=${FORMSPREE_PROJECT_ID}
+        - GOOGLE_TAG_MANAGER_ID=${GOOGLE_TAG_MANAGER_ID}
+        - GOOGLE_TAG_MANAGER_ENVIRONMENT_AUTH_STRING=${GOOGLE_TAG_MANAGER_ENVIRONMENT_AUTH_STRING}
+        - GOOGLE_TAG_MANAGER_ENVIRONMENT_PREVIEW_NAME=${GOOGLE_TAG_MANAGER_ENVIRONMENT_PREVIEW_NAME}
+    ports:
+      - 127.0.0.1:8080:80
